@@ -1,32 +1,34 @@
-import React from 'react';
-import './StartPage.css';
-import owlImage from '../assets/owl_girl.png';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import styles from "./StartPage.module.css";
+import owlImage from "../assets/owl_girl.png";
+import { useNavigate } from "react-router-dom";
 
 export default function StartPage() {
   const navigate = useNavigate();
 
   const goToLogin = () => {
-    navigate('\login');
+    navigate("login");
   };
 
   return (
     <>
-      <div className="header">
-        <div className="logo">LEV<br />STORY</div>
-      </div>
-
-      <div className="home-container">
-        <div className="left">
+      <div className={styles.homecontainer}>
+        <div className={styles.left}>
           <img src={owlImage} alt="Girl with owl" />
         </div>
-        <div className="right">
-          <h1>나만의 AI 동화책을<br /> 만나보세요!</h1>
+        <div className={styles.right}>
+          <h1>
+            나만의 AI 동화책을
+            <br /> 만나보세요!
+          </h1>
           <p>
-            당신의 취향에 딱 맞춘 맞춤형 영어 동화를<br />
+            당신의 취향에 딱 맞춘 맞춤형 영어 동화를
+            <br />
             AI가 직접 만들어드려요.
           </p>
-          <button onClick={() => navigate('/login')}>지금 시작하기</button>
+          <button className={styles.btn} onClick={() => navigate("/login")}>
+            지금 시작하기
+          </button>
         </div>
       </div>
     </>
