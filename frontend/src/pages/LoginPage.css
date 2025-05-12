@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  background-color: #DDDDDD; /* 홈페이지랑 동일한 배경색 */
+}
+
+/* 로고 위치 고정 */
+.header {
+  position: relative;
+  top: 30px;
+  left: 30px;
+}
+    
+.logo {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  font-family: 'RubikBubbles', sans-serif;
+  font-size: 48px;
+  color: #658864;
+  line-height: 1.2;
+  text-align: center;
+  z-index: 1000;
+
+  text-shadow:
+    -2px -2px 0 #fff,
+     2px -2px 0 #fff,
+    -2px  2px 0 #fff,
+     2px  2px 0 #fff,
+     4px  4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.login-page {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'HakgyoansimGeurimilgi', sans-serif;
+}
+
+.login-content {
+  text-align: center;
+}
+
+.login-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.login-box {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.login-input {
+  font-size: 18px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  background-color: #DDDDDD;
+}
+
+.login-button {
+  background-color: #7e9d7c;
+  color: white;
+  font-size: 18px;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; /* 선과 텍스트 사이 간격 */
+  margin: 12px 0;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+  border: none;
+}
+.or-text {
+  margin: 16px 0;
+  text-align: center;
+  color: #555   ;
+  font-size: 16px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.social-button {
+  width: 30%;
+  height: 40px;
+  border: none;
+  border: 1.5px solid #ccc;
+  background-color: #DDDDDD;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: none;
+  cursor: pointer;
+  display: flex; 
+  justify-content: center;  
+  align-items: center;   
+  padding: 0;     
+}
+
+.signup {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signup a {
+  color: #476644;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.social-icon {
+  height: 33px;
+  width: 33px;
+  object-fit: contain;
+}
