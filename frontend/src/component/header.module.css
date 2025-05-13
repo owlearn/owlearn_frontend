@@ -5,6 +5,11 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "HakgyoansimGeurimilgi";
+  src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
+}
+
 .header {
   display: flex;
   flex-direction: row;
@@ -35,7 +40,7 @@
 }
 
 .rightbtn {
-  font-family: "Hakgyoansim Geurimilgi TTF";
+  font-family: "HakgyoansimGeurimilgi";
   font-size: 24px;
   background: none;
   border: none;
