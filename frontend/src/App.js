@@ -4,6 +4,7 @@ import Header from "./component/header";
 import StartPage from "./pages/StartPage";
 import LoginPage from "./pages/LoginPage";
 import StudyMain from "./pages/studyMain";
+import StudyProgress from "./pages/studyProgress";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<StartPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/studyMain" element={<StudyMain />} />
+        <Route path="/tale/study" element={<StudyProgress />} />
       </Routes>
     </Router>
   );

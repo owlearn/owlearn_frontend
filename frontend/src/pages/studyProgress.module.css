@@ -1,0 +1,116 @@
+.tytle {
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  background: linear-gradient(270deg, #869b73 0.01%, #b7b78a 84.13%);
+  color: #ffffff;
+  width: 80%;
+  height: 90px;
+  color: #ffffff;
+  font-family: "Hakgyoansim Geurimilgi TTF";
+  font-size: 50px;
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  text-align: center;
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+  width: 85%;
+  margin: auto;
+}
+
+.illust {
+  width: 30%;
+  height: 350px;
+  margin: auto;
+}
+
+.storyBox {
+  margin: auto;
+  border-radius: 15px;
+  background: #fdfdfd;
+  box-shadow: 1px 2px 20px 1px rgba(0, 0, 0, 0.25);
+  width: 50%;
+  height: 350px;
+  font-family: "Hakgyoansim Geurimilgi TTF";
+  font-size: 20px;
+  line-height: 1.4;
+  white-space: pre-line; /* 줄바꿈 \n 인식 */
+  padding-left: 50px;
+  padding-right: 50px;
+  display: flex; /* Flexbox 적용 */
+  flex-direction: column; /* 세로 방향 정렬 */
+  justify-content: center; /* 수직 중앙 정렬 */
+}
+
+.pageBtn {
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  justify-content: center; /* 가로 가운데 정렬 */
+  gap: 10px;
+}
+
+.arrow {
+  color: #000;
+  text-align: center;
+  font-family: "Hakgyoansim Geurimilgi TTF";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.bottomContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3개의 동일한 칼럼 */
+  margin: auto;
+  padding-top: 3%;
+}
+
+.speakerBtn {
+  border: none;
+  background: none;
+  font-size: 40px;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  margin: auto;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 중간 정렬 */
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.bar {
+  margin: auto;
+}
+
+.quizBtn {
+  border-radius: 40px;
+  background: #78716c;
+  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  border: none;
+  width: 100px;
+  height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  margin: auto;
+}
+.quizBtn:hover {
+  background: #68615c;
+}
