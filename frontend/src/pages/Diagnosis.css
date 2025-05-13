@@ -1,0 +1,197 @@
+.diagnosis-page {
+  background-color: #dddddd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'HakgyoansimGeurimilgi', sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.progress-container {
+  width: 50%;
+  max-width: 500px;
+  margin: 180px auto 30px;
+  position: relative;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #c4c4c4;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #7e9d7c;
+  transition: width 0.3s;
+}
+
+.progress-text {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.question-section {
+  margin: 10px auto;
+  text-align: center;
+}
+
+.question-title {
+  font-size: 25px;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.choice-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.choice-box {
+  width: 115px;
+  height: 100px;
+  padding: 10px;
+  background-color: #dddddd;
+  border: 1.5px solid #bbb;
+  border-radius: 12px;
+  box-shadow:none; 
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.choice-box.selected {
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice-icon {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  margin-bottom: 0px;
+}
+
+.choice-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.choice-label {
+  font-size: 22px;
+  color: #000; /* 검정 글자 */
+  text-align: center;
+}
+
+.radio-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.radio-box {
+  width: 100px;
+  height: 35px;
+  padding: 10px;
+  background-color: #dddddd;
+  border: 1.5px solid #bbb;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  gap: 8px;
+}
+
+.radio-box input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #999;
+  position: relative;
+}
+
+.radio-box input:checked + .custom-radio::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #7e9d7c;
+}
+
+.radio-label-text {
+  font-size: 22px;
+  color: #000;
+}
+
+.age-select {
+  font-size: 20px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1.5px solid #bbb;
+  background-color: #dddddd;
+  width: 380px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  padding: 12px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background-color: #869b73;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  min-width: 150px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.submit-button:disabled {
+  background-color: #b0b0b0;
+  cursor: default;
+}
