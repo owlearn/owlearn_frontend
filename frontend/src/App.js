@@ -7,6 +7,7 @@ import Diagnosis from "./pages/DiagnosisPage";
 import StudyMain from "./pages/studyMain";
 import StudyProgress from "./pages/studyProgress";
 import Quiz from "./pages/quiz";
+import QuizAnswer from "./pages/quizAnswer";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/studyMain" element={<StudyMain />} />
         <Route path="/tale/study" element={<StudyProgress />} />
         <Route path="/tale/quiz" element={<Quiz />} />
+        <Route path="/tale/quiz/answer" element={<QuizAnswer />} />
       </Routes>
     </Router>
   );
