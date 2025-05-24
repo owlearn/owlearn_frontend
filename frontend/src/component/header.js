@@ -18,7 +18,8 @@ function Header() {
           <button className={styles.rightbtn}>Logout</button>
           <span>|</span>
           <button
-            onClick={() => navigate(`/mypage`)}
+            // onClick={() => navigate(`/mypage`)}
+            // //마이페이지 구현 후 활성화
             className={styles.rightbtn}
           >
             MyPage
