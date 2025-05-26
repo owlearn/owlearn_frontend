@@ -57,7 +57,8 @@ function StudyMain() {
           </button>
           <button
             className={styles.boxBadge}
-            onClick={() => navigate("/mypage")}
+            // onClick={() => navigate("/mypage")}
+            //마이페이지 구현 후 활성화
           >
             <img src={badge} className={styles.icon}></img>
             나의 <br />
@@ -65,7 +66,8 @@ function StudyMain() {
           </button>
           <button
             className={styles.boxSearch}
-            onClick={() => navigate("/tale/list")}
+            // onClick={() => navigate("/tale/list")}
+            // 해당 페이지 구현 후 활성화 (동화 리스트는 페이지 존재여부도 미정)
           >
             <img src={search} className={styles.icon}></img>
             동화 <br />

@@ -3,7 +3,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'HakgyoansimGeurimilgi', sans-serif;
+  font-family: "HakgyoansimGeurimilgi", sans-serif;
 }
 
 .main-content {
@@ -18,7 +18,7 @@
 .progress-container {
   width: 50%;
   max-width: 500px;
-  margin: 180px auto 30px;
+  margin: 50px auto;
   position: relative;
 }
 
@@ -69,7 +69,7 @@
   background-color: #dddddd;
   border: 1.5px solid #bbb;
   border-radius: 12px;
-  box-shadow:none; 
+  box-shadow: none;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
@@ -142,7 +142,7 @@
 }
 
 .radio-box input:checked + .custom-radio::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
