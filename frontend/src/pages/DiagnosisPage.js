@@ -5,6 +5,10 @@ import animalIcon from "../assets/animal.png";
 import magicIcon from "../assets/magic.png";
 import adventureIcon from "../assets/adventure.png";
 
+import lora1 from "../assets/lora1.png";
+import lora2 from "../assets/lora2.png";
+import lora3 from "../assets/lora3.png";
+
 export default function DiagnosisPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({ topic: "", style: "", age: "" });
@@ -32,6 +36,8 @@ export default function DiagnosisPage() {
     마법: magicIcon,
     모험: adventureIcon,
   };
+
+  const loraImg = [lora1, lora2, lora3];
 
   return (
     <div className="diagnosis-page">
@@ -67,20 +73,19 @@ export default function DiagnosisPage() {
 
       <div className="question-section">
         <p className="question-title">선호하는 그림체는 어떤 것인가요?</p>
-        <div className="radio-buttons">
-          {["귀여운", "단순한", "세밀한"].map((style) => (
-            <label key={style} className="radio-box">
-              <input
-                type="radio"
-                name="style"
-                value={style}
-                checked={answers.style === style}
-                onChange={() => handleAnswer("style", style)}
-                style={{ display: "none" }}
-              />
-              <span className="custom-radio" />
-              <span className="radio-label-text">{style}</span>
-            </label>
+        <div className="choice-buttons">
+          {loraImg.map((img, index) => (
+            <div key={index}>
+              <button
+                className={`lora-button ${
+                  answers.style === img ? "selected" : ""
+                }`}
+                onClick={() => handleAnswer("style", img)}
+              >
+                <img src={img} className="lora-img" alt={`lora${index + 1}`} />
+              </button>
+              <span className="img-label">{`${index + 1}번`}</span>
+            </div>
           ))}
         </div>
       </div>
