@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./studyProgress.module.css";
-import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import illust from "../assets/illust.png";
@@ -8,6 +7,8 @@ import illust from "../assets/illust.png";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { GiSpeaker } from "react-icons/gi";
+
+import { getTale } from "../api/tale";
 
 const dummyTytle = "Lily and the Magic Within";
 const dummyImg = illust;
@@ -50,6 +51,18 @@ function StudyProgress() {
   const pageAdd = () => {
     if (page < entirePage) setPage(page + 1);
   };
+
+  useEffect(() => {
+    const apiGetTale = async () => {
+      try {
+        const tale = getTale(1);
+        console.log(tale);
+      } catch (error) {
+        console.error("Error fetching tale: ", error);
+      }
+    };
+    apiGetTale();
+  }, []);
 
   return (
     <div>
