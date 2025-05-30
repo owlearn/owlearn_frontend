@@ -41,7 +41,7 @@ function StudyMain() {
         <div className={styles.boxContainer}>
           <button
             className={styles.boxStudy}
-            onClick={() => navigate("/tale/study")}
+            onClick={() => navigate("/create")}
           >
             <img src={book} className={styles.icon}></img>
             동화 학습

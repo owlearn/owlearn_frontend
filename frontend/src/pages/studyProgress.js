@@ -61,7 +61,7 @@ function StudyProgress() {
         console.error("Error fetching tale: ", error);
       }
     };
-    apiGetTale();
+    apiGetTale(0);
   }, []);
 
   return (

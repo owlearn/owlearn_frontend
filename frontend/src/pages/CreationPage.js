@@ -13,7 +13,7 @@ export default function CreationPage() {
   }, []);
 
   const goToLearning = () => {
-    navigate("/studyMain");
+    navigate("/tale/study");
   };
 
   return (
