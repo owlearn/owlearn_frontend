@@ -27,7 +27,7 @@ export default function DiagnosisPage() {
     console.log("handleSubmit 실행됨"); // ✅ 이거 찍히는지 확인
     if (step === 3) {
       console.log("navigate 실행됨");
-      navigate("/create");
+      navigate("/studyMain");
     }
   };
 
