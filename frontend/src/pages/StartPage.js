@@ -26,7 +26,7 @@ export default function StartPage() {
             <br />
             AI가 직접 만들어드려요.
           </p>
-          <button className={styles.btn} onClick={() => navigate("/login")}>
+          <button className={styles.btn} onClick={() => navigate("/register")}>
             지금 시작하기
           </button>
         </div>

@@ -1,12 +1,11 @@
-.diagnosis-page {
+.diagnosisPage {
   background-color: #dddddd;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: "HakgyoansimGeurimilgi", sans-serif;
 }
 
-.main-content {
+.mainContent {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -15,14 +14,14 @@
   padding: 40px 20px;
 }
 
-.progress-container {
+.progressContainer {
   width: 50%;
   max-width: 500px;
-  margin: 50px auto;
+  margin: 35px auto;
   position: relative;
 }
 
-.progress-bar {
+.progressBar {
   width: 100%;
   height: 10px;
   background-color: #c4c4c4;
@@ -36,7 +35,7 @@
   transition: width 0.3s;
 }
 
-.progress-text {
+.progressText {
   position: absolute;
   right: 0;
   top: 28px;
@@ -44,28 +43,28 @@
   font-weight: bold;
 }
 
-.question-section {
-  margin: 10px auto;
+.questionSection {
+  margin: 5px auto;
   text-align: center;
 }
 
-.question-title {
-  font-size: 25px;
-  margin-bottom: 16px;
+.questionTitle {
+  font-size: 22px;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 
-.choice-buttons {
+.choiceButtons {
   display: flex;
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
 }
 
-.choice-box {
-  width: 115px;
-  height: 100px;
-  padding: 10px;
+.choiceBox {
+  width: 100px;
+  height: 80px;
+  padding: 20px;
   background-color: #dddddd;
   border: 1.5px solid #bbb;
   border-radius: 12px;
@@ -79,86 +78,32 @@
   overflow: hidden;
 }
 
-.choice-box.selected {
+.choiceBox.selected {
   background-color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.choice-icon {
+.choiceIcon {
   width: 75px;
   height: 75px;
   object-fit: contain;
   margin-bottom: 0px;
 }
 
-.choice-wrapper {
+.choiceWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 }
 
-.choice-label {
-  font-size: 22px;
-  color: #000; /* 검정 글자 */
+.choiceLabel {
+  font-size: 20px;
+  color: #000;
   text-align: center;
 }
 
-.radio-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.radio-box {
-  width: 100px;
-  height: 35px;
-  padding: 10px;
-  background-color: #dddddd;
-  border: 1.5px solid #bbb;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  gap: 8px;
-}
-
-.radio-box input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.custom-radio {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid #999;
-  position: relative;
-}
-
-.radio-box input:checked + .custom-radio::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #7e9d7c;
-}
-
-.radio-label-text {
-  font-size: 22px;
-  color: #000;
-}
-
-.age-select {
+.ageSelect {
   font-size: 20px;
   padding: 10px 14px;
   border-radius: 6px;
@@ -169,13 +114,12 @@
   text-align: center;
 }
 
-.submit-container {
+.submitContainer {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
 }
 
-.submit-button {
+.submitButton {
   padding: 12px 28px;
   font-size: 18px;
   border: none;
@@ -188,17 +132,18 @@
   width: fit-content;
   min-width: 150px;
   max-width: 200px;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: 30px;
 }
 
-.submit-button:disabled {
+.submitButton:disabled {
   background-color: #b0b0b0;
   cursor: default;
 }
 
-.lora-button {
-  width: 150px;
-  height: 120px;
+.loraButton {
+  width: 120px;
+  height: 100px;
   padding: 10px;
   background-color: #dddddd;
   border: 1.5px solid #bbb;
@@ -210,30 +155,29 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-.lora-button.selected {
+.loraButton.selected {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  width: 155px;
-  height: 125px;
-  border-radius: 10px;
+  width: 125px;
+  height: 105px;
   background-color: #f9f9f9;
-  border: 5px solid rgb(255, 255, 255);
+  border: 5px solid #ffffff;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
   transform: scale(1.03);
   transition: all 0.2s ease;
 }
-.img-label {
-  font-size: 22px;
-  color: #000; /* 검정 글자 */
+
+.imgLabel {
+  font-size: 20px;
+  color: #000;
   text-align: center;
 }
 
-.lora-img {
-  width: 150px;
-  height: 120px;
-  object-fit: cover; /* 잘리는 대신 꽉 채우기 */
+.loraImg {
+  width: 120px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 10px;
 }

@@ -1,0 +1,61 @@
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  font-family: sans-serif;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.input,
+.select {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  resize: vertical;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.quizBox {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.addQuizButton,
+.submitButton {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #869b73;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 16px;
+  margin-right: 10px;
+}
+
+.addQuizButton:hover,
+.submitButton:hover {
+  background-color: #476644;
+}
