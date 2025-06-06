@@ -24,17 +24,19 @@ const SignupPage = () => {
       return;
     }
 
-    try {
-      console.log("회원가입 요청:", userId, name, password);
-      const response = await signupAPI(userId, name, password);
-
-      console.log("회원가입 성공:", response);
-      alert("회원가입이 완료되었습니다!");
-      navigate("/diagnosis");
-    } catch (error) {
-      console.error("회원가입 실패:", error);
-      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-    }
+    //시연을 위해 api는 잠시 주석처리
+    //   try {
+    //     console.log("회원가입 요청:", userId, name, password);
+    //     const response = await signupAPI(userId, name, password);
+    //     console.log("회원가입 성공:", response);
+    //     alert("회원가입이 완료되었습니다!");
+    //     navigate("/diagnosis");
+    //   } catch (error) {
+    //     console.error("회원가입 실패:", error);
+    //     alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+    //   }
+    // };
+    navigate("/diagnosis");
   };
 
   return (
