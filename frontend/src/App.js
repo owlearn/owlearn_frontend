@@ -9,6 +9,7 @@ import StudyMain from "./pages/studyMain";
 import StudyProgress from "./pages/studyProgress";
 import Quiz from "./pages/quiz";
 import QuizAnswer from "./pages/quizAnswer";
+import Register from "./pages/register";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/tale/study" element={<StudyProgress />} />
         <Route path="/tale/quiz" element={<Quiz />} />
         <Route path="/tale/quiz/answer" element={<QuizAnswer />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
