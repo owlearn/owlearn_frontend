@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./Diagnosis.css";
 import { useNavigate } from "react-router-dom";
+import styles from "./DiagnosisPage.module.css"; // ✅ 수정된 import
+
 import animalIcon from "../assets/animal.png";
 import magicIcon from "../assets/magic.png";
 import adventureIcon from "../assets/adventure.png";
@@ -24,10 +25,10 @@ export default function DiagnosisPage() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    console.log("handleSubmit 실행됨"); // ✅ 이거 찍히는지 확인
+    console.log("handleSubmit 실행됨");
     if (step === 3) {
       console.log("navigate 실행됨");
-      navigate("/studyMain");
+      navigate("/login");
     }
   };
 
@@ -40,60 +41,67 @@ export default function DiagnosisPage() {
   const loraImg = [lora1, lora2, lora3];
 
   return (
-    <div className="diagnosis-page">
-      <div className="progress-container">
-        <div className="progress-bar">
-          <div className="progress" style={{ width: `${(step / 3) * 100}%` }} />
+    <div className={styles.diagnosisPage}>
+      <div className={styles.progressContainer}>
+        <div className={styles.progressBar}>
+          <div
+            className={styles.progress}
+            style={{ width: `${(step / 3) * 100}%` }}
+          />
         </div>
-        <span className="progress-text">{step} / 3</span>
+        <span className={styles.progressText}>{step} / 3</span>
       </div>
 
-      <div className="question-section">
-        <p className="question-title">좋아하는 주제는 무엇인가요?</p>
-        <div className="choice-buttons">
+      <div className={styles.questionSection}>
+        <p className={styles.questionTitle}>좋아하는 주제는 무엇인가요?</p>
+        <div className={styles.choiceButtons}>
           {["동물", "마법", "모험"].map((choice) => (
-            <div key={choice} className="choice-wrapper">
+            <div key={choice} className={styles.choiceWrapper}>
               <button
-                className={`choice-box ${
-                  answers.topic === choice ? "selected" : ""
+                className={`${styles.choiceBox} ${
+                  answers.topic === choice ? styles.selected : ""
                 }`}
                 onClick={() => handleAnswer("topic", choice)}
               >
                 <img
                   src={imageMap[choice]}
                   alt={choice}
-                  className="choice-icon"
+                  className={styles.choiceIcon}
                 />
               </button>
-              <span className="choice-label">{choice}</span>
+              <span className={styles.choiceLabel}>{choice}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="question-section">
-        <p className="question-title">선호하는 그림체는 어떤 것인가요?</p>
-        <div className="choice-buttons">
+      <div className={styles.questionSection}>
+        <p className={styles.questionTitle}>선호하는 그림체는 어떤 것인가요?</p>
+        <div className={styles.choiceButtons}>
           {loraImg.map((img, index) => (
             <div key={index}>
               <button
-                className={`lora-button ${
-                  answers.style === img ? "selected" : ""
+                className={`${styles.loraButton} ${
+                  answers.style === img ? styles.selected : ""
                 }`}
                 onClick={() => handleAnswer("style", img)}
               >
-                <img src={img} className="lora-img" alt={`lora${index + 1}`} />
+                <img
+                  src={img}
+                  className={styles.loraImg}
+                  alt={`lora${index + 1}`}
+                />
               </button>
-              <span className="img-label">{`${index + 1}번`}</span>
+              <span className={styles.imgLabel}>{`${index + 1}번`}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="question-section">
-        <p className="question-title">연령대를 선택해 주세요.</p>
+      <div className={styles.questionSection}>
+        <p className={styles.questionTitle}>연령대를 선택해 주세요.</p>
         <select
-          className="age-select"
+          className={styles.ageSelect}
           value={answers.age}
           onChange={(e) => handleAnswer("age", e.target.value)}
         >
@@ -107,7 +115,7 @@ export default function DiagnosisPage() {
       </div>
 
       <button
-        className="submit-button"
+        className={styles.submitButton}
         disabled={step < 3}
         onClick={handleSubmit}
       >
