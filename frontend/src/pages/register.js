@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 
-import { signupAPI } from "../api/user";
+import { signupAPI, idCheckAPI } from "../api/user";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ const SignupPage = () => {
   const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   useEffect(() => {
     console.log("입력 상태:", { userId, name, password });
@@ -18,25 +19,50 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // 유효성 검사 추가
     if (!userId.trim() || !name.trim() || !password.trim()) {
       alert("모든 항목을 빠짐없이 입력해주세요.");
       return;
     }
 
-    //시연을 위해 api는 잠시 주석처리
-    //   try {
-    //     console.log("회원가입 요청:", userId, name, password);
-    //     const response = await signupAPI(userId, name, password);
-    //     console.log("회원가입 성공:", response);
-    //     alert("회원가입이 완료되었습니다!");
-    //     navigate("/diagnosis");
-    //   } catch (error) {
-    //     console.error("회원가입 실패:", error);
-    //     alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-    //   }
-    // };
-    navigate("/diagnosis");
+    if (!isDuplicateChecked) {
+      alert("아이디 중복 확인을 먼저 해주세요.");
+      return;
+    }
+
+    try {
+      const response = await signupAPI(userId, name, password);
+      console.log("회원가입 성공:", response);
+      alert("회원가입이 완료되었습니다!");
+      navigate("/diagnosis");
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const checkDuplicateId = async () => {
+    if (!userId.trim()) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await idCheckAPI(userId);
+      console.log("중복 확인 응답:", response);
+
+      const message = response?.data?.responseDto?.message;
+
+      // 메시지가 있으면 그대로 alert로 표시
+      if (message) {
+        alert(message);
+        setIsDuplicateChecked(message === "사용가능한 아이디입니다.");
+      } else {
+        alert("서버로부터 메시지를 받지 못했습니다.");
+      }
+    } catch (error) {
+      console.error("중복 확인 오류:", error);
+      alert("중복 확인 중 오류가 발생했습니다.");
+    }
   };
 
   return (
@@ -50,13 +76,25 @@ const SignupPage = () => {
         <form className={styles.form} onSubmit={handleSignup}>
           <div className={styles.formGroup}>
             <label>아이디</label>
-            <input
-              placeholder="아이디를 입력하세요"
-              required
-              className={styles.input}
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-            />
+            <div className={styles.inputWithButton}>
+              <input
+                placeholder="아이디를 입력하세요"
+                required
+                className={styles.input}
+                value={userId}
+                onChange={(e) => {
+                  setUserId(e.target.value);
+                  setIsDuplicateChecked(false); // 입력값이 바뀌면 중복확인 다시 필요
+                }}
+              />
+              <button
+                type="button"
+                className={styles.duplicateCheckButton}
+                onClick={checkDuplicateId}
+              >
+                중복확인
+              </button>
+            </div>
           </div>
 
           <div className={styles.formGroup}>

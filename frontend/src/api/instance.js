@@ -8,8 +8,7 @@ const defaultInstance = axios.create({
 
 // user 인스턴스
 const userInstance = axios.create(defaultInstance.defaults);
-userInstance.defaults.baseURL += "";
-//임시로 /api 안붙임
+userInstance.defaults.baseURL += "/api";
 
 // tale 인스턴스
 const taleInstance = axios.create(defaultInstance.defaults);

@@ -136,3 +136,23 @@
 .loginLink a:hover {
   text-decoration: underline;
 }
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.duplicateCheckButton {
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.duplicateCheckButton:hover {
+  background-color: #e0e0e0;
+}
