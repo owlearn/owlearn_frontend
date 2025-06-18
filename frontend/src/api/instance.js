@@ -8,10 +8,10 @@ const defaultInstance = axios.create({
 
 // user 인스턴스
 const userInstance = axios.create(defaultInstance.defaults);
-userInstance.defaults.baseURL += "/api";
+userInstance.defaults.baseURL += "/api/user";
 
 // tale 인스턴스
 const taleInstance = axios.create(defaultInstance.defaults);
-taleInstance.defaults.baseURL += "/api";
+taleInstance.defaults.baseURL += "/api/tales";
 
 export { taleInstance, userInstance };
