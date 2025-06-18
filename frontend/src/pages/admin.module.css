@@ -79,7 +79,23 @@
   background-color: #6e805c;
 }
 
+.uploadWrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .uploadButton {
   max-width: 400px;
   margin: 0 auto 20px;
+  font-size: 20px;
+  background-color: #6c8759;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 35%;
+}
+
+.uploadButton:hover {
+  background-color: #5e774e;
 }

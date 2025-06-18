@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import styles from "./admin.module.css";
+import { insertTaleAPI } from "../api/tale";
 
 function AdminUploadPage() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState([""]);
-  const [imageUrls, setImageUrls] = useState([""]);
+  const [images, setImages] = useState([null]);
   const [quizzes, setQuizzes] = useState([
     {
       questionNumber: 1,
@@ -22,25 +22,19 @@ function AdminUploadPage() {
     setContents(updated);
   };
 
-  const handleImageChange = (index, file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const updated = [...imageUrls];
-      updated[index] = reader.result;
-      setImageUrls(updated);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+  const handleImageChange = (idx, file) => {
+    const updated = [...images];
+    updated[idx] = file;
+    setImages(updated);
   };
 
-  const handleQuizChange = (index, field, value) => {
+  const handleQuizChange = (idx, field, payload) => {
     const updated = [...quizzes];
     if (field === "choices") {
-      updated[index].choices = [...updated[index].choices];
-      updated[index].choices[value.choiceIndex] = value.text;
+      const { choiceIndex, text } = payload;
+      updated[idx].choices[choiceIndex] = text;
     } else {
-      updated[index][field] = value;
+      updated[idx][field] = payload;
     }
     setQuizzes(updated);
   };
@@ -60,132 +54,134 @@ function AdminUploadPage() {
 
   const addPage = () => {
     setContents([...contents, ""]);
-    setImageUrls([...imageUrls, ""]);
+    setImages([...images, null]);
   };
 
   const handleUpload = async () => {
+    console.log("보낼 quizzes:", JSON.stringify(quizzes, null, 2));
     try {
-      const taleRes = await axios.post("/api/tales", {
-        title,
-        contents,
-        imageUrls,
-      });
-      const taleId = taleRes.data.id;
-
-      await axios.post(
-        "/api/quizzes",
-        quizzes.map((q) => ({ ...q, taleId }))
-      );
-
-      alert("동화와 퀴즈가 성공적으로 업로드되었습니다!");
-    } catch (error) {
-      console.error("업로드 실패:", error);
-      alert("업로드에 실패했습니다.");
+      await insertTaleAPI(title, contents, quizzes, images);
+      alert("업로드 성공!");
+    } catch (err) {
+      console.error(err);
+      alert("업로드 실패: " + err.message);
     }
   };
 
+  useEffect(() => {
+    console.log({ title, contents, images, quizzes });
+  }, [title, contents, images, quizzes]);
+
   return (
     <div className={styles.container}>
-      <div className={styles.sectionWrapper}>
-        {/* 왼쪽: 동화 등록 */}
-        <div className={styles.section}>
-          <h3 className={styles.header}>동화 등록</h3>
-
-          <h4>동화 제목</h4>
-          <input
-            className={styles.input}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-
-          <h4>페이지별 내용</h4>
-          {contents.map((text, idx) => (
-            <textarea
-              key={idx}
-              placeholder={`페이지 ${idx + 1}`}
-              value={text}
-              onChange={(e) => handleContentChange(idx, e.target.value)}
-              className={styles.pageTextarea}
-            />
-          ))}
-
-          <h4>이미지 업로드</h4>
-          {imageUrls.map((url, idx) => (
+      <form
+        encType="multipart/form-data"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleUpload();
+        }}
+      >
+        <div className={styles.sectionWrapper}>
+          <div className={styles.section}>
+            <h3 className={styles.header}>동화 등록</h3>
+            <h4>동화 제목</h4>
             <input
-              key={idx}
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(idx, e.target.files[0])}
               className={styles.input}
+              placeholder="동화 제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-          ))}
-
-          <button className={styles.addPageButton} onClick={addPage}>
-            + 페이지 및 이미지 추가
-          </button>
-        </div>
-
-        {/* 오른쪽: 퀴즈 등록 */}
-        <div className={styles.section}>
-          <h2 className={styles.header}>퀴즈 등록</h2>
-          {quizzes.map((quiz, idx) => (
-            <div key={idx}>
-              <h4>문제 {idx + 1}</h4>
-              <input
-                className={styles.input}
-                placeholder="문제 내용"
-                value={quiz.question}
-                onChange={(e) =>
-                  handleQuizChange(idx, "question", e.target.value)
-                }
-              />
-              {quiz.choices.map((choice, cIdx) => (
+            <h4>페이지별 내용</h4>
+            {contents.map((text, idx) => (
+              <div key={idx} className={styles.pageBlock}>
+                <textarea
+                  className={styles.pageTextarea}
+                  placeholder={`페이지 ${idx + 1}`}
+                  value={text}
+                  onChange={(e) => handleContentChange(idx, e.target.value)}
+                />
+                <h4>이미지 업로드</h4>
                 <input
-                  key={cIdx}
+                  type="file"
+                  accept="image/*"
                   className={styles.input}
-                  placeholder={`선지 ${cIdx + 1}`}
-                  value={choice}
+                  onChange={(e) => handleImageChange(idx, e.target.files[0])}
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              className={styles.addPageButton}
+              onClick={addPage}
+            >
+              + 페이지 및 이미지 추가
+            </button>
+          </div>
+
+          <div className={styles.section}>
+            <h3 className={styles.header}>퀴즈 등록</h3>
+            {quizzes.map((quiz, idx) => (
+              <div key={idx} className={styles.quizBlock}>
+                <h4>문제 {idx + 1}</h4>
+                <input
+                  className={styles.input}
+                  placeholder="문제"
+                  value={quiz.question}
                   onChange={(e) =>
-                    handleQuizChange(idx, "choices", {
-                      choiceIndex: cIdx,
-                      text: e.target.value,
-                    })
+                    handleQuizChange(idx, "question", e.target.value)
                   }
                 />
-              ))}
-              <select
-                className={styles.select}
-                value={quiz.answerIndex}
-                onChange={(e) =>
-                  handleQuizChange(idx, "answerIndex", parseInt(e.target.value))
-                }
-              >
-                <option value={0}>정답: 선지 1</option>
-                <option value={1}>정답: 선지 2</option>
-                <option value={2}>정답: 선지 3</option>
-                <option value={3}>정답: 선지 4</option>
-              </select>
-              <textarea
-                className={styles.textarea}
-                placeholder="해설"
-                value={quiz.explanation}
-                onChange={(e) =>
-                  handleQuizChange(idx, "explanation", e.target.value)
-                }
-              />
-            </div>
-          ))}
-
-          <button className={styles.addQuizButton} onClick={addQuiz}>
-            + 퀴즈 추가
-          </button>
+                {quiz.choices.map((opt, cIdx) => (
+                  <input
+                    key={cIdx}
+                    className={styles.input}
+                    placeholder={`선지 ${cIdx + 1}`}
+                    value={opt}
+                    onChange={(e) =>
+                      handleQuizChange(idx, "choices", {
+                        choiceIndex: cIdx,
+                        text: e.target.value,
+                      })
+                    }
+                  />
+                ))}
+                <select
+                  className={styles.select}
+                  value={quiz.answer}
+                  onChange={(e) =>
+                    handleQuizChange(idx, "answer", e.target.value)
+                  }
+                >
+                  {quiz.choices.map((choice, i) => (
+                    <option key={i} value={choice}>
+                      정답: {choice || `선지 ${i + 1}`}
+                    </option>
+                  ))}
+                </select>
+                <textarea
+                  className={styles.textarea}
+                  placeholder="해설"
+                  value={quiz.explanation}
+                  onChange={(e) =>
+                    handleQuizChange(idx, "explanation", e.target.value)
+                  }
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              className={styles.addQuizButton}
+              onClick={addQuiz}
+            >
+              + 퀴즈 추가
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* 하단 전체 업로드 버튼 */}
-      <button className={styles.uploadButton} onClick={handleUpload}>
-        동화 및 퀴즈 전체 업로드
-      </button>
+        <button className={styles.uploadButton}>
+          동화 및 퀴즈 전체 업로드
+        </button>
+      </form>
     </div>
   );
 }
