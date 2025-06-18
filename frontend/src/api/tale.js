@@ -5,16 +5,28 @@ import { request } from "../utils/request";
 export const getTale = (taleId) =>
   request(taleInstance, "get", `/tales/${taleId}`);
 
-// //공지 POST 요청
-// export const setNoticeData = (title, content) =>
-//   request(api, "post", `/api/notices`, { title: title, content: content });
+export const insertTaleAPI = (title, contents, quizzes, images) => {
+  const formData = new FormData();
 
-// 관리자 동화 삽입 - 이미지 URL 방식으로 수정됨
-export const insertTaleAPI = (title, contents, quizzesJson, imageUrls) => {
-  return taleInstance.post("/tales/insert", {
-    title: title,
-    contents: contents,
-    quizzesJson: quizzesJson,
-    images: imageUrls, // File 객체 대신 URL 문자열 배열
+  // 제목
+  formData.append("title", title);
+
+  // 페이지별 본문
+  contents.forEach((text) => {
+    formData.append("contents", text);
   });
+
+  // 이미지 파일들 (List<MultipartFile>)
+  images.forEach((file) => {
+    if (file) {
+      formData.append("images", file);
+    }
+  });
+
+  // 퀴즈 JSON을 문자열로 변환 후 전송 (String 형태로 백에서 파싱)
+  const quizzesJsonString = JSON.stringify(quizzes);
+  formData.append("quizzesJson", quizzesJsonString);
+
+  // 최종 요청
+  return request(taleInstance, "post", "/tales/insert", formData);
 };
