@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "HakgyoansimGeurimilgi";
+  src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
+}
+
 .tytle {
   margin: auto;
   margin-top: 50px;
@@ -14,6 +19,7 @@
   align-items: center; /* 수직 중앙 정렬 */
   text-align: center;
   justify-content: center; /* 수평 중앙 정렬 */
+  font-weight: 600;
 }
 
 .rightContainer {
@@ -28,6 +34,7 @@
   width: 30%;
   height: 350px;
   margin: auto;
+  border-radius: 30px;
 }
 
 .storyBox {
@@ -47,26 +54,27 @@
   flex-direction: column; /* 세로 방향 정렬 */
   justify-content: center; /* 수직 중앙 정렬 */
 }
-
 .pageBtn {
   display: flex;
-  flex-direction: row;
-  display: flex;
-  justify-content: center; /* 가로 가운데 정렬 */
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+.arrow {
+  background-color: #eeeeee;
+  color: #333333;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.arrow {
-  color: #000;
-  text-align: center;
-  font-family: "Hakgyoansim Geurimilgi TTF";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  border: none;
-  background: none;
-  cursor: pointer;
+.arrow:hover {
+  background-color: #dddddd;
 }
 
 .bottomContainer {
@@ -98,19 +106,24 @@
 .bar {
   margin: auto;
 }
-
 .quizBtn {
   border-radius: 40px;
-  background: #78716c;
-  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, #a98f7b, #786e65); /* 은은한 그라데이션 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 더 큰 그림자 */
   cursor: pointer;
   border: none;
-  width: 100px;
-  height: 50px;
+  width: 130px;
+  height: 55px;
   color: #ffffff;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
   margin: auto;
 }
+
 .quizBtn:hover {
-  background: #68615c;
+  background: linear-gradient(135deg, #7e6655, #5b5047); /* hover 시 어둡게 */
+  transform: translateY(-2px); /* 살짝 튀어오르는 효과 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
 }
