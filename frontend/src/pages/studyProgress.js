@@ -78,7 +78,7 @@ function StudyProgress() {
       <div className={styles.tytle}>{title}</div>
       <div className={styles.rightContainer}>
         <img
-          src={imageUrls[page - 1]}
+          src={`http://3.39.6.242:8080${imageUrls[page - 1]}`}
           className={styles.illust}
           alt={`Page ${page}`}
         />
