@@ -39,8 +39,10 @@ function StudyProgress() {
   }
 
   const [page, setPage] = useState(1);
-
-  const entirePage = 10;
+  const [title, setTitle] = useState("");
+  const [contents, setContents] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+  const entirePage = contents.length;
 
   const navigate = useNavigate();
 
@@ -55,8 +57,15 @@ function StudyProgress() {
   useEffect(() => {
     const apiGetTale = async () => {
       try {
-        const tale = getTale(10);
-        console.log(tale);
+        const response = await getTale(11);
+        const data = response.data.responseDto;
+        setTitle(data.title);
+        setContents(
+          data.contents.map(
+            (text) => text.replace(/([.?!])\s*/g, "$1\n\n") // 문장마다 줄바꿈
+          )
+        );
+        setImageUrls(data.imageUrls);
       } catch (error) {
         console.error("Error fetching tale: ", error);
       }
@@ -66,32 +75,40 @@ function StudyProgress() {
 
   return (
     <div>
-      <div className={styles.tytle}>{dummyTytle}</div>
+      <div className={styles.tytle}>{title}</div>
       <div className={styles.rightContainer}>
-        <img src={dummyImg} className={styles.illust}></img>{" "}
+        <img
+          src={imageUrls[page - 1]}
+          className={styles.illust}
+          alt={`Page ${page}`}
+        />
         <div className={styles.storyBox}>
-          <p>{dummyStory[page - 1]}</p>
+          <p>{contents[page - 1]}</p>
           <div className={styles.pageBtn}>
-            {page == 1 ? null : (
-              <button className={styles.arrow} onClick={pageMinus}>
-                <IoIosArrowBack />
-              </button>
-            )}
-            {/* 1페이지면 왼쪽 버튼 삭제 */}
+            <button
+              className={styles.arrow}
+              onClick={pageMinus}
+              style={{ visibility: page === 1 ? "hidden" : "visible" }}
+            >
+              <IoIosArrowBack />
+            </button>
+
             <span>
               {page}/{entirePage}
             </span>
-            <button className={styles.arrow} onClick={pageAdd}>
-              {page == entirePage ? null : <IoIosArrowForward />}
+
+            <button
+              className={styles.arrow}
+              onClick={pageAdd}
+              style={{ visibility: page === entirePage ? "hidden" : "visible" }}
+            >
+              <IoIosArrowForward />
             </button>
           </div>
         </div>
       </div>
       <div className={styles.bottomContainer}>
-        <button className={styles.speakerBtn}>
-          {" "}
-          <GiSpeaker />
-        </button>{" "}
+        {<button className={styles.speakerBtn}> {/* <GiSpeaker /> */}</button>}
         {/* 현재 tts 미사용이므로 비활성화 */}
         {/*<div className={styles.progress}>
           <span>진행도 : {(page / entirePage) * 100}%</span>
