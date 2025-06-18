@@ -55,7 +55,7 @@ function StudyProgress() {
   useEffect(() => {
     const apiGetTale = async () => {
       try {
-        const tale = getTale(3); //3으로 확인
+        const tale = getTale(10);
         console.log(tale);
       } catch (error) {
         console.error("Error fetching tale: ", error);
