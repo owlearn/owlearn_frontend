@@ -147,14 +147,18 @@ function AdminUploadPage() {
                 ))}
                 <select
                   className={styles.select}
-                  value={quiz.answer}
+                  value={quiz.answerIndex}
                   onChange={(e) =>
-                    handleQuizChange(idx, "answer", e.target.value)
+                    handleQuizChange(
+                      idx,
+                      "answerIndex",
+                      parseInt(e.target.value)
+                    )
                   }
                 >
-                  {quiz.choices.map((choice, i) => (
-                    <option key={i} value={choice}>
-                      정답: {choice || `선지 ${i + 1}`}
+                  {quiz.choices.map((_, i) => (
+                    <option key={i} value={i}>
+                      정답: {quiz.choices[i] || `선지 ${i + 1}`}
                     </option>
                   ))}
                 </select>
