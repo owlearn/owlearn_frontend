@@ -34,12 +34,14 @@
 
 .quizBox {
   height: 50vh;
-  /* overflow-y: auto; 세로 스크롤 활성화 */
+  max-height: 400px; /* 고정 높이 */
+  overflow-y: auto; /* 넘치면 스크롤 */
   background: white;
   padding: 20px 30px 5px 30px;
   border-radius: 15px;
   background: #fdfdfd;
   box-shadow: 1px 2px 20px 1px rgba(0, 0, 0, 0.25);
+  margin-bottom: 20px;
 }
 
 .questionText {
@@ -48,7 +50,7 @@
 }
 
 /* 옵션 영역 */
-.options {
+.choices {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -76,19 +78,26 @@
 
 /* 제출 버튼 */
 .submitButton {
-  background-color: #78716c;
-  color: white;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #a98f7b, #786e65); /* 은은한 그라데이션 */
   margin-top: 20px;
   padding: 10px 24px;
-  border: none;
-  border-radius: 20px;
   font-size: 20px;
-  font-weight: bold;
   cursor: pointer;
   float: right;
-  transition: background-color 0.3s;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 더 큰 그림자 */
+  border: none;
+  width: 130px;
+  height: 55px;
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  margin: auto;
 }
 
 .submitButton:hover {
-  background-color: #68615c;
+  background: linear-gradient(135deg, #7e6655, #5b5047); /* hover 시 어둡게 */
+  transform: translateY(-4px); /* 살짝 튀어오르는 효과 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
 }
