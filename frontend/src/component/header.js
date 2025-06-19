@@ -9,7 +9,10 @@ function Header() {
     <div>
       <div className={styles.header}>
         <div>
-          <button onClick={() => navigate(`/`)} className={styles.logo}>
+          <button
+            onClick={() => navigate(`/studyMain`)}
+            className={styles.logo}
+          >
             OWLEARN
           </button>
         </div>
