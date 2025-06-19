@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./quizAnswer.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getQuizAPI } from "../api/quizzes";
+import { getQuizCorrectAPI } from "../api/quizzes";
 
 const quizData = {
   reading: [
@@ -74,6 +75,7 @@ const QuizAnswer = () => {
       }
     };
     getQuiz();
+    // getQuizCorrectAPI(0, 13, 1);
   }, []);
 
   const isCorrect = result[currentIndex]?.isCorrect;
@@ -100,7 +102,7 @@ const QuizAnswer = () => {
       {/* 퀴즈 해설 */}
       {quizzes.length > 0 && (
         <div className={styles.quizBox}>
-          <h2>{isCorrect ? "정답입니다!" : "오답입니다!"}</h2>
+          <h2>{isCorrect ? "✅ 정답입니다!" : "❌ 오답입니다!"}</h2>
           <p className={styles.questionText}>Q. {question}</p>
           {/* <p className={styles.answer}>[해설] {explanation}</p> */}
           <h3>해설:</h3>

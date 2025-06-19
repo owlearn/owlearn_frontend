@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./quiz.module.css";
 import { useNavigate } from "react-router-dom";
 import { getQuizAPI } from "../api/quizzes";
+import { quizSubmitAPI } from "../api/quizzes";
 
 //test
 
@@ -59,6 +60,15 @@ function Quiz() {
       return;
     }
 
+    // // 각각 문제에 대해 정답 제출 요청 보내기
+    // quizzes.forEach((quiz, idx) => {
+    //   const selectedIndex = selectedAnswers[idx];
+    //   const questionNumber =
+    //     quiz.questionNumber !== 0 ? quiz.questionNumber : idx + 1; //0이면(현재 오류) 따로 123 배정
+
+    //   quizSubmitAPI(13, questionNumber, selectedIndex, 1); // userId는 하드코딩된 예시
+    // });
+
     // 정답 확인 로직
     const result = quizzes.map((quiz, idx) => {
       const isCorrect = quiz.answerIndex === selectedAnswers[idx];
@@ -71,7 +81,7 @@ function Quiz() {
 
     // 결과를 다음 페이지로 넘김
     navigate("/tale/quiz/answer", {
-      state: { result }, // 👉 넘겨줌
+      state: { result },
     });
   };
 
