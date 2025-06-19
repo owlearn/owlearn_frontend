@@ -15,7 +15,8 @@ const quizData = {
         "Climbing oak trees.",
       ],
       answerIndex: 1,
-      why: "정답은 [Dancing with fairies in the forest.] 입니다.\n 동화 속에서 Lily는 숲 속에서 요정들과 춤추는 것을 가장 좋아했습니다. \n 'Lily loved nothing more than to spend her days exploring the forest'에서 요정들과 춤추었다고 명시되어 있습니다.\n다른 보기들은 본문 내용과 일치하지 않습니다.",
+      explanation:
+        "장면 2에서 버디는 집 안에서 공(ball) 을 발견했어요.\n\n그 공 덕분에 즐거운 모험이 시작되었답니다!",
     },
   ],
   grammar: [
@@ -29,7 +30,8 @@ const quizData = {
         "We are ready.",
       ],
       answerIndex: 3,
-      why: "정답은 [We are ready.]입니다. \n이 문장은 문법적으로 올바른 주어-동사 일치를 보여줍니다. \n\n She don’t like apples. → She는 3인칭 단수이므로 [doesn’t]를 써야 합니다.\n He go to school every day. → He는 3인칭 단수이므로 [goes]가 맞습니다.\nThey is happy. → They는 복수이므로 [are]을 써야 합니다.",
+      explanation:
+        "장면 4에서 버디는 공을 들고 공원(park) 으로 가서 신나게 놀았어요.\n\n정말 즐거운 하루였답니다!",
     },
   ],
   listening: [
@@ -47,6 +49,11 @@ const quizData = {
     },
   ],
 };
+
+const explanationDummy = [
+  "장면 2에서 Buddy는 집 안에서 공(ball) 을 발견했어요.\n그 공 덕분에 즐거운 모험이 시작되었답니다!",
+  "장면 5에서 Buddy는 집으로 돌아와서 따뜻한 이불(warm blanket) 을 덮고 잠이 들었어요(fell asleep).\n 즐거운 하루를 보내고 포근하게 쉬었답니다.",
+];
 
 const QuizAnswer = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -95,7 +102,9 @@ const QuizAnswer = () => {
         <div className={styles.quizBox}>
           <h2>{isCorrect ? "정답입니다!" : "오답입니다!"}</h2>
           <p className={styles.questionText}>Q. {question}</p>
-          <p className={styles.answer}>[해설] {explanation}</p>
+          {/* <p className={styles.answer}>[해설] {explanation}</p> */}
+          <h3>해설:</h3>
+          <p className={styles.answer}>{explanationDummy[currentIndex]}</p>{" "}
         </div>
       )}
 
