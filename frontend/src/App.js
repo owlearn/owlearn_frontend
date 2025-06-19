@@ -1,6 +1,8 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./component/header";
+import HeaderBeforeLogin from "./component/headerBeforeLogin";
 import StartPage from "./pages/StartPage";
 import LoginPage from "./pages/LoginPage";
 import Diagnosis from "./pages/DiagnosisPage";
@@ -15,7 +17,24 @@ import Admin from "./pages/admin";
 function App() {
   return (
     <Router>
-      <Header />
+      <AppContent />
+    </Router>
+  );
+}
+
+function AppContent() {
+  const location = useLocation();
+
+  const showHeaderBeforeLogin = [
+    "/",
+    "/login",
+    "/diagnosis",
+    "/register",
+  ].includes(location.pathname);
+
+  return (
+    <>
+      {showHeaderBeforeLogin ? <HeaderBeforeLogin /> : <Header />}
       <Routes>
         <Route path="/" element={<StartPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -28,7 +47,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
-    </Router>
+    </>
   );
 }
 
