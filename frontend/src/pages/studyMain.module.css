@@ -49,10 +49,11 @@
   padding-top: 20px;
 }
 
-.fairytale {
+.image {
   width: 180px;
-  height: 150px;
+  height: 160px;
   margin-bottom: 10px;
+  border-radius: 20px;
 }
 
 .readBtn {
