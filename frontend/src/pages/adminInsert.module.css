@@ -1,0 +1,101 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px 20px;
+  font-family: "HakgyoansimGeurimilgi", sans-serif;
+  box-sizing: border-box;
+}
+
+.sectionWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #222;
+  margin-top: 10px;
+}
+
+.input,
+.select,
+.textarea,
+.pageTextarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.pageTextarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.textarea {
+  height: 40px;
+  resize: vertical;
+}
+
+.addPageButton,
+.addQuizButton,
+.uploadButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #869b73;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addPageButton:hover,
+.addQuizButton:hover,
+.uploadButton:hover {
+  background-color: #6e805c;
+}
+
+.uploadWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.uploadButton {
+  max-width: 400px;
+  margin: 0 auto 20px;
+  font-size: 20px;
+  background-color: #6c8759;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 35%;
+}
+
+.uploadButton:hover {
+  background-color: #5e774e;
+}

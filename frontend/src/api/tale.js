@@ -29,3 +29,21 @@ export const insertTaleAPI = (title, contents, quizzes, images) => {
   // 최종 요청
   return request(taleInstance, "post", "/insert", formData);
 };
+
+// 관리자 동화목록조회
+export const getTaleListAPI = () => request(taleInstance, "get", "");
+
+// 관리자 특정동화수정
+export const editTaleAPI = (taleId, title, contents, imageUrls, quizzes) => {
+  return request(taleInstance, "put", `/${taleId}`, {
+    title: title,
+    contents: contents,
+    imageUrls: imageUrls,
+    quizzes: quizzes,
+  });
+};
+
+// 관리자 특정동화삭제
+export const deleteTaleAPI = (taleId) => {
+  return request(taleInstance, "delete", `/${taleId}`);
+};
