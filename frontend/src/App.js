@@ -13,6 +13,9 @@ import Quiz from "./pages/quiz";
 import QuizAnswer from "./pages/quizAnswer";
 import Register from "./pages/register";
 import Admin from "./pages/admin";
+import AdminInsert from "./pages/adminInsert";
+import AdminList from "./pages/adminList";
+import AdminEdit from "./pages/adminEdit";
 
 function App() {
   return (
@@ -46,6 +49,9 @@ function AppContent() {
         <Route path="/tale/quiz/answer" element={<QuizAnswer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/insert" element={<AdminInsert />} />
+        <Route path="/admin/list" element={<AdminList />} />
+        <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
       </Routes>
     </>
   );

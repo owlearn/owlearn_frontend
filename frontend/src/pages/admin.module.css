@@ -1,101 +1,43 @@
 .container {
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 20px 20px;
-  font-family: "HakgyoansimGeurimilgi", sans-serif;
-  box-sizing: border-box;
+  padding-top: 100px;
 }
 
-.sectionWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  width: 100%;
-  max-width: 1200px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 60px;
+  letter-spacing: -0.5px;
 }
 
-.section {
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  width: 80%;
+  max-width: 800px;
+}
+
+.card {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  box-sizing: border-box;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
 }
 
-.header {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #222;
-  margin-top: 10px;
-}
-
-.input,
-.select,
-.textarea,
-.pageTextarea {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 14px;
-  font-size: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-.pageTextarea {
-  height: 100px;
-  resize: vertical;
-}
-
-.textarea {
-  height: 40px;
-  resize: vertical;
-}
-
-.addPageButton,
-.addQuizButton,
-.uploadButton {
-  width: 100%;
-  padding: 12px;
-  background-color: #869b73;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  margin-top: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.addPageButton:hover,
-.addQuizButton:hover,
-.uploadButton:hover {
-  background-color: #6e805c;
-}
-
-.uploadWrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.uploadButton {
-  max-width: 400px;
-  margin: 0 auto 20px;
-  font-size: 20px;
-  background-color: #6c8759;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-left: 35%;
-}
-
-.uploadButton:hover {
-  background-color: #5e774e;
+.card:hover {
+  background-color: #f1f5f9;
+  transform: scale(1.03);
+  border-color: #94a3b8;
+  color: #0f172a;
 }
