@@ -12,24 +12,27 @@ function LoginPage() {
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+
   useEffect(() => {
     console.log("입력 상태:", { id, pw });
   }, [id, pw]);
 
-  const login = async () => {
-    try {
-      // const response = await signinAPI(id, pw); // await 추가
-      // if (response.status === 200) {
-      //   // 로그인 성공 확인
-      //   localStorage.setItem("userId", response.data.id); // userId 저장
-      navigate("/studyMain");
-      // } else {
-      //   alert("로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요."); // 로그인 실패 처리
-      // }
-    } catch (error) {
-      console.error("로그인 중 오류 발생:", error); // 에러 처리
-      alert("로그인 중 오류가 발생했습니다.");
-    }
+  const login = () => {
+    // const login = async () => {
+    // try {
+    //   // const response = await signinAPI(id, pw); // await 추가
+    //   // if (response.status === 200) {
+    //   //   // 로그인 성공 확인
+    //   //   localStorage.setItem("userId", response.data.id); // userId 저장
+    //   navigate("/studyMain");
+    //   // } else {
+    //   //   alert("로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요."); // 로그인 실패 처리
+    //   // }
+    // } catch (error) {
+    //   console.error("로그인 중 오류 발생:", error); // 에러 처리
+    //   alert("로그인 중 오류가 발생했습니다.");
+    // }
+    navigate("/studyMain");
   };
 
   const goToAdmin = () => {
