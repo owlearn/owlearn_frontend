@@ -15,6 +15,6 @@ const taleInstance = axios.create(defaultInstance.defaults);
 taleInstance.defaults.baseURL += "/tales";
 
 const quizzesInstance = axios.create(defaultInstance.defaults);
-quizzesInstance.defaults.baseURL += "";
+quizzesInstance.defaults.baseURL += "/quizzes";
 
 export { taleInstance, userInstance, quizzesInstance };
