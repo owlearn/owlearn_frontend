@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./quizAnswer.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getQuizAPI } from "../api/quizzes";
 
 const quizData = {
   reading: [
@@ -47,46 +48,62 @@ const quizData = {
   ],
 };
 
-function QuizAnswer() {
-  const [activeTab, setActiveTab] = useState("reading"); //카테고리 선택
-
-  const isCorrect = false;
-
+const QuizAnswer = () => {
+  const [quizzes, setQuizzes] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
-
-  const currentQuiz = quizData[activeTab][0]; // 각 카테고리마다 퀴즈 하나씩 있다고 가정
+  const location = useLocation();
+  const result = location.state?.result || [];
 
   const studyEnd = () => navigate("/studyMain");
 
+  useEffect(() => {
+    const getQuiz = async () => {
+      try {
+        const response = await getQuizAPI(13);
+        setQuizzes(response.data);
+      } catch (error) {
+        console.error("Error fetching quiz: ", error);
+      }
+    };
+    getQuiz();
+  }, []);
+
+  const isCorrect = result[currentIndex]?.isCorrect;
+  const explanation = result[currentIndex]?.explanation;
+  const question = quizzes[currentIndex]?.question;
+
   return (
     <div className={styles.container}>
-      {/* 탭 */}
+      {/* 문제 번호 탭 */}
       <div className={styles.tabs}>
-        {["reading", "grammar", "listening"].map((tab) => (
+        {quizzes.map((_, i) => (
           <button
-            key={tab}
+            key={i}
             className={`${styles.tab} ${
-              activeTab === tab ? styles.active : ""
+              currentIndex === i ? styles.active : ""
             }`}
-            onClick={() => {
-              setActiveTab(tab);
-            }}
+            onClick={() => setCurrentIndex(i)}
           >
-            {tab}
+            {i + 1}
           </button>
         ))}
       </div>
 
-      {/* 퀴즈 내용 */}
-      <div className={styles.quizBox}>
-        {{ isCorrect } ? <h2> 정답입니다! </h2> : <h2> 오답입니다!</h2>}
-        <p className={styles.answer}>{currentQuiz.why}</p>
-      </div>
+      {/* 퀴즈 해설 */}
+      {quizzes.length > 0 && (
+        <div className={styles.quizBox}>
+          <h2>{isCorrect ? "정답입니다!" : "오답입니다!"}</h2>
+          <p className={styles.questionText}>Q. {question}</p>
+          <p className={styles.answer}>[해설] {explanation}</p>
+        </div>
+      )}
+
       <button className={styles.submitButton} onClick={studyEnd}>
         학습 종료
       </button>
     </div>
   );
-}
+};
 
 export default QuizAnswer;
