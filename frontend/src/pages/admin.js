@@ -58,7 +58,7 @@ function AdminUploadPage() {
   };
 
   const handleUpload = async () => {
-    console.log("보낼 quizzes:", JSON.stringify(quizzes, null, 2));
+    console.log("보낼 quizzes:", JSON.stringify(quizzes));
     try {
       await insertTaleAPI(title, contents, quizzes, images);
       alert("업로드 성공!");

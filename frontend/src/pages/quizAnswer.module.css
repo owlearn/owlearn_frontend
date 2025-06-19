@@ -44,7 +44,7 @@
 }
 
 .answer {
-  font-size: 22px;
+  font-size: 20px;
   margin-bottom: 25px;
   white-space: pre-line; /* 줄바꿈 \n 인식 */
   line-height: 1.6;
