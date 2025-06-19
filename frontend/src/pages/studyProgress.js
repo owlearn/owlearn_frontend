@@ -77,14 +77,18 @@ function StudyProgress() {
     <div>
       <div className={styles.tytle}>{title}</div>
       <div className={styles.rightContainer}>
-        <img
-          src={`/image-proxy${imageUrls[page - 1]}`}
-          className={styles.illust}
-          alt={`Page ${page}`}
-        />
-        {console.log(
-          "[이미지 src]: ",
-          `http://3.39.6.242:8080${imageUrls[page - 1]}`
+        {imageUrls[page - 1] && (
+          <>
+            <img
+              src={`/image-proxy${imageUrls[page - 1]}`}
+              className={styles.illust}
+              alt={`Page ${page}`}
+            />
+            {console.log(
+              "[이미지 src]: ",
+              `/image-proxy${imageUrls[page - 1]}`
+            )}
+          </>
         )}
         <div className={styles.storyBox}>
           <p>{contents[page - 1]}</p>
