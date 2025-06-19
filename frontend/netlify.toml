@@ -10,7 +10,7 @@
   status = 200
 
 [[redirects]]
-from = "/image-proxy/*"
-to = "http://3.39.6.242:8080/:splat"
-status = 200
-force = true
+  from = "/image-proxy/images/*"
+  to = "http://3.39.6.242:8080/images/:splat"
+  status = 200
+  force = true
