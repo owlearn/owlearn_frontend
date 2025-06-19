@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./quiz.module.css";
 import { useNavigate } from "react-router-dom";
+import { getQuizAPI } from "../api/quizzes";
 
 //test
 
@@ -47,60 +48,95 @@ const quizData = {
 };
 
 function Quiz() {
-  const [activeTab, setActiveTab] = useState("reading"); //카테고리 선택
-  const [selected, setSelected] = useState({}); //보기 선택
-
+  const [quizzes, setQuizzes] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
   const navigate = useNavigate();
 
-  const currentQuiz = quizData[activeTab][0]; // 각 카테고리마다 퀴즈 하나씩 있다고 가정
-
   const handleSubmit = () => {
-    if (selected[activeTab] !== undefined) {
-      navigate("/tale/quiz/answer");
-    } //선택된 탭에서 선지 눌렀다면 이동
-    else alert("정답을 선택해주세요");
+    if (Object.keys(selectedAnswers).length !== quizzes.length) {
+      alert("모든 문제에 답을 선택해주세요.");
+      return;
+    }
+
+    // 정답 확인 로직
+    const result = quizzes.map((quiz, idx) => {
+      const isCorrect = quiz.answerIndex === selectedAnswers[idx];
+      return {
+        isCorrect,
+      };
+    });
+
+    console.log("[채점 결과]:", result);
+
+    // 결과를 다음 페이지로 넘김
+    navigate("/tale/quiz/answer", {
+      state: { result }, // 👉 넘겨줌
+    });
   };
+
+  useEffect(() => {
+    const getQuiz = async () => {
+      try {
+        const response = await getQuizAPI(11);
+        console.log("[response]:", response);
+        const quizList = response.data;
+        console.log("[quizData]:", quizList); //quizzes에 담을 데이터
+        setQuizzes(quizList);
+      } catch (error) {
+        console.error("Error fetching quiz: ", error);
+      }
+    };
+    getQuiz();
+  }, []);
+
+  useEffect(() => {
+    console.log("[선택한 답안]", selectedAnswers); // ✅ 추가
+  }, [selectedAnswers]);
 
   return (
     <div className={styles.container}>
-      {/* 탭 */}
+      {/* 퀴즈 번호 탭 */}
       <div className={styles.tabs}>
-        {["reading", "grammar", "listening"].map((tab) => (
+        {quizzes.map((quiz, i) => (
           <button
-            key={tab}
+            key={i}
             className={`${styles.tab} ${
-              activeTab === tab ? styles.active : ""
+              currentIndex === i ? styles.active : ""
             }`}
-            onClick={() => {
-              setActiveTab(tab);
-            }}
+            onClick={() => setCurrentIndex(i)}
           >
-            {tab}
+            {i + 1}
           </button>
         ))}
       </div>
-
-      {/* 퀴즈 내용 */}
-      <div className={styles.quizBox}>
-        <h2>[ Question {currentQuiz.id} ]</h2>
-        <p className={styles.questionText}>{currentQuiz.question}</p>
-        <div className={styles.options}>
-          {currentQuiz.options.map((option, index) => (
-            <label key={index} className={styles.optionLabel}>
-              <input
-                type="radio"
-                name={`quiz-${activeTab}`} //탭별로 radio 저장
-                checked={selected[activeTab] === index}
-                onChange={() =>
-                  setSelected((prev) => ({ ...prev, [activeTab]: index }))
-                }
-              />
-              <span>{option}</span>
-            </label>
-          ))}
+      {quizzes.length > 0 && quizzes[currentIndex] && (
+        <div className={styles.quizBox}>
+          <h2>[ 문제 {currentIndex + 1} ]</h2>
+          <p className={styles.questionText}>
+            {quizzes[currentIndex].question}
+          </p>
+          <div className={styles.choices}>
+            {quizzes[currentIndex].choices.map((choices, idx) => (
+              <label key={idx} className={styles.optionLabel}>
+                <input
+                  type="radio"
+                  name={`quiz-${currentIndex}`}
+                  checked={selectedAnswers[currentIndex] === idx}
+                  onChange={() =>
+                    setSelectedAnswers((prev) => ({
+                      ...prev,
+                      [currentIndex]: idx,
+                    }))
+                  }
+                />
+                <span>{choices}</span>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-
+      )}
+      {/* 제출 버튼 */}
       <button className={styles.submitButton} onClick={handleSubmit}>
         정답 제출
       </button>
