@@ -78,7 +78,7 @@ function Quiz() {
   useEffect(() => {
     const getQuiz = async () => {
       try {
-        const response = await getQuizAPI(11);
+        const response = await getQuizAPI(13);
         console.log("[response]:", response);
         const quizList = response.data;
         console.log("[quizData]:", quizList); //quizzes에 담을 데이터
