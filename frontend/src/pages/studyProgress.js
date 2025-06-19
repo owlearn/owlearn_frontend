@@ -57,7 +57,7 @@ function StudyProgress() {
   useEffect(() => {
     const apiGetTale = async () => {
       try {
-        const response = await getTale(11);
+        const response = await getTale(13);
         const data = response.data.responseDto;
         setTitle(data.title);
         setContents(

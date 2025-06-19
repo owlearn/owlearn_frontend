@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./studyMain.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -9,8 +9,26 @@ import quiz from "../assets/studyMainQuiz.png";
 import badge from "../assets/studyMainBadge.png";
 import search from "../assets/studyMainSearch.png";
 
+import { getTale } from "../api/tale";
+
 function StudyMain() {
+  const [title, setTitle] = useState("");
+  const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const apiGetTale = async () => {
+      try {
+        const response = await getTale(13);
+        const data = response.data.responseDto;
+        setTitle(data.title);
+        setImageUrls(data.imageUrls);
+      } catch (error) {
+        console.error("Error fetching tale: ", error);
+      }
+    };
+    apiGetTale();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -22,8 +40,11 @@ function StudyMain() {
           </h3>
         </div>
         <div className={styles.leftContent}>
-          <h2 className={styles.bookTytle}>Forest Fairy</h2>
-          <img src={fairytale} className={styles.fairytale}></img>
+          <h2 className={styles.bookTytle}>{title}</h2>
+          <img
+            src={`/image-proxy${imageUrls[0]}`}
+            className={styles.image}
+          ></img>
         </div>
         <button
           className={styles.readBtn}
@@ -34,7 +55,7 @@ function StudyMain() {
       </div>
       <div className={styles.right}>
         <div className={styles.rightTytle}>
-          <span className={styles.name}>박가연</span>
+          <span className={styles.name}>윤현동</span>
           <span>님, 환영해요!</span>
         </div>
         <div className={styles.miniTytle}>오늘은 어떤 동화를 읽어볼까요?</div>
