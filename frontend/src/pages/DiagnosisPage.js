@@ -6,9 +6,9 @@ import animalIcon from "../assets/animal.png";
 import magicIcon from "../assets/magic.png";
 import adventureIcon from "../assets/adventure.png";
 
-import lora1 from "../assets/lora1.png";
-import lora2 from "../assets/lora2.png";
-import lora3 from "../assets/lora3.png";
+import lora1 from "../assets/loraA.png";
+import lora2 from "../assets/loraB.png";
+import lora3 from "../assets/loraC.png";
 
 export default function DiagnosisPage() {
   const [step, setStep] = useState(0);
@@ -76,7 +76,7 @@ export default function DiagnosisPage() {
       </div>
 
       <div className={styles.questionSection}>
-        <p className={styles.questionTitle}>선호하는 그림체는 어떤 것인가요?</p>
+        <p className={styles.questionTitle}>선호하는 캐릭터는 어떤 것인가요?</p>
         <div className={styles.choiceButtons}>
           {loraImg.map((img, index) => (
             <div key={index}>
