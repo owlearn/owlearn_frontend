@@ -58,3 +58,5 @@ function AppContent() {
 }
 
 export default App;
+
+// test: PR 충돌 확인용 주석
