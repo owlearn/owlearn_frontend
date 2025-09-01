@@ -1,0 +1,183 @@
+.diagnosisPage {
+  background-color: #dddddd;
+  display: flex;
+  flex-direction: column;
+  font-family: "HakgyoansimGeurimilgi", sans-serif;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.progressContainer {
+  width: 50%;
+  max-width: 500px;
+  margin: 35px auto;
+  position: relative;
+}
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+  background-color: #c4c4c4;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #7e9d7c;
+  transition: width 0.3s;
+}
+
+.progressText {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.questionSection {
+  margin: 5px auto;
+  text-align: center;
+}
+
+.questionTitle {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.choiceButtons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.choiceBox {
+  width: 100px;
+  height: 80px;
+  padding: 20px;
+  background-color: #dddddd;
+  border: 1.5px solid #bbb;
+  border-radius: 12px;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.choiceBox.selected {
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.choiceIcon {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  margin-bottom: 0px;
+}
+
+.choiceWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.choiceLabel {
+  font-size: 20px;
+  color: #000;
+  text-align: center;
+}
+
+.ageSelect {
+  font-size: 20px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1.5px solid #bbb;
+  background-color: #dddddd;
+  width: 380px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.submitContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.submitButton {
+  padding: 12px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background-color: #869b73;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  min-width: 150px;
+  max-width: 200px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.submitButton:disabled {
+  background-color: #b0b0b0;
+  cursor: default;
+}
+
+.loraButton {
+  width: 120px;
+  height: 100px;
+  padding: 10px;
+  background-color: #dddddd;
+  border: 1.5px solid #bbb;
+  border-radius: 12px;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.loraButton.selected {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 125px;
+  height: 105px;
+  background-color: #f9f9f9;
+  border: 5px solid #ffffff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  transform: scale(1.03);
+  transition: all 0.2s ease;
+}
+
+.imgLabel {
+  font-size: 20px;
+  color: #000;
+  text-align: center;
+}
+
+.loraImg {
+  width: 120px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}

@@ -1,0 +1,129 @@
+@font-face {
+  font-family: "HakgyoansimGeurimilgi";
+  src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
+}
+
+.tytle {
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  background: linear-gradient(270deg, #869b73 0.01%, #b7b78a 84.13%);
+  color: #ffffff;
+  width: 80%;
+  height: 90px;
+  color: #ffffff;
+  font-family: "HakgyoansimGeurimilgi";
+  font-size: 50px;
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  text-align: center;
+  justify-content: center; /* 수평 중앙 정렬 */
+  font-weight: 600;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+  width: 85%;
+  margin: auto;
+}
+
+.illust {
+  /* width: 30%; */
+  height: 50vh;
+  margin: auto;
+  border-radius: 30px;
+}
+
+.storyBox {
+  margin: auto;
+  border-radius: 15px;
+  background: #fdfdfd;
+  box-shadow: 1px 2px 20px 1px rgba(0, 0, 0, 0.25);
+  width: 50%;
+  height: 50vh;
+  font-family: "Hakgyoansim Geurimilgi TTF";
+  font-size: 26px;
+  line-height: 1.4;
+  white-space: pre-line; /* 줄바꿈 \n 인식 */
+  padding-left: 50px;
+  padding-right: 50px;
+  display: flex; /* Flexbox 적용 */
+  flex-direction: column; /* 세로 방향 정렬 */
+  justify-content: center; /* 수직 중앙 정렬 */
+}
+.pageBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+.arrow {
+  background-color: #eeeeee;
+  color: #333333;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.arrow:hover {
+  background-color: #dddddd;
+}
+
+.bottomContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3개의 동일한 칼럼 */
+  margin: auto;
+  padding-top: 3%;
+}
+
+.speakerBtn {
+  border: none;
+  background: none;
+  font-size: 40px;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  margin: auto;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 중간 정렬 */
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.bar {
+  margin: auto;
+}
+.quizBtn {
+  border-radius: 40px;
+  background: linear-gradient(135deg, #a98f7b, #786e65); /* 은은한 그라데이션 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 더 큰 그림자 */
+  cursor: pointer;
+  border: none;
+  width: 130px;
+  height: 55px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+  margin: auto;
+}
+
+.quizBtn:hover {
+  background: linear-gradient(135deg, #7e6655, #5b5047); /* hover 시 어둡게 */
+  transform: translateY(-2px); /* 살짝 튀어오르는 효과 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+}

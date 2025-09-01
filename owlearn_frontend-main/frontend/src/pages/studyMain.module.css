@@ -1,0 +1,180 @@
+@font-face {
+  font-family: "HakgyoansimGeurimilgi";
+  src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  background: rgba(254, 239, 196, 0.7);
+  border-radius: 10px;
+  margin-left: auto;
+  margin-top: 10%;
+  width: 20%;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.leftTytle {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  margin-top: 3%;
+}
+.owl {
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+}
+
+.tytle {
+  margin-right: auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.leftContent {
+  background: #fef4d5;
+  border-radius: 10px;
+  text-align: center;
+  margin: auto;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.bookTytle {
+  padding-top: 20px;
+}
+
+.image {
+  width: 180px;
+  height: 160px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+}
+
+.readBtn {
+  margin: auto;
+  width: 140px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: #ecd79b;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.right {
+  width: 50%;
+  margin-right: auto;
+  margin-top: auto;
+}
+
+.rightTytle {
+  text-align: center;
+  font-size: 48px;
+  line-height: 2.5;
+  font-weight: bold;
+}
+
+.name {
+  color: #658864;
+  font-weight: bold;
+}
+
+.miniTytle {
+  text-align: center;
+  font-size: 28px;
+}
+
+.boxContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2열 */
+  grid-template-rows: 1fr 1fr; /* 2행 */
+  padding-top: 30px;
+  gap: 25px;
+  width: fit-content; /* 아이템 크기에 맞게 컨테이너 너비 */
+  margin: 0 auto; /* 수평 가운데 정렬 */
+  padding-top: 50px;
+}
+
+.boxStudy {
+  background: rgba(168, 203, 136, 0.6);
+  border-radius: 15px;
+  width: 250px;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* 가로 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  font-size: 24px;
+  gap: 14px;
+  font-weight: bold;
+  border: none;
+  color: #657a52;
+  cursor: pointer;
+  text-height: 2;
+}
+
+.boxQuiz {
+  background: rgba(217, 155, 155, 0.5);
+  width: 250px;
+  height: 150px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* 가로 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  font-size: 24px;
+  gap: 14px;
+  font-weight: bold;
+  border: none;
+  color: #6d4d4d;
+  cursor: pointer;
+}
+
+.boxBadge {
+  background: rgba(97, 167, 220, 0.5);
+  width: 250px;
+  height: 150px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* 가로 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  font-size: 24px;
+  margin: auto;
+  gap: 14px;
+  font-weight: bold;
+  border: none;
+  color: #31536e;
+  cursor: pointer;
+}
+
+.boxSearch {
+  background: rgba(225, 210, 53, 0.5);
+  width: 250px;
+  height: 150px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* 가로 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  font-size: 24px;
+  margin: auto;
+  gap: 14px;
+  font-weight: bold;
+  border: none;
+  color: #70691a;
+  cursor: pointer;
+}
+
+.icon {
+  width: 100px;
+  height: 80px;
+}
