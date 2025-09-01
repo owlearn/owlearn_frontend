@@ -1,0 +1,151 @@
+.loginPage {
+  background-color: #dddddd;
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "HakgyoansimGeurimilgi", sans-serif;
+}
+
+.loginContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginTitle {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 24px;
+}
+
+.loginBox {
+  background-color: #ffffff;
+  padding: 40px 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  margin-bottom: 28px;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  background-color: #f5f5f5;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #869b73;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.loginButton:hover {
+  background-color: #476644;
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #bbb;
+  border: none;
+}
+
+.orText {
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+}
+
+.socialButtons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.socialButton {
+  width: 30%;
+  height: 40px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.socialButton:hover {
+  background-color: #efefef;
+}
+
+.socialIcon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.signup {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup a {
+  color: #3366ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
+
+.adminLink {
+  text-align: center;
+}
+
+.adminButton {
+  background-color: #a8b8a2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin-top: 15px;
+}
+
+.adminButton:hover {
+  background-color: #8a9b87;
+}
