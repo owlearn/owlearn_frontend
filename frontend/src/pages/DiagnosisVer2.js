@@ -89,18 +89,22 @@ function DiagnosisPage() {
   const handleCapture = async () => {
     const avatarElement = document.querySelector(`.${styles.avatarLayerWrap}`);
     if (avatarElement) {
-      const canvas = await html2canvas(avatarElement);
+      const canvas = await html2canvas(avatarElement, {
+        width: 400, // 원하는 캡처 너비(px)
+        height: 400, // 원하는 캡처 높이(px)
+        scale: 2, // 해상도 배율 (2면 2배로 선명하게)
+      });
       const imgData = canvas.toDataURL("image/png");
-      // 완성한 부엉이 이미지 다운로드
+      // 완성한 부엉이 이미지 다운로드 (백엔드에 전송 예정)
       const link = document.createElement("a");
       link.href = imgData;
       link.download = "avatar.png";
-      document.body.appendChild(link); // 링크를 body에 추가
+      document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link); // 클릭 후 삭제
+      document.body.removeChild(link);
       setTimeout(() => {
         navigate("/diagnosisEnd");
-      }, 1000); // 1초 후 이동
+      }, 800);
     } else {
       navigate("/diagnosisEnd");
     }
