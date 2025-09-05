@@ -7,7 +7,7 @@ export default function Prompting() {
 
   const [title, setTitle] = useState("");
   const [storyText, setStoryText] = useState("");
-  const [characters, setCharacters] = useState([{ name: "", main: false }]);
+  const [characters, setCharacters] = useState([{ name: "", main: false, image: null }]);
 
   const addCharacter = () =>
     setCharacters((prev) => [...prev, { name: "", main: false }]);
@@ -48,14 +48,29 @@ export default function Prompting() {
                   {characters.map((c, i) => (
                     <div key={i} className={styles.characterGrid}>
                       <div className={styles.characterSelectArea}>
-                        <button
-                          className={styles.characterDesignBtn}
-                          onClick={() => alert('캐릭터 디자인 페이지로 이동합니다.')}
-                        >
-                        <span className={styles.characterLine}>캐릭터</span>
-                        <span className={styles.characterLine}>선택하기</span>
-                      </button>
-                    </div>
+                        <label className={styles.characterUploadBox}>
+                          {c.image ? (
+                            <img
+                              src={URL.createObjectURL(c.image)}
+                              alt="캐릭터 미리보기"
+                              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "12px" }}
+                            />
+                          ) : (
+                            <>
+                              <span>캐릭터</span>
+                              <span>선택하기</span>
+                            </>
+                          )}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className={styles.characterFileInput}
+                            onChange={(e) => updateCharacter(i, "image", e.target.files[0])}
+                          />
+                        </label>
+                      </div>
+
+
                 <div className={styles.characterInputField}>
                   <label htmlFor={`characterName-${i}`} className={styles.characterNameLabel}>캐릭터 이름</label>
                     <input
