@@ -6,6 +6,7 @@ import HeaderBeforeLogin from "./component/headerBeforeLogin";
 import StartPage from "./pages/StartPage";
 import LoginPage from "./pages/LoginPage";
 import Diagnosis from "./pages/DiagnosisPage";
+import DiagnosisVer2 from "./pages/DiagnosisVer2";
 import Prompting from "./pages/Prompting";
 import CreationPage from "./pages/CreationPage";
 import StudyMain from "./pages/studyMain";
@@ -43,6 +44,7 @@ function AppContent() {
         <Route path="/" element={<StartPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/diagnosis" element={<Diagnosis />} />
+        <Route path="/diagnosisVer2" element={<DiagnosisVer2 />} />
         <Route path="/prompting" element={<Prompting />} />
         <Route path="/create" element={<CreationPage />} />
         <Route path="/studyMain" element={<StudyMain />} />
