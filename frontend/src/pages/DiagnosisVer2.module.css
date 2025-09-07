@@ -3,13 +3,31 @@
   src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
 }
 
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 .diagnosisPage {
   background-color: #dddddd;
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Changed from row to column */
+  align-items: center; /* Center children horizontally */
   font-family: "HakgyoansimGeurimilgi", sans-serif;
-  margin-top: 5%;
-  gap: 5%;
+  margin-top: 2%;
+  gap: 1rem; /* Adjusted gap */
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+  width: 70%;
+  gap: 10%;
 }
 
 .avatar {
@@ -18,9 +36,9 @@
   align-items: center;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.75);
-  width: 50%;
+  width: 40%; /* Adjusted width */
   height: 60vh;
-  margin: auto 0 auto 20%;
+  /* margin: auto 0 auto 20%; Removed margin for flexbox to handle spacing */
   position: relative;
   justify-content: center;
 }
@@ -80,12 +98,12 @@
 }
 
 .itemContainer {
-  margin: auto;
-  margin-right: 20%;
+  /* margin: auto; */ /* Removed margin */
+  /* margin-right: 20%; */ /* Removed margin */
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  width: 50%;
+  width: 40%; /* Adjusted width */
   height: 60vh;
 }
 
