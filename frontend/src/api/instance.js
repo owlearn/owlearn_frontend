@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_URL;
 
 const defaultInstance = axios.create({
-  baseURL: "/api",
+  baseURL: `${BASE_URL}/api`,
 });
 
 // user 인스턴스
