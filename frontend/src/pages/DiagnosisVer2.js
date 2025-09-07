@@ -140,61 +140,64 @@ function DiagnosisPage() {
 
   return (
     <div className={styles.diagnosisPage}>
-      <div className={styles.avatar}>
-        <div className={styles.avatarLayerWrap}>
-          <img src={avatarBase} className={styles.avatarImg} alt="avatar" />
-          {selectedFace && (
-            <img
-              src={selectedFace.itemImg}
-              className={styles.avatarLayer}
-              alt="face-item"
-              style={selectedFace.style}
-            />
-          )}
-          {selectedCloth && (
-            <img
-              src={selectedCloth.itemImg}
-              className={styles.avatarLayer}
-              alt="cloth-item"
-              style={selectedCloth.style}
-            />
-          )}
-        </div>
-        <button className={styles.submitButton} onClick={handleCapture}>
-          완료
-        </button>
-      </div>
-
-      <div className={styles.itemContainer}>
-        <div className={styles.container}>
-          <div className={styles.tabs}>
-            {tabList.map((tab, i) => (
-              <button
-                key={i}
-                className={`${styles.tab} ${
-                  currentIndex === i ? styles.active : ""
-                }`}
-                onClick={() => setCurrentIndex(i)}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-          <div className={styles.items}>
-            {items.map((item, index) => (
+      <h1 className={styles.title}>나만의 캐릭터 만들기</h1>
+      <div className={styles.mainContent}>
+        <div className={styles.avatar}>
+          <div className={styles.avatarLayerWrap}>
+            <img src={avatarBase} className={styles.avatarImg} alt="avatar" />
+            {selectedFace && (
               <img
-                key={index}
-                src={item.itemImg}
-                className={`${styles.itemImg} ${
-                  (currentIndex === 0 && selectedFace?.name === item.name) ||
-                  (currentIndex === 1 && selectedCloth?.name === item.name)
-                    ? styles.selectedItem
-                    : ""
-                }`}
-                alt={item.name}
-                onClick={() => handleItemClick(item)}
+                src={selectedFace.itemImg}
+                className={styles.avatarLayer}
+                alt="face-item"
+                style={selectedFace.style}
               />
-            ))}
+            )}
+            {selectedCloth && (
+              <img
+                src={selectedCloth.itemImg}
+                className={styles.avatarLayer}
+                alt="cloth-item"
+                style={selectedCloth.style}
+              />
+            )}
+          </div>
+          <button className={styles.submitButton} onClick={handleCapture}>
+            완료
+          </button>
+        </div>
+
+        <div className={styles.itemContainer}>
+          <div className={styles.container}>
+            <div className={styles.tabs}>
+              {tabList.map((tab, i) => (
+                <button
+                  key={i}
+                  className={`${styles.tab} ${
+                    currentIndex === i ? styles.active : ""
+                  }`}
+                  onClick={() => setCurrentIndex(i)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+            <div className={styles.items}>
+              {items.map((item, index) => (
+                <img
+                  key={index}
+                  src={item.itemImg}
+                  className={`${styles.itemImg} ${
+                    (currentIndex === 0 && selectedFace?.name === item.name) ||
+                    (currentIndex === 1 && selectedCloth?.name === item.name)
+                      ? styles.selectedItem
+                      : ""
+                  }`}
+                  alt={item.name}
+                  onClick={() => handleItemClick(item)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
