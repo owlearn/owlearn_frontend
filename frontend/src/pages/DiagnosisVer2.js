@@ -17,22 +17,22 @@ const faceItems = [
   {
     itemImg: itemHeadband,
     name: "머리띠",
-    style: { top: "-10%", left: "27%", width: "37%" }, // 세부 위치 조정
+    style: { top: "4%", left: "36%", width: "25%" }, // 세부 위치 조정
   },
   {
     itemImg: itemHat,
     name: "모자",
-    style: { top: "-10%", left: "30%", width: "40%" },
+    style: { top: "3%", left: "38%", width: "28%" },
   },
   {
     itemImg: itemGlasses,
     name: "안경",
-    style: { top: "0%", left: "15%", width: "63%" },
+    style: { top: "10%", left: "24%", width: "50%" },
   },
   {
     itemImg: itemCrown,
     name: "왕관",
-    style: { top: "-7%", left: "32%", width: "30%" },
+    style: { top: "5%", left: "37%", width: "25%" },
   },
 ];
 
@@ -40,22 +40,22 @@ const clothItems = [
   {
     itemImg: itemTie,
     name: "넥타이",
-    style: { top: "108px", left: "70px", width: "80px" },
+    style: { top: "38%", left: "37%", width: "25%" },
   },
   {
     itemImg: itemBadge,
     name: "뱃지",
-    style: { top: "120px", left: "110px", width: "20%" },
+    style: { top: "125px", left: "48%", width: "15%" },
   },
   {
     itemImg: itemBag,
     name: "가방",
-    style: { top: "140px", left: "-12px", width: "80px" },
+    style: { top: "140px", left: "13%", width: "25%" },
   },
   {
     itemImg: itemRibbon,
     name: "리본",
-    style: { top: "92px", left: "80px", width: "60px" },
+    style: { top: "35%", left: "39%", width: "20%" },
   },
 ];
 
@@ -89,12 +89,40 @@ function DiagnosisPage() {
   const handleCapture = async () => {
     const avatarElement = document.querySelector(`.${styles.avatarLayerWrap}`);
     if (avatarElement) {
+      const scale = 2;
+      const targetWidth = 250 * scale;
+      const targetHeight = 300 * scale;
+
+      // 1. 너비는 고정하고, 높이는 원본 크기대로 캡처
       const canvas = await html2canvas(avatarElement, {
-        width: 400, // 원하는 캡처 너비(px)
-        height: 400, // 원하는 캡처 높이(px)
-        scale: 2, // 해상도 배율 (2면 2배로 선명하게)
+        width: 250,
+        height: 300,
+        scale: scale,
+        backgroundColor: null, // 배경 투명
       });
-      const imgData = canvas.toDataURL("image/png");
+
+      // 2. 캡처된 캔버스를 위쪽 기준으로 크롭 (머리 잘림 방지)
+      const sourceY = -50;
+
+      const croppedCanvas = document.createElement("canvas");
+      croppedCanvas.width = targetWidth;
+      croppedCanvas.height = targetHeight;
+      const ctx = croppedCanvas.getContext("2d");
+
+      // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+      ctx.drawImage(
+        canvas,
+        0, // sx
+        sourceY, // sy
+        targetWidth, // sWidth
+        targetHeight, // sHeight
+        0, // dx
+        0, // dy
+        targetWidth, // dWidth
+        targetHeight // dHeight
+      );
+
+      const imgData = croppedCanvas.toDataURL("image/png");
       // 완성한 부엉이 이미지 다운로드 (백엔드에 전송 예정)
       const link = document.createElement("a");
       link.href = imgData;
@@ -104,7 +132,7 @@ function DiagnosisPage() {
       document.body.removeChild(link);
       setTimeout(() => {
         navigate("/diagnosisEnd");
-      }, 800);
+      }, 600);
     } else {
       navigate("/diagnosisEnd");
     }
