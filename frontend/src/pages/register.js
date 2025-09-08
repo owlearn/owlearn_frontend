@@ -11,6 +11,8 @@ const SignupPage = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
+  const [idCheckMessage, setIdCheckMessage] = useState("");
+  const [idCheckStatus, setIdCheckStatus] = useState("idle"); // idle | checking | available | taken | error
 
   useEffect(() => {
     console.log("입력 상태:", { userId, name, password });
@@ -41,27 +43,36 @@ const SignupPage = () => {
   };
 
   const checkDuplicateId = async () => {
+    // 입력이 비었으면 안내만 표시하고 종료
     if (!userId.trim()) {
-      alert("아이디를 입력해주세요.");
+      setIdCheckMessage("아이디를 입력해주세요.");
+      setIdCheckStatus("error");
+      setIsDuplicateChecked(false);
       return;
     }
 
     try {
-      const response = await idCheckAPI(userId);
+      setIdCheckStatus("checking");
+      const response = await idCheckAPI(userId); // API 비동기처리
       console.log("중복 확인 응답:", response);
 
       const message = response?.data?.responseDto?.message;
 
-      // 메시지가 있으면 그대로 alert로 표시
       if (message) {
-        alert(message);
-        setIsDuplicateChecked(message === "사용가능한 아이디입니다.");
+        const available = message === "사용가능한 아이디입니다.";
+        setIsDuplicateChecked(available);
+        setIdCheckMessage(message);
+        setIdCheckStatus(available ? "available" : "taken");
       } else {
-        alert("서버로부터 메시지를 받지 못했습니다.");
+        setIdCheckMessage("서버로부터 메시지를 받지 못했습니다.");
+        setIdCheckStatus("error");
+        setIsDuplicateChecked(false);
       }
     } catch (error) {
       console.error("중복 확인 오류:", error);
-      alert("중복 확인 중 오류가 발생했습니다.");
+      setIdCheckMessage("중복 확인 중 오류가 발생했습니다.");
+      setIdCheckStatus("error");
+      setIsDuplicateChecked(false);
     }
   };
 
@@ -75,6 +86,16 @@ const SignupPage = () => {
 
         <form className={styles.form} onSubmit={handleSignup}>
           <div className={styles.formGroup}>
+            <label>이름</label>
+            <input
+              placeholder="이름을 입력하세요"
+              required
+              className={styles.input}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className={styles.formGroup}>
             <label>아이디</label>
             <div className={styles.inputWithButton}>
               <input
@@ -85,27 +106,28 @@ const SignupPage = () => {
                 onChange={(e) => {
                   setUserId(e.target.value);
                   setIsDuplicateChecked(false); // 입력값이 바뀌면 중복확인 다시 필요
+                  // 메시지 초기화 (입력 변경 시)
+                  setIdCheckMessage("");
+                  setIdCheckStatus("idle");
                 }}
+                onBlur={checkDuplicateId} // 포커스 아웃 시 중복 확인
               />
-              <button
-                type="button"
-                className={styles.duplicateCheckButton}
-                onClick={checkDuplicateId}
-              >
-                중복확인
-              </button>
+              {/* 중복 확인 메시지 */}
             </div>
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>이름</label>
-            <input
-              placeholder="이름을 입력하세요"
-              required
-              className={styles.input}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            {idCheckStatus !== "idle" && (
+              <div
+                className={
+                  idCheckStatus === "available"
+                    ? styles.successText
+                    : idCheckStatus === "checking"
+                    ? styles.infoText
+                    : styles.errorText
+                }
+                style={{ marginTop: 6 }}
+              >
+                {idCheckStatus === "checking" ? "확인 중..." : idCheckMessage}
+              </div>
+            )}
           </div>
 
           <div className={styles.formGroup}>
