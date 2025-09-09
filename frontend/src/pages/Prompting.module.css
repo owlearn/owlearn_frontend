@@ -7,11 +7,19 @@
 .header {
   font-size: 30px;
   font-weight: 700;
-  margin: 12px 0 20px;
   margin-top: 70px;
   margin-bottom: 50px;
-  margin-left: 220px;
+  text-align: center;
   color: #2b2b2b;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2b2b2b;
+  text-align: center;        
+  margin: 70px auto 50px;   
+  width: 100%;    
 }
 
 .row {

@@ -111,7 +111,7 @@ export default function Prompting() {
       <button 
         type="submit" 
         className={styles.primaryBtn}
-        onClick={() => window.location.href = '/create'}
+        onClick={() => window.location.href = '/output'}
       >
         동화 만들기
       </button>
