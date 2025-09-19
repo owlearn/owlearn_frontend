@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Prompting.module.css";
 import { promptAPI } from "../api/prompt";
+import { imageBaseUrl } from "../api/instance";
 
 export default function Prompting() {
   const navigate = useNavigate();
@@ -177,7 +178,7 @@ export default function Prompting() {
             imageUrls.map((url, idx) => (
               <div key={idx} className={styles.outputItem}>
                 <img
-                  src={`/image-proxy${url}`}
+                  src={`${imageBaseUrl}${url}`}
                   className={styles.illust}
                   alt={`동화 이미지 ${idx + 1}`}
                 />
