@@ -17,4 +17,8 @@ taleInstance.defaults.baseURL += "/tales";
 const quizzesInstance = axios.create(defaultInstance.defaults);
 quizzesInstance.defaults.baseURL += "/quizzes";
 
-export { taleInstance, userInstance, quizzesInstance };
+// gemini 이미지생성 인스턴스
+const promptInstance = axios.create(defaultInstance.defaults);
+promptInstance.defaults.baseURL += "/gemini";
+
+export { taleInstance, userInstance, quizzesInstance, promptInstance };
