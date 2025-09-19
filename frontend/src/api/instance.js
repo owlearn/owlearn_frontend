@@ -21,4 +21,13 @@ quizzesInstance.defaults.baseURL += "/quizzes";
 const promptInstance = axios.create(defaultInstance.defaults);
 promptInstance.defaults.baseURL += "/gemini";
 
-export { taleInstance, userInstance, quizzesInstance, promptInstance };
+// 서버 저장된 이미지 접근용 인스턴스
+const imageBaseUrl = `${BASE_URL}`;
+
+export {
+  taleInstance,
+  userInstance,
+  quizzesInstance,
+  promptInstance,
+  imageBaseUrl,
+};
