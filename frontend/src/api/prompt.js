@@ -20,10 +20,12 @@ export const promptAPI = (prompt) => {
 export const Image2ImageAPI = (prompt, refImage) => {
   const formData = new FormData();
 
-  // 텍스트
   formData.append("prompt", prompt);
-  formData.append("refImage", refImage);
+  if (refImage) {
+    formData.append("refImage", refImage);
+  }
 
-  // 최종 전송
-  return request(promptInstance, "post", "", formData);
+  return request(promptInstance, "post", "", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
