@@ -27,7 +27,7 @@
   justify-content: center;
   align-items: flex-start; /* Align items to the top */
   width: 70%;
-  gap: 10%;
+  gap: 3%;
 }
 
 .avatar {
@@ -45,12 +45,13 @@
 
 .avatarLayerWrap {
   position: relative;
-  width: 230px;
+  width: 300px;
   height: 300px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 80px;
 }
 
 .avatarImg,
@@ -103,7 +104,7 @@
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  width: 40%; /* Adjusted width */
+  width: 50%; /* Adjusted width */
   height: 60vh;
 }
 
@@ -141,8 +142,8 @@
 
 .items {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 120px);
   gap: 1%;
   justify-items: center;
   align-items: center;
