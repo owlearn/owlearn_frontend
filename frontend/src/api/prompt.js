@@ -15,3 +15,17 @@ import { request } from "../utils/request";
 export const promptAPI = (prompt) => {
   return request(promptInstance, "post", "", { prompt: prompt });
 };
+
+// Img2Img (이미지+텍스트->이미지)
+export const Image2ImageAPI = (prompt, refImage) => {
+  const formData = new FormData();
+
+  formData.append("prompt", prompt);
+  if (refImage) {
+    formData.append("refImage", refImage);
+  }
+
+  return request(promptInstance, "post", "", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
