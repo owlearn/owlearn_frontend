@@ -25,6 +25,7 @@ promptInstance.defaults.baseURL += "/gemini";
 const imageBaseUrl = `${BASE_URL}`;
 
 export {
+  defaultInstance,
   taleInstance,
   userInstance,
   quizzesInstance,

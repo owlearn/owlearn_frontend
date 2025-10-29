@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "./DiagnosisEnd.module.css";
 import avatarComplete from "../assets/myAvatar.png"; // 완성된 부엉이 이미지 (백엔드에서 받을 예정)
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import firework from "../assets/firework.png";
 
 const DiagnosisEnd = () => {
   const navigate = useNavigate();
+  const location = useLocation(); 
+  const imageUrl = location.state?.imageUrl; // 백엔드에서 전달받은 경로
+
   const onClick = () => {
     navigate("/studyMain");
   };
