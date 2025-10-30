@@ -12,6 +12,7 @@ import Prompting from "./pages/Prompting";
 import OutputPage from "./pages/OutputPage";
 import CreationPage from "./pages/CreationPage";
 import LoginProfile from "./pages/LoginProfile";
+import AddProfile from "./pages/addProfile";
 import StudyMain from "./pages/studyMain";
 import StudyProgress from "./pages/studyProgress";
 import Quiz from "./pages/quiz";
@@ -53,6 +54,7 @@ function AppContent() {
         <Route path="/output" element={<OutputPage />} />
         <Route path="/create" element={<CreationPage />} />
         <Route path="/loginProfile" element={<LoginProfile />} />
+        <Route path="/addProfile" element={<AddProfile />} />
         <Route path="/studyMain" element={<StudyMain />} />
         <Route path="/tale/study" element={<StudyProgress />} />
         <Route path="/tale/quiz" element={<Quiz />} />
