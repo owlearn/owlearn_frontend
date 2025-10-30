@@ -8,12 +8,27 @@ function ProfileSelectionPage() {
   const navigate = useNavigate();
   const [children, setChildren] = useState([]);
 
-  // localStorage에서 자녀 정보 불러오기
+  // // localStorage에서 자녀 정보 불러오기
+  // useEffect(() => {
+  //   const savedChildren = localStorage.getItem("childProfiles");
+  //   if (savedChildren) {
+  //     setChildren(JSON.parse(savedChildren));
+  //   }
+  // }, []);
+
+  //학부모 로그인은 스토리지로, 자녀목록을 불러올때는 스토리지에 저장된 parentID를 기반으로 서버에서 불러올 예정
   useEffect(() => {
-    const savedChildren = localStorage.getItem("childProfiles");
-    if (savedChildren) {
-      setChildren(JSON.parse(savedChildren));
-    }
+    const fetchChildren = async () => {
+      try {
+        // const response = await defaultInstance.get("/child/list"); //api 연동 예정
+        //setChildren(response.data.children); // DB에서 불러오기
+      } catch (error) {
+        console.error("자녀 목록 불러오기 실패:", error);
+        setChildren([]);
+      }
+    };
+
+    fetchChildren();
   }, []);
 
   // 자녀 선택시 studyMain 이동 + 선택한 자녀 정보 저장
