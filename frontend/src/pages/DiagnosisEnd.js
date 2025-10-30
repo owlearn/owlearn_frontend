@@ -6,11 +6,11 @@ import firework from "../assets/firework.png";
 
 const DiagnosisEnd = () => {
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
   const imageUrl = location.state?.imageUrl; // 백엔드에서 전달받은 경로
 
   const onClick = () => {
-    navigate("/studyMain");
+    navigate("/loginProfile");
   };
   return (
     <div className={styles.diagnosisEnd}>
