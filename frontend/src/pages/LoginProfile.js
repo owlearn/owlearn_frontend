@@ -39,7 +39,7 @@ function ProfileSelectionPage() {
 
   // 학부모 관리 모드
   const handleParentMode = () => {
-    navigate("/parentMode");
+    navigate("/parentMain");
   };
 
   // 자녀 추가

@@ -22,6 +22,7 @@ import Admin from "./pages/admin";
 import AdminInsert from "./pages/adminInsert";
 import AdminList from "./pages/adminList";
 import AdminEdit from "./pages/adminEdit";
+import ParentMain from "./pages/parentMain";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function AppContent() {
         <Route path="/admin/insert" element={<AdminInsert />} />
         <Route path="/admin/list" element={<AdminList />} />
         <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
+        <Route path="/parentMain" element={<ParentMain />} />
       </Routes>
     </>
   );
