@@ -23,6 +23,9 @@ import AdminInsert from "./pages/adminInsert";
 import AdminList from "./pages/adminList";
 import AdminEdit from "./pages/adminEdit";
 import ParentMain from "./pages/parentMain";
+import ChildDetail from "./pages/childDetail";
+import ChildMyPage from "./pages/childMyPage";
+import ChildInfoEdit from "./pages/childInfoEdit";
 
 function App() {
   return (
@@ -66,6 +69,9 @@ function AppContent() {
         <Route path="/admin/list" element={<AdminList />} />
         <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
         <Route path="/parentMain" element={<ParentMain />} />
+        <Route path="/child/mypage" element={<ChildMyPage />} />
+        <Route path="/child/info/edit" element={<ChildInfoEdit />} />
+        <Route path="/child/:childId/detail" element={<ChildDetail />} />
       </Routes>
     </>
   );
