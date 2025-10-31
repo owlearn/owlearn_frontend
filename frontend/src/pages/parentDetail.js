@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./childDetail.module.css";
+import styles from "./parentDetail.module.css";
 import defaultCover from "../assets/fairy.png";
 
 // 더미 데이터 (서버 연동 전 테스트용)
@@ -79,7 +79,8 @@ export default function ChildDetail() {
         </div>
       </section>
 
-      {/* 맞춤형 동화 큐레이션 */}
+      {/* 우선보류 */}
+      {/* 맞춤형 동화 큐레이션
       <section className={styles.recommendation}>
         <h3> 이번 주 추천 동화</h3>
         <div className={styles.recCard}>
@@ -104,7 +105,7 @@ export default function ChildDetail() {
             <button onClick={() => handleBookAction("skip")}>추천 제외</button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 학습 주제 밸런스 */}
       <section className={styles.topicBalance}>

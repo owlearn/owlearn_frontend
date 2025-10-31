@@ -53,7 +53,7 @@ export default function ParentDashboard() {
 
   const goChildDetail = (child) => {
     localStorage.setItem("selectedChild", JSON.stringify(child));
-    navigate(`/child/${child.id}/detail`);
+    navigate(`/parent/${child.id}/detail`);
   };
 
   const goAddProfile = () => navigate("/addProfile");
@@ -93,7 +93,7 @@ export default function ParentDashboard() {
             </div>
 
             <div className={styles.recent}>
-              <div className={styles.thumbWrap}>
+              {/* <div className={styles.thumbWrap}>
                 {child.recentBookCover ? (
                   <img
                     src={child.recentBookCover}
@@ -103,13 +103,13 @@ export default function ParentDashboard() {
                 ) : (
                   <div className={styles.thumbPlaceholder}>No Image</div>
                 )}
-              </div>
-              <div className={styles.recentMeta}>
+              </div> */}
+              {/* <div className={styles.recentMeta}>
                 <div className={styles.recentLabel}>최근 읽은 책</div>
                 <div className={styles.recentTitle}>
                   {child.recentBook || "-"}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className={styles.metrics}>
@@ -119,10 +119,10 @@ export default function ParentDashboard() {
                   {child.quizAccuracy ?? 0}%
                 </div>
               </div>
-              <div className={styles.metric}>
+              {/* <div className={styles.metric}>
                 <div className={styles.metricLabel}>학습 진도</div>
                 <div className={styles.metricValue}>{child.progress ?? 0}%</div>
-              </div>
+              </div> */}
             </div>
 
             <div className={styles.topics}>
