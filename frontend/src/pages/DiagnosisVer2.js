@@ -310,8 +310,8 @@ function DiagnosisPage() {
     const avatarElement = document.querySelector(`.${styles.avatarLayerWrap}`);    
     if (avatarElement) {
       const scale = 2; // 이미지 품질을 높이기 위한 스케일
-      const captureWidth = 250;
-      const captureHeight = 300;
+      const captureWidth = 270;
+      const captureHeight = 330;
 
       const canvas = await html2canvas(avatarElement, {
         width: captureWidth,
@@ -319,6 +319,10 @@ function DiagnosisPage() {
         scale: scale,
         backgroundColor: null, // 배경 투명하게 캡처
         useCORS: true, 
+        y:-40,
+        /*x: 10,  // ← 왼쪽 여백 잘라내기
+        scrollX: 0,
+        scrollY: 0,*/
       });
 
       const sourceY = 0; // 초기 크롭 시작점을 0으로 설정하여 전체 캡처
@@ -332,7 +336,7 @@ function DiagnosisPage() {
 
       ctx.drawImage(
         canvas,
-        0, 
+        25*scale, 
         sourceY, 
         canvas.width, 
         canvas.height - sourceY, 
@@ -350,37 +354,37 @@ function DiagnosisPage() {
         const blob = await (await fetch(imgData)).blob();
 
         const formData = new FormData();
-        formData.append("file", blob, "avatar.png");
+        formData.append("image", blob, "avatar.png");
 
         formData.append("selectedHair", selectedHair?.name || "");
         formData.append("selectedClothes", selectedClothes?.name || "");
         formData.append("selectedShoes", selectedShoes?.name || "");
         formData.append("selectedAccessory", selectedAccessory?.name || "");
+        
+        for (let [key, value] of formData.entries()) {
+          console.log("FormData Key:", key, "Value:", value);
+        }
 
-        const response = await defaultInstance.post("/upload-avatar", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+      const response = await defaultInstance.post("/user/character", formData); // axios 자동 처리
 
-        if (response.ok) {
-          const result = await response.json();
-          console.log("업로드 성공:", result);
-          alert("서버 전송 완료");
-
-          // FastAPI가 반환한 이미지 경로로 다음 페이지 이동
-          const imagePath = result.path; // FastAPI 응답 JSON에 path 필드 있어야 함
-          navigate("/diagnosisEnd", { state: { imageUrl: `${imageBaseUrl}/${imagePath}` } });
-        } else {
+      if (response.status === 200) {
+        console.log("업로드 성공:", response.data);
+        console.log("응답 전체:", response);
+        console.log("응답 데이터:", response.data);
+        alert("서버 전송 완료");
+        navigate("/diagnosisEnd", { state: { imageUrl: response.data.responseDto.message } });
+      } else {
         console.error("업로드 실패:", response.statusText);
         alert("이미지 업로드 실패");
-        }   
-      } catch (error) {
-        console.error("전송 오류:", error);
-        alert("백엔드 전송 중 오류 발생");
-      }  
+      } 
+    } catch (error) {
+      console.error("전송 오류:", error);
+      alert("백엔드 전송 중 오류 발생");
+    }
       
       const link = document.createElement("a");
       link.href = imgData;
-      link.download = "avatar_with_accessory.png";
+      link.download = "avatar.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
