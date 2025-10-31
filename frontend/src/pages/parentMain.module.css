@@ -107,10 +107,27 @@
   transform: translateY(-4px);
 }
 
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .cardHeader h3 {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
+}
+
+.ageBadge {
+  font-size: 13px;
+  font-weight: 600;
+  color: #556145;
+  background: rgba(136, 150, 116, 0.16);
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
 .recent {

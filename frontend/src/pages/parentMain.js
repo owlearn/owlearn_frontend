@@ -14,6 +14,7 @@ const dummyChildren = [
     quizAccuracy: 88,
     progress: 72,
     favoriteTopics: ["과학", "우주", "미래"],
+    age: 8,
   },
   {
     id: "child-2",
@@ -23,6 +24,7 @@ const dummyChildren = [
     quizAccuracy: 92,
     progress: 63,
     favoriteTopics: ["자연", "모험", "스토리텔링"],
+    age: 9,
   },
   {
     id: "child-3",
@@ -32,6 +34,7 @@ const dummyChildren = [
     quizAccuracy: 76,
     progress: 54,
     favoriteTopics: ["해양", "환경", "퀴즈"],
+    age: 10,
   },
 ];
 
@@ -82,6 +85,11 @@ export default function ParentDashboard() {
           <article key={child.id} className={styles.card}>
             <div className={styles.cardHeader}>
               <h3>{child.name}</h3>
+              <span className={styles.ageBadge}>
+                {child.age !== null && child.age !== undefined
+                  ? `${child.age}세`
+                  : "나이 미입력"}
+              </span>
             </div>
 
             <div className={styles.recent}>
