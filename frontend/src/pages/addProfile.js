@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
-//API : import { defaultInstance } from "../api/instance";
+// import { defaultInstance } from "../api/instance";
 
 const ChildProfilePage = () => {
   const navigate = useNavigate();
   const [childName, setChildName] = useState("");
+  const [birthdate, setBirthdate] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleCreateProfile = async () => {
@@ -14,15 +15,19 @@ const ChildProfilePage = () => {
       return;
     }
 
+    if (!birthdate) {
+      alert("자녀의 생년월일을 선택해주세요.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // api 연동 예정
+      //  서버 연동 (준비되면 주석 해제)
       // const response = await defaultInstance.post("/child/register", {
       //   name: childName,
+      //   birthdate,
       // });
-
-      // console.log("서버 응답:", response.data);
 
       alert(`"${childName}" 프로필이 생성되었습니다.`);
       navigate("/diagnosisver2");
@@ -39,7 +44,7 @@ const ChildProfilePage = () => {
       <div className={styles.container}>
         <h1 className={styles.title}>자녀 프로필 생성</h1>
         <p className={styles.subtitle}>
-          자녀의 이름을 입력하고 캐릭터를 만들어주세요
+          자녀의 이름과 생년월일을 입력해 주세요.
         </p>
 
         <div className={styles.form}>
@@ -51,6 +56,18 @@ const ChildProfilePage = () => {
               className={styles.input}
               value={childName}
               onChange={(e) => setChildName(e.target.value)}
+              disabled={loading}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>생년월일</label>
+            <input
+              type="date"
+              required
+              className={styles.input}
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
               disabled={loading}
             />
           </div>
