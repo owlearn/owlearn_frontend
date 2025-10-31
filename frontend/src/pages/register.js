@@ -86,7 +86,7 @@ const SignupPage = () => {
 
         <form className={styles.form} onSubmit={handleSignup}>
           <div className={styles.formGroup}>
-            <label>이름</label>
+            <label>학부모 이름</label>
             <input
               placeholder="이름을 입력하세요"
               required

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-import googleIcon from "../assets/google.png";
-import kakaoIcon from "../assets/kakao.png";
-import naverIcon from "../assets/naver.png";
+// import googleIcon from "../assets/google.png";
+// import kakaoIcon from "../assets/kakao.png";
+// import naverIcon from "../assets/naver.png";
 
 import { signinAPI } from "../api/user";
 
@@ -32,7 +32,7 @@ function LoginPage() {
     //   console.error("로그인 중 오류 발생:", error); // 에러 처리
     //   alert("로그인 중 오류가 발생했습니다.");
     // }
-    navigate("/studyMain");
+    navigate("/loginProfile"); //학부모별 자녀 프로필 선택 페이지로 이동
   };
 
   const goToAdmin = () => {
@@ -67,12 +67,12 @@ function LoginPage() {
 
         {/* 나머지 요소는 박스 밖에 그대로 */}
         <div className={styles.or}>
-          <hr className={styles.line} />
+          {/* <hr className={styles.line} />
           <span className={styles.orText}>또는</span>
-          <hr className={styles.line} />
+          <hr className={styles.line} /> */}
         </div>
 
-        <div className={styles.socialButtons}>
+        {/* <div className={styles.socialButtons}>
           <button className={styles.socialButton}>
             <img src={googleIcon} alt="Google" className={styles.socialIcon} />
           </button>
@@ -82,7 +82,7 @@ function LoginPage() {
           <button className={styles.socialButton}>
             <img src={naverIcon} alt="Naver" className={styles.socialIcon} />
           </button>
-        </div>
+        </div> */}
 
         <div className={styles.signup}>
           처음이신가요? <Link to="/register">회원가입</Link>
