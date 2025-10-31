@@ -58,6 +58,9 @@ function ProfileSelectionPage() {
     navigate("/addProfile");
   };
 
+  // 기본 아바타가 없는 경우 방어
+  const resolveAvatar = (child) => child.avatar || defaultAvatar;
+
   return (
     <div className={styles.page}>
       <div className={styles.header}>
@@ -76,7 +79,7 @@ function ProfileSelectionPage() {
         {children.map((child) => (
           <div key={child.id} className={styles.card}>
             <img
-              src={child.avatar}
+              src={resolveAvatar(child)}
               alt={`${child.name} 아바타`}
               className={styles.avatar}
             />
