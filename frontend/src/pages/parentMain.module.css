@@ -1,0 +1,259 @@
+.page {
+  padding: 40px 32px 64px;
+  font-family: "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  color: #2f2f2f;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.linkBtn {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5942;
+  box-shadow: 0 4px 12px rgba(80, 90, 70, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.linkBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(80, 90, 70, 0.18);
+}
+
+/* 인사문구 영역 */
+.greeting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 10px 28px rgba(90, 100, 80, 0.12);
+  margin-bottom: 36px;
+}
+
+.greetText {
+  font-size: 20px;
+  color: #3a3a3a;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* 버튼 */
+.primary {
+  background-color: #94a184;
+  color: #fff;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(140, 150, 120, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.primary:hover {
+  background-color: #7d8b6c;
+}
+
+.secondary {
+  background-color: #ffffff;
+  color: #4b5942;
+  padding: 12px 22px;
+  border-radius: 12px;
+  border: 1px solid #c9ccb8;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondary:hover {
+  background-color: #f4f5ef;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(90, 100, 80, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #e2e5d5;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ageBadge {
+  font-size: 13px;
+  font-weight: 600;
+  color: #556145;
+  background: rgba(136, 150, 116, 0.16);
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.recent {
+  display: flex;
+  gap: 16px;
+}
+
+/* 최근 본 책 */
+.thumbWrap {
+  width: 90px;
+  min-width: 90px;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f2f2ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbPlaceholder {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.recentMeta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.recentLabel {
+  font-size: 13px;
+  color: #7a856c;
+  font-weight: 500;
+}
+
+.recentTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3c3c3c;
+}
+
+/* 퀴즈/진도 */
+.metrics {
+  display: flex;
+  gap: 12px;
+}
+
+.metric {
+  flex: 1;
+  background: #f5f8f2;
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricLabel {
+  font-size: 13px;
+  color: #7a856c;
+  font-weight: 500;
+}
+
+.metricValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #5a6a49;
+}
+
+/* 선호 주제 */
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1.5px dashed #c9ccb8;
+  padding-top: 12px;
+}
+
+.topicChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: #eaf3e2;
+  color: #4b5942;
+  padding: 8px 14px;
+  border-radius: 9px;
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(90, 100, 80, 0.1);
+  transition: all 0.2s ease;
+}
+
+.muted {
+  color: #b3b7a4;
+  font-size: 13px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .page {
+    padding: 28px 20px 48px;
+  }
+
+  .greeting {
+    padding: 22px 24px;
+  }
+
+  .recent {
+    align-items: center;
+  }
+}

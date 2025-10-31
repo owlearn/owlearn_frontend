@@ -23,7 +23,7 @@ const DiagnosisEnd = () => {
   console.log("이미지 URL:", imageUrl);
 
   const onClick = () => {
-    navigate("/studyMain");
+    navigate("/loginProfile");
   };
 
   return (
