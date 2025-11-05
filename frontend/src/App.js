@@ -24,8 +24,7 @@ import AdminList from "./pages/adminList";
 import AdminEdit from "./pages/adminEdit";
 import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
-// import ChildMyPage from "./pages/childMyPage";
-// import ChildInfoEdit from "./pages/childInfoEdit";
+import ChildMyPage from "./pages/childMyPage";
 
 function App() {
   return (
@@ -70,14 +69,10 @@ function AppContent() {
         <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
         <Route path="/parentMain" element={<ParentMain />} />
         <Route path="/parent/:childId/detail" element={<ParentDetail />} />
-
-        {/* <Route path="/child/mypage" element={<ChildMyPage />} /> */}
-        {/* <Route path="/child/info/edit" element={<ChildInfoEdit />} */}
+        <Route path="/mypage" element={<ChildMyPage />} />
       </Routes>
     </>
   );
 }
 
 export default App;
-
-// test: PR 충돌 확인용 주석
