@@ -1,0 +1,458 @@
+.page {
+  font-family: "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  padding: 56px 48px;
+  color: #2f2f2f;
+}
+
+.profileSection {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 36px;
+  background: linear-gradient(90deg, #b7b78a 0%, #869b73 100%);
+  border-radius: 28px;
+  padding: 36px 44px;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.profileImage {
+  width: 140px;
+  height: auto;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+  border-radius: 20px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.profileContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.greeting {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.subText {
+  font-size: 17px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* 해시태그 */
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 15px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: background 0.2s ease;
+}
+.tag:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.noTags {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.profileAside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  min-width: 200px;
+  justify-content: center;
+}
+
+.profileTopRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.creditBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 18px;
+  padding: 10px 18px;
+  color: #ffffff;
+  font-size: 15px;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.creditBadge span {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.creditBadge strong {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.summarySection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-bottom: 48px;
+}
+
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #2f3724;
+}
+
+.book {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.book img {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.bookPlaceholder {
+  width: 90px;
+  height: 120px;
+  border-radius: 14px;
+  border: 2px dashed #d4dec5;
+  background: #f2f5ec;
+}
+
+.bookMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #4c5843;
+}
+
+.progressRow strong {
+  font-size: 20px;
+  color: #244020;
+}
+
+.primaryBtn {
+  border-radius: 16px;
+  border: none;
+  background: #94a184;
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(118, 132, 105, 0.28);
+  transition: background 0.2s ease;
+  margin-top: 12px;
+}
+.primaryBtn:hover {
+  background: #7f8d6f;
+}
+
+.infoSection {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.infoSection h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #2b2b2b;
+}
+
+.infoGrid {
+  display: grid;
+  gap: 18px;
+}
+
+.infoField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #2f2f2f;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.infoField span {
+  color: #6a735d;
+  font-size: 15px;
+}
+
+.infoField strong {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f261b;
+}
+
+/* 팝업 (리포트/정보 수정) */
+.modalOverlay {
+  position: fixed;
+  /* 고정해서 팝업처럼 띄움 */
+
+  inset: 0;
+  background: rgba(27, 35, 20, 0.55);
+  /* 반투명 배경 */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  z-index: 999;
+  /* 다른 요소들 위에 표시 */
+}
+
+.modalPanel {
+  background: #ffffff;
+  width: min(900px, 70vw);
+  max-height: 85vh;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(28, 39, 19, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeUp 0.25s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  border-bottom: 1px solid #e5ead8;
+}
+
+.modalHeader h2 {
+  font-size: 24px;
+  color: #23301c;
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #58634b;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.closeBtn:hover {
+  color: #3a4530;
+}
+
+.modalBody {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.modalField {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+  color: #2f2f2f;
+}
+
+.modalField span {
+  font-weight: 600;
+  color: #5d6b4a;
+}
+
+.modalField input {
+  border: 1px solid #dfe3d6;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: #2f2f2f;
+  background: #f8fbf2;
+}
+
+.modalActions {
+  padding: 0 32px 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  border-top: 1px solid #e5ead8;
+}
+
+.ghostBtn {
+  border-radius: 16px;
+  border: 1px solid #c8cebe;
+  background: #ffffff;
+  color: #5a6b4f;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.ghostBtn:hover {
+  background: #f6f8f2;
+}
+
+/* 리포트 리스트 */
+.reportList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.reportItem {
+  border-radius: 20px;
+  background: #f6f9ee;
+  border: 1px solid #e0e8d5;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.15s ease;
+}
+.reportItem:hover {
+  transform: translateY(-2px);
+}
+
+.reportItemTitle {
+  font-size: 20px;
+  color: #27311e;
+  font-weight: 700;
+}
+
+.reportSummary {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #445137;
+  margin: 0;
+}
+
+.reportDate {
+  font-size: 14px;
+  color: #7b866d;
+}
+
+.reportEmpty {
+  text-align: center;
+  color: #59674c;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 40px 0;
+  font-size: 16px;
+}
+
+/* =========================
+   비어있는 상태
+========================= */
+.empty {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.empty p {
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.empty button {
+  background: #a5b89f;
+  border: none;
+  padding: 10px 18px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.empty button:hover {
+  background: #8fa48a;
+}
+/* =========================
+   프로필 상단 우측 버튼 + 크레딧 박스
+========================= */
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.editBtnRight {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 18px;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+}
+.editBtnRight:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* 프로필 내부 크레딧 */
