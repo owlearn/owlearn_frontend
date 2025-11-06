@@ -22,6 +22,7 @@ import Admin from "./pages/admin";
 import AdminInsert from "./pages/adminInsert";
 import AdminList from "./pages/adminList";
 import AdminEdit from "./pages/adminEdit";
+import AdminTaleView from "./pages/adminTaleView";
 import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
@@ -59,7 +60,7 @@ function AppContent() {
         <Route path="/loginProfile" element={<LoginProfile />} />
         <Route path="/addProfile" element={<AddProfile />} />
         <Route path="/studyMain" element={<StudyMain />} />
-        <Route path="/tale/study" element={<StudyProgress />} />
+        <Route path="/tale/study/:taleId?" element={<StudyProgress />} />
         <Route path="/tale/quiz" element={<Quiz />} />
         <Route path="/tale/quiz/answer" element={<QuizAnswer />} />
         <Route path="/register" element={<Register />} />
@@ -67,6 +68,7 @@ function AppContent() {
         <Route path="/admin/insert" element={<AdminInsert />} />
         <Route path="/admin/list" element={<AdminList />} />
         <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
+        <Route path="/admin/tale/:taleId" element={<AdminTaleView />} />
         <Route path="/parentMain" element={<ParentMain />} />
         <Route path="/parent/:childId/detail" element={<ParentDetail />} />
         <Route path="/mypage" element={<ChildMyPage />} />

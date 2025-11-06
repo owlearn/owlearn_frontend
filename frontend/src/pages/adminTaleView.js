@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TaleView from "../component/taleView";
 import { getTale } from "../api/tale";
 import { imageBaseUrl } from "../api/instance";
-import styles from "./studyProgress.module.css";
+import styles from "./adminTaleView.module.css";
 
-function StudyProgress() {
+function AdminTaleView() {
+  const { taleId } = useParams();
   const navigate = useNavigate();
-  const { taleId: taleIdFromPath } = useParams();
-  const defaultTaleId = "14"; //임시 지정
-  const taleId = taleIdFromPath ?? defaultTaleId;
 
-  // 상태 관리
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [tale, setTale] = useState({
@@ -20,37 +17,39 @@ function StudyProgress() {
     imageUrls: [],
   });
 
-  // 동화 데이터 불러오기
   useEffect(() => {
     let mounted = true;
     const fetchTale = async () => {
       setLoading(true);
       setError("");
       try {
-        const response = await getTale(taleId);
-        const data = response.data?.responseDto ?? {};
+        const taleRes = await getTale(taleId);
+        const taleData = taleRes.data?.responseDto || {};
         if (!mounted) return;
         setTale({
-          title: data.title || "",
-          contents: Array.isArray(data.contents) ? data.contents : [],
-          imageUrls: Array.isArray(data.imageUrls) ? data.imageUrls : [],
+          title: taleData.title || "",
+          contents: Array.isArray(taleData.contents) ? taleData.contents : [],
+          imageUrls: Array.isArray(taleData.imageUrls)
+            ? taleData.imageUrls
+            : [],
         });
-      } catch (error) {
-        console.error("Error fetching tale: ", error);
+      } catch (err) {
+        console.error("동화 조회 실패:", err);
         if (!mounted) return;
         setError("동화를 불러오는 중 문제가 발생했어요.");
       } finally {
         if (mounted) setLoading(false);
       }
     };
+
     fetchTale();
     return () => {
       mounted = false;
     };
   }, [taleId]);
 
-  const handleReport = () => {
-    navigate("/tale/report", { state: { taleId: taleId } });
+  const handleBack = () => {
+    navigate("/admin/list");
   };
 
   if (loading) {
@@ -61,37 +60,44 @@ function StudyProgress() {
     );
   }
 
-  // 에러일 때
   if (error) {
     return (
       <div className={styles.page}>
         <div className={`${styles.stateMessage} ${styles.error}`}>{error}</div>
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={handleBack}
+        >
+          목록으로 돌아가기
+        </button>
       </div>
     );
   }
 
-  // 메인 렌더링
   return (
     <div className={styles.page}>
       <TaleView
         title={tale.title}
         contents={tale.contents}
         imageUrls={tale.imageUrls}
+        variant="admin"
         imageSrcBuilder={(src) => (src ? `${imageBaseUrl}${src}` : src)}
-        renderFooter={({ page, totalPages }) =>
-          totalPages > 0 && page === totalPages ? (
-            <button
-              type="button"
-              className={styles.quizBtn}
-              onClick={handleReport}
-            >
-              REPORT
-            </button>
-          ) : null
-        }
       />
+
+      {/* 오버레이 형태의 정보 영역 */}
+      <div className={styles.overlayInfo}>
+        <span className={styles.taleId}>ID: {taleId}</span>
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={handleBack}
+        >
+          ← 목록으로
+        </button>
+      </div>
     </div>
   );
 }
 
-export default StudyProgress;
+export default AdminTaleView;

@@ -43,6 +43,12 @@
   margin-top: 4px;
 }
 
+.buttonGroup {
+  display: flex;
+  align-items: center;
+}
+
+.viewBtn,
 .detailBtn,
 .deleteBtn {
   background-color: #e2e8f0;
@@ -56,6 +62,11 @@
   transition: background-color 0.2s ease-in-out;
 }
 
+.buttonGroup button:first-child {
+  margin-left: 0;
+}
+
+.viewBtn:hover,
 .detailBtn:hover {
   background-color: #cbd5e1;
 }

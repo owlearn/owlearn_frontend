@@ -43,6 +43,13 @@ function TaleListPage() {
             </div>
             <div className={styles.buttonGroup}>
               <button
+                className={styles.viewBtn}
+                onClick={() => navigate(`/admin/tale/${tale.id}`)}
+              >
+                보기
+              </button>{" "}
+              {/*동화조회*/}
+              <button
                 className={styles.detailBtn}
                 onClick={() => navigate(`/admin/edit/${tale.id}`)}
               >
