@@ -9,6 +9,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { GiSpeaker } from "react-icons/gi";
 
 import { getTale } from "../api/tale";
+import { imageBaseUrl } from "../api/instance";
 
 const dummyTytle = "Lily and the Magic Within";
 const dummyImg = illust;
@@ -80,13 +81,13 @@ function StudyProgress() {
         {imageUrls[page - 1] && (
           <>
             <img
-              src={`/image-proxy${imageUrls[page - 1]}`}
+              src={`${imageBaseUrl}${imageUrls[page - 1]}`}
               className={styles.illust}
               alt={`Page ${page}`}
             />
             {console.log(
               "[이미지 src]: ",
-              `/image-proxy${imageUrls[page - 1]}`
+              `${imageBaseUrl}${imageUrls[page - 1]}`
             )}
           </>
         )}
