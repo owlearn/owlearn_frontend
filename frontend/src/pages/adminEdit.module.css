@@ -1,47 +1,53 @@
 .container {
-  max-width: 720px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   padding: 40px 20px;
-  border-radius: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 14px;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 32px;
+  color: #4b5a36;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.input {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  margin-bottom: 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
+.input,
 .textarea {
   width: 100%;
-  min-height: 100px;
   padding: 12px;
   font-size: 16px;
-  margin-bottom: 16px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   background-color: #fff;
   resize: vertical;
 }
 
+.textarea {
+  min-height: 120px;
+}
+
+/* 퀴즈 관련 박스 */
 .quizBox {
-  margin-bottom: 24px;
-  padding: 16px;
-  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
   border-radius: 10px;
-  background-color: #ffffff;
+  padding: 16px;
+  margin-bottom: 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.question {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  margin-bottom: 8px;
 }
 
 .select {
@@ -54,24 +60,7 @@
   background-color: #f1f5f9;
 }
 
-.submitButton {
-  width: 100%;
-  padding: 14px;
-  background-color: #869b73;
-  color: white;
-  font-size: 20px;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 24px;
-  transition: background-color 0.3s ease;
-}
-
-.submitButton:hover {
-  background-color: #5e774e;
-}
-
+/* 추가 / 삭제 버튼 */
 .addQuizBtn {
   margin-top: 16px;
   padding: 10px 16px;
@@ -80,6 +69,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .addQuizBtn:hover {
@@ -95,31 +85,45 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .deleteBtn:hover {
   background-color: #ef4444;
 }
-.quizBox {
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-}
 
-.input {
-  width: 97%;
-  margin-bottom: 8px;
-  padding: 10px;
-  font-size: 14px;
-}
-
-.question {
+/* 저장 버튼 */
+.saveButton,
+.submitButton {
+  align-self: flex-end;
   width: 100%;
-  margin-bottom: 8px;
-  padding: 10px;
-  font-size: 16px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #869b73;
   border: none;
-  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 24px;
+}
+
+.saveButton:hover,
+.submitButton:hover {
+  transform: translateY(-1px);
+}
+
+.saveButton:disabled,
+.submitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* 안내 메시지 */
+.message {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #4b5a36;
+  text-align: right;
 }
