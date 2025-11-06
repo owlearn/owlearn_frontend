@@ -179,7 +179,7 @@
   color: #3c3c3c;
 }
 
-/* 퀴즈/진도 */
+/* 독후/진도 */
 .metrics {
   display: flex;
   gap: 12px;
@@ -205,6 +205,14 @@
   font-size: 18px;
   font-weight: 700;
   color: #5a6a49;
+}
+
+.metricNote {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5942;
+  line-height: 1.5;
+  white-space: pre-line;
 }
 
 /* 선호 주제 */

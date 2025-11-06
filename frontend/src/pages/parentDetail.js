@@ -9,7 +9,37 @@ const dummyChild = {
   name: "김하늘",
   recentBook: "우주 탐험대",
   recentBookCover: defaultCover,
-  totalQuizAccuracy: 85, //누적 정답률
+  reports: [
+    {
+      id: "report-1",
+      title: "우주 여행 일지",
+      excerpt: "탐사 중 만난 친구들과 배운 점을 기록했어요.",
+      submittedAt: "2024-04-08",
+      visibleToParent: true,
+      bookTitle: "우주 탐험대",
+    },
+    {
+      id: "report-2",
+      title: "행성 비교표",
+      excerpt: "태양계 행성의 특징을 비교하며 핵심 정보를 정리했어요.",
+      submittedAt: "2024-04-02",
+      visibleToParent: true,
+      bookTitle: "지구에서 가장 먼 여행",
+    },
+    {
+      id: "report-3",
+      title: "비밀의 모험 편지",
+      excerpt: "마음 속 생각을 편지로 남겼지만, 이번엔 혼자 간직하고 싶대요.",
+      submittedAt: "2024-03-29",
+      visibleToParent: false,
+      bookTitle: "토끼와 거북이",
+    },
+  ],
+  report: {
+    title: "우주 여행 일지",
+    summary: "탐사 중 만난 친구들과 배운 점을 기록했어요.",
+    updatedAt: "2024-04-08",
+  },
   favoriteTopics: ["과학 탐구", "논리적 사고", "호기심 발산"],
 };
 
@@ -35,6 +65,9 @@ export default function ChildDetail() {
   const [child, setChild] = useState(dummyChild);
   const [recommendation, setRecommendation] = useState(dummyRecommendation);
   const [topics, setTopics] = useState(dummyTopicBalance);
+  const reports = collectReports(child);
+  const reportCount = reports.length;
+  const reportBookTitles = extractReportBooks(reports, child.recentBook);
 
   useEffect(() => {
     // ✅ 실제 서버 연동 시:
@@ -74,7 +107,25 @@ export default function ChildDetail() {
             <p>
               최근 읽은 책: <strong>{child.recentBook}</strong>
             </p>
-            <p>전체 퀴즈 정답률: {child.totalQuizAccuracy}%</p>{" "}
+            <div className={styles.reportOverview}>
+              <div className={styles.reportCount}>
+                <span className={styles.reportLabel}>작성한 리포트</span>
+                <span className={styles.reportValue}>{reportCount}건</span>
+              </div>
+              <div className={styles.reportBooks}>
+                {reportBookTitles.length > 0 ? (
+                  reportBookTitles.map((title) => (
+                    <span key={title} className={styles.bookChip}>
+                      {title}
+                    </span>
+                  ))
+                ) : (
+                  <span className={styles.reportEmpty}>
+                    아직 작성한 리포트가 없어요.
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -155,4 +206,37 @@ function getColor(topic, index) {
   }
   const colorIndex = Math.abs(hash) % colors.length;
   return colors[colorIndex];
+}
+
+function collectReports(child) {
+  if (!child) return [];
+
+  let reports = [];
+
+  if (Array.isArray(child.reports) && child.reports.length > 0) {
+    reports = child.reports;
+  } else if (child.report) {
+    reports = [
+      {
+        id: `${child.id}-report`,
+        title: child.report.title || "리포트",
+        excerpt: child.report.summary || "",
+        submittedAt: child.report.updatedAt,
+        bookTitle: child.recentBook,
+      },
+    ];
+  }
+
+  return reports.sort((a, b) => {
+    const aTime = new Date(a.submittedAt || 0).getTime();
+    const bTime = new Date(b.submittedAt || 0).getTime();
+    return bTime - aTime;
+  });
+}
+
+function extractReportBooks(reports, fallbackBook) {
+  const titles = reports
+    .map((report) => report.bookTitle || fallbackBook)
+    .filter(Boolean);
+  return [...new Set(titles)];
 }
