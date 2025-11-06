@@ -11,30 +11,30 @@ const dummyChildren = [
     name: "김하늘",
     recentBook: "우주 탐험대",
     recentBookCover: book,
-    quizAccuracy: 88,
     progress: 72,
-    favoriteTopics: ["과학", "우주", "미래"],
+    favoriteTopics: ["과학", "우주", "탐험"],
     age: 8,
+    credits: 320,
   },
   {
     id: "child-2",
     name: "이도윤",
     recentBook: "숲속 친구들의 모험",
     recentBookCover: book,
-    quizAccuracy: 92,
     progress: 63,
-    favoriteTopics: ["자연", "모험", "스토리텔링"],
+    favoriteTopics: ["자연", "모험", "감정 공감"],
     age: 9,
+    credits: 210,
   },
   {
     id: "child-3",
     name: "최서연",
     recentBook: "바닷속 신비",
     recentBookCover: book,
-    quizAccuracy: 76,
     progress: 54,
-    favoriteTopics: ["해양", "환경", "퀴즈"],
+    favoriteTopics: ["해양", "환경", "상상력"],
     age: 10,
+    credits: 180,
   },
 ];
 
@@ -114,15 +114,13 @@ export default function ParentDashboard() {
 
             <div className={styles.metrics}>
               <div className={styles.metric}>
-                <div className={styles.metricLabel}>퀴즈 정답률</div>
+                <div className={styles.metricLabel}>누적 학습 포인트</div>
                 <div className={styles.metricValue}>
-                  {child.quizAccuracy ?? 0}%
+                  {typeof child.credits === "number"
+                    ? `${child.credits.toLocaleString()}점`
+                    : "-"}
                 </div>
               </div>
-              {/* <div className={styles.metric}>
-                <div className={styles.metricLabel}>학습 진도</div>
-                <div className={styles.metricValue}>{child.progress ?? 0}%</div>
-              </div> */}
             </div>
 
             <div className={styles.topics}>
