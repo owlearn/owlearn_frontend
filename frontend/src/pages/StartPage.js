@@ -7,7 +7,7 @@ export default function StartPage() {
   const navigate = useNavigate();
 
   const goToLogin = () => {
-    navigate("login");
+    navigate("/login");
   };
 
   return (
@@ -26,7 +26,7 @@ export default function StartPage() {
             <br />
             AI가 직접 만들어드려요.
           </p>
-          <button className={styles.btn} onClick={() => navigate("/register")}>
+          <button className={styles.btn} onClick={() => goToLogin()}>
             지금 시작하기
           </button>
         </div>
