@@ -15,10 +15,21 @@ export const idCheckAPI = async (userId) => {
   return request(userInstance, "get", "/checkId", { params: { userId } });
 };
 
-//로그인
-export const signinAPI = (id, pw) => {
+// 로그인
+export const signinAPI = (userId, password) => {
   return request(userInstance, "post", `/signin`, {
-    id: id,
-    pw: pw,
+    userId: userId,
+    password: password,
   });
 };
+  
+// 캐릭터 커스터마이징 저장
+export const saveCharacterAPI = (formData) => {
+  return request(userInstance, "post", "/character", formData);
+};
+
+// 캐릭터 커스터마이징 조회
+export const getCharacterAPI = () => {
+  return request(userInstance, "get", "/character");
+};
+

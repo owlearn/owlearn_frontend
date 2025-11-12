@@ -24,6 +24,17 @@ promptInstance.defaults.baseURL += "/gemini";
 // 서버 저장된 이미지 접근용 인스턴스
 const imageBaseUrl = `${BASE_URL}`;
 
+userInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export {
   defaultInstance,
   taleInstance,
