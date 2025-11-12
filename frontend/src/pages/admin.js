@@ -8,6 +8,7 @@ function AdminMainPage() {
   const menus = [
     { title: "동화 직접 삽입", path: "/admin/insert" },
     { title: "전체 동화 목록 조회", path: "/admin/list" },
+    { title: "동화 생성하기", path: "/admin/prompting" },
   ];
 
   return (

@@ -75,7 +75,7 @@ const StudyMain = () => {
   };
 
   const handleAiBook = () => {
-    navigate("/prompting");
+    navigate("/customStudy");
   };
 
   const handleMypage = () => {
