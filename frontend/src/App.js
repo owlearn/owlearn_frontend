@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import Diagnosis from "./pages/DiagnosisPage";
 import DiagnosisVer2 from "./pages/DiagnosisVer2";
 import DiagnosisEnd from "./pages/DiagnosisEnd";
-import Prompting from "./pages/Prompting";
+import CustomStudy from "./pages/customStudy";
 import OutputPage from "./pages/OutputPage";
 import CreationPage from "./pages/CreationPage";
 import LoginProfile from "./pages/LoginProfile";
@@ -23,6 +23,7 @@ import AdminInsert from "./pages/adminInsert";
 import AdminList from "./pages/adminList";
 import AdminEdit from "./pages/adminEdit";
 import AdminTaleView from "./pages/adminTaleView";
+import Prompting from "./pages/Prompting";
 import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
@@ -54,7 +55,7 @@ function AppContent() {
         <Route path="/diagnosis" element={<Diagnosis />} />
         <Route path="/diagnosisVer2" element={<DiagnosisVer2 />} />
         <Route path="/diagnosisEnd" element={<DiagnosisEnd />} />
-        <Route path="/prompting" element={<Prompting />} />
+        <Route path="/customStudy" element={<CustomStudy />} />
         <Route path="/output" element={<OutputPage />} />
         <Route path="/create" element={<CreationPage />} />
         <Route path="/loginProfile" element={<LoginProfile />} />
@@ -67,6 +68,7 @@ function AppContent() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/insert" element={<AdminInsert />} />
         <Route path="/admin/list" element={<AdminList />} />
+        <Route path="/admin/prompting" element={<Prompting />} />
         <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
         <Route path="/admin/tale/:taleId" element={<AdminTaleView />} />
         <Route path="/parentMain" element={<ParentMain />} />
