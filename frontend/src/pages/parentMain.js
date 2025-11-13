@@ -52,7 +52,6 @@ export default function ParentDashboard() {
   }, []);
 
   const goChildDetail = (child) => {
-    localStorage.setItem("selectedChild", JSON.stringify(child));
     navigate(`/parent/${child.id}/detail`);
   };
 
