@@ -27,6 +27,7 @@ import Prompting from "./pages/Prompting";
 import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
+import Report from "./pages/report";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function AppContent() {
         <Route path="/tale/study/:taleId?" element={<StudyProgress />} />
         <Route path="/tale/quiz" element={<Quiz />} />
         <Route path="/tale/quiz/answer" element={<QuizAnswer />} />
+        <Route path="/tale/report" element={<Report />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/insert" element={<AdminInsert />} />
