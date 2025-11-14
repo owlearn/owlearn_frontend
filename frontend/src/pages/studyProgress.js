@@ -8,7 +8,7 @@ import styles from "./studyProgress.module.css";
 function StudyProgress() {
   const navigate = useNavigate();
   const { taleId: taleIdFromPath } = useParams();
-  const defaultTaleId = "14"; //임시 지정
+  const defaultTaleId = "49"; //임시 지정
   const taleId = taleIdFromPath ?? defaultTaleId;
 
   // 상태 관리
