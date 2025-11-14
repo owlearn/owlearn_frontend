@@ -54,7 +54,7 @@ function AppContent() {
         <Route path="/" element={<StartPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/diagnosis" element={<Diagnosis />} />
-        <Route path="/diagnosisVer2" element={<DiagnosisVer2 />} />
+        <Route path="/diagnosis/:childId" element={<DiagnosisVer2 />} />
         <Route path="/diagnosisEnd" element={<DiagnosisEnd />} />
         <Route path="/customStudy" element={<CustomStudy />} />
         <Route path="/output" element={<OutputPage />} />

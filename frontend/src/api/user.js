@@ -33,3 +33,14 @@ export const getCharacterAPI = () => {
   return request(userInstance, "get", "/character");
 };
 
+// 자녀 추가
+export const addChildAPI = async (childData) => {
+  const res = await userInstance.post("/child", childData);
+  return res.data.responseDto; 
+};
+
+// 자녀 목록 조회
+export const getChildAPI = async () => {
+  const res = await userInstance.get("/child");
+  return res.data.responseDto;   // 배열로 내려옴
+};
