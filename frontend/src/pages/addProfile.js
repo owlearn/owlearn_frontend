@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
-// import { defaultInstance } from "../api/instance";
+import { addChildAPI } from "../api/user";
 
 const ChildProfilePage = () => {
   const navigate = useNavigate();
   const [childName, setChildName] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // 나이 계산 함수 (생년월일 기반)
+  const calculateAge = (birthdate) => {
+    const birth = new Date(birthdate);
+    const today = new Date();
+    return today.getFullYear() - birth.getFullYear();
+  };
 
   const handleCreateProfile = async () => {
     if (!childName.trim()) {
@@ -20,24 +27,35 @@ const ChildProfilePage = () => {
       return;
     }
 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      //  서버 연동 (준비되면 주석 해제)
-      // const response = await defaultInstance.post("/child/register", {
-      //   name: childName,
-      //   birthdate,
-      // });
+      const response = await addChildAPI({
+        childName: childName,
+        age: calculateAge(birthdate),
+      });
+
+      console.log("addChild API 응답:", response);
+      const childId = response.childId;
 
       alert(`"${childName}" 프로필이 생성되었습니다.`);
-      navigate("/diagnosisver2");
+      navigate(`/diagnosis/${childId}`);
     } catch (error) {
       console.error("프로필 생성 오류:", error);
-      alert("서버 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      alert("서버 전송 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
   };
+
+
 
   return (
     <div className={styles.page}>

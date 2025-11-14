@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LoginProfile.module.css";
 import defaultAvatar from "../assets/owl_hi.png";
 import parentIcon from "../assets/parentModeLogo.png";
-import { userInstance } from "../api/instance"; 
+import { getChildAPI } from "../api/user";
 
 function ProfileSelectionPage() {
   const navigate = useNavigate();
@@ -26,22 +26,15 @@ function ProfileSelectionPage() {
           return;
         }
 
-        // 백엔드 자녀 조회 API 호출
-        const response = await userInstance.get("/child", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const data = await getChildAPI();
+        console.log("받은 자녀 목록:", data);
 
-        console.log("자녀 목록 응답:", response);
-
-        const data = response?.data?.responseDto;
-        if (data) {
-          // 백엔드 응답 구조에 따라 조정 (예: data.children)
-          setChildren(Array.isArray(data.children) ? data.children : [data]);
+        if (Array.isArray(data)) {
+          setChildren(data);
         } else {
           setChildren([]);
         }
+
       } catch (err) {
         console.error("자녀 목록 불러오기 실패:", err);
         setError("자녀 목록을 불러오지 못했습니다.");
@@ -56,8 +49,14 @@ function ProfileSelectionPage() {
 
   // 자녀 선택시 studyMain 이동 + 선택한 자녀 정보 저장
   const handleChildSelect = (child) => {
+    console.log("선택한 child:", child);
     localStorage.setItem("selectedChild", JSON.stringify(child));
-    navigate("/studyMain");
+    if (!child.characterImageUrl) {
+      // 진단 필요
+      navigate(`/diagnosis/${child.id}`);
+    } else { // 학습 메인 페이지로 이동
+      navigate("/studyMain", { state: { child } });
+    }
   };
 
   // 학부모 관리 모드
