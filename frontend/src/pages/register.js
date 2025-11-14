@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 
-import { signupAPI, idCheckAPI } from "../api/user";
+import { signupAPI, idCheckAPI, signinAPI } from "../api/user";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -32,48 +32,70 @@ const SignupPage = () => {
     }
 
     try {
+      // 1) 회원가입 요청
       const response = await signupAPI(userId, name, password);
       console.log("회원가입 성공:", response);
+
       alert("회원가입이 완료되었습니다!");
-      navigate("/diagnosisver2");
+
+      // 2) 자동 로그인 시도
+      const loginResponse = await signinAPI(userId, password);
+
+      console.log("자동 로그인 응답:", loginResponse);
+
+      const token = loginResponse?.data?.responseDto?.token;
+
+      if (!token) {
+        alert("자동 로그인에 실패했습니다. 로그인 페이지로 이동합니다.");
+        navigate("/login");
+        return;
+      }
+
+      // 3) 토큰 저장
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+
+      // 4) 학생추가 페이지로 이동
+      navigate("/loginProfile");
+
     } catch (error) {
       console.error("회원가입 실패:", error);
       alert("회원가입에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
-  const checkDuplicateId = async () => {
-    // 입력이 비었으면 안내만 표시하고 종료
-    if (!userId.trim()) {
-      setIdCheckMessage("아이디를 입력해주세요.");
-      setIdCheckStatus("error");
-      setIsDuplicateChecked(false);
-      return;
-    }
+    const checkDuplicateId = async () => {
+      // 입력이 비었으면 안내만 표시하고 종료
+      if (!userId.trim()) {
+        setIdCheckMessage("아이디를 입력해주세요.");
+        setIdCheckStatus("error");
+        setIsDuplicateChecked(false);
+        return;
+      }
 
-    try {
-      setIdCheckStatus("checking");
-      const response = await idCheckAPI(userId); // API 비동기처리
-      console.log("중복 확인 응답:", response);
+      try {
+        setIdCheckStatus("checking");
+        const response = await idCheckAPI(userId); // API 비동기처리
+        console.log("중복 확인 응답:", response);
 
-      const message = response?.data?.responseDto?.message;
+        const message = response?.data?.responseDto?.message;
 
-      if (message) {
-        const available = message === "사용가능한 아이디입니다.";
-        setIsDuplicateChecked(available);
-        setIdCheckMessage(message);
-        setIdCheckStatus(available ? "available" : "taken");
-      } else {
-        setIdCheckMessage("서버로부터 메시지를 받지 못했습니다.");
+        if (message) {
+          const available = message === "사용가능한 아이디입니다.";
+          setIsDuplicateChecked(available);
+          setIdCheckMessage(message);
+          setIdCheckStatus(available ? "available" : "taken");
+        } else {
+          setIdCheckMessage("서버로부터 메시지를 받지 못했습니다.");
+          setIdCheckStatus("error");
+          setIsDuplicateChecked(false);
+        }
+      } catch (error) {
+        console.error("중복 확인 오류:", error);
+        setIdCheckMessage("중복 확인 중 오류가 발생했습니다.");
         setIdCheckStatus("error");
         setIsDuplicateChecked(false);
       }
-    } catch (error) {
-      console.error("중복 확인 오류:", error);
-      setIdCheckMessage("중복 확인 중 오류가 발생했습니다.");
-      setIdCheckStatus("error");
-      setIsDuplicateChecked(false);
-    }
   };
 
   return (
