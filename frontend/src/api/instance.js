@@ -24,16 +24,24 @@ promptInstance.defaults.baseURL += "/gemini";
 // 서버 저장된 이미지 접근용 인스턴스
 const imageBaseUrl = `${BASE_URL}`;
 
-userInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+//인증 토큰 붙이기
+const attachToken = (instance) => {
+  instance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+};
+
+//토큰이 필요한 인스턴스
+attachToken(userInstance);
+attachToken(taleInstance);
+attachToken(defaultInstance);
 
 export {
   defaultInstance,
