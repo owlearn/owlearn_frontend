@@ -3,33 +3,56 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LoginProfile.module.css";
 import defaultAvatar from "../assets/owl_hi.png";
 import parentIcon from "../assets/parentModeLogo.png";
+import { userInstance } from "../api/instance"; 
 
 function ProfileSelectionPage() {
   const navigate = useNavigate();
   const [children, setChildren] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // // localStorage에서 자녀 정보 불러오기
-  // useEffect(() => {
-  //   const savedChildren = localStorage.getItem("childProfiles");
-  //   if (savedChildren) {
-  //     setChildren(JSON.parse(savedChildren));
-  //   }
-  // }, []);
-
-  //학부모 로그인은 스토리지로, 자녀목록을 불러올때는 스토리지에 저장된 parentID를 기반으로 서버에서 불러올 예정
+  // userId는 참고용 저장, 실제 조회는 JWT 토큰으로 백엔드에서 부모 ID 호출
+  // 자녀 목록 불러오기
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        // const response = await defaultInstance.get("/child/list"); //api 연동 예정
-        //setChildren(response.data.children); // DB에서 불러오기
-      } catch (error) {
-        console.error("자녀 목록 불러오기 실패:", error);
+        const token = localStorage.getItem("token");
+        console.log("저장된 토큰:", token);
+        const userId = localStorage.getItem("userId");
+
+        if (!token || !userId) {
+          alert("로그인이 필요합니다.");
+          navigate("/login");
+          return;
+        }
+
+        // 백엔드 자녀 조회 API 호출
+        const response = await userInstance.get("/child", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("자녀 목록 응답:", response);
+
+        const data = response?.data?.responseDto;
+        if (data) {
+          // 백엔드 응답 구조에 따라 조정 (예: data.children)
+          setChildren(Array.isArray(data.children) ? data.children : [data]);
+        } else {
+          setChildren([]);
+        }
+      } catch (err) {
+        console.error("자녀 목록 불러오기 실패:", err);
+        setError("자녀 목록을 불러오지 못했습니다.");
         setChildren([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchChildren();
-  }, []);
+  }, [navigate]);
 
   // 자녀 선택시 studyMain 이동 + 선택한 자녀 정보 저장
   const handleChildSelect = (child) => {
@@ -44,17 +67,6 @@ function ProfileSelectionPage() {
 
   // 자녀 추가
   const handleAddChild = () => {
-    // const name = prompt("새 자녀의 이름을 입력하세요:");
-    // if (name) {
-    //   const newChild = {
-    //     id: children.length + 1, // 👈 순번 기반 ID
-    //     name,
-    //     avatar: defaultAvatar,
-    //   };
-    //   const updatedChildren = [...children, newChild];
-    //   setChildren(updatedChildren);
-    //   localStorage.setItem("childProfiles", JSON.stringify(updatedChildren));
-    // }
     navigate("/addProfile");
   };
 
