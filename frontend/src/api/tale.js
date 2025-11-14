@@ -30,7 +30,7 @@ export const insertTaleAPI = (title, contents, quizzes, images) => {
   return request(taleInstance, "post", "/insert", formData);
 };
 
-// 관리자 동화목록조회
+// 전체 동화목록조회
 export const getTaleListAPI = () => request(taleInstance, "get", "");
 
 // 관리자 특정동화수정

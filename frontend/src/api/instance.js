@@ -41,7 +41,6 @@ const attachToken = (instance) => {
 //토큰이 필요한 인스턴스
 attachToken(userInstance);
 attachToken(taleInstance);
-attachToken(defaultInstance);
 
 export {
   defaultInstance,
