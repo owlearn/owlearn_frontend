@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import html2canvas from "html2canvas";
 import styles from "./DiagnosisVer2.module.css";
 import avatarBase from "../assets/avatar.png";
-import { defaultInstance, imageBaseUrl } from "../api/instance";
+import coinIcon from "../assets/credit.png";
+import { saveCharacterAPI } from "../api/user";
 
 import hairMale1 from "../assets/hair_boy_1.png";
 import hairMale2 from "../assets/hair_boy_2.png";
@@ -51,54 +53,69 @@ const hair = [
     name: "남자머리1",
     type: "male",
     style: { top: "-15px", left: "83px", width: "45%" },
-  },
-  {
-    itemImg: hairMale2,
-    name: "남자머리2",
-    type: "male",
-    style: { top: "-18.5px", left: "80px", width: "45%" },
-  },
-  {
-    itemImg: hairMale3,
-    name: "남자머리3",
-    type: "male",
-    style: { top: "-18.5px", left: "82px", width: "45%" },
-  },
-  {
-    itemImg: hairMale4,
-    name: "남자머리4",
-    type: "male",
-    style: { top: "-19.5px", left: "82px", width: "45%" },
-  },
-  {
-    itemImg: hairFemale1,
-    name: "여자머리1",
-    type: "male",
-    style: { top: "7px", left: "80px", width: "45%" },
-  },
-  {
-    itemImg: hairFemale2,
-    name: "여자머리2",
-    type: "female",
-    style: { top: "-4px", left: "82px", width: "45%" },
-  },
-  {
-    itemImg: hairFemale3,
-    name: "여자머리3",
-    type: "female",
-    style: { top: "-4px", left: "82px", width: "45%" },
+    unlocked: true,
   },
   {
     itemImg: hairFemale4,
     name: "여자머리4",
     type: "female",
     style: { top: "0px", left: "82px", width: "45%" },
+    unlocked: true,
+  },
+  {
+    itemImg: hairMale3,
+    name: "남자머리3",
+    type: "male",
+    style: { top: "-18.5px", left: "82px", width: "45%" },
+    unlocked: true,
+  },
+  {
+    itemImg: hairMale4,
+    name: "남자머리4",
+    type: "male",
+    style: { top: "-19.5px", left: "82px", width: "45%" },
+    unlocked: false,
+    price: 200, 
+  },
+  {
+    itemImg: hairFemale1,
+    name: "여자머리1",
+    type: "male",
+    style: { top: "7px", left: "80px", width: "45%" },
+    unlocked: false,
+    price: 200, 
+  },
+  {
+    itemImg: hairFemale2,
+    name: "여자머리2",
+    type: "female",
+    style: { top: "-4px", left: "82px", width: "45%" },
+    unlocked: false,
+    price: 400, 
+  },
+  {
+    itemImg: hairFemale3,
+    name: "여자머리3",
+    type: "female",
+    style: { top: "-4px", left: "82px", width: "45%" },
+    unlocked: false,
+    price: 600, 
   },
   {
     itemImg: hairFemale5,
     name: "여자머리5",
     type: "female",
     style: { top: "7px", left: "82px", width: "45%" },
+    unlocked: false,
+    price: 600, 
+  },
+  {
+    itemImg: hairMale2,
+    name: "남자머리2",
+    type: "male",
+    style: { top: "-18.5px", left: "80px", width: "45%" },
+    unlocked: false,
+    price: 800, 
   },
 ];
 
@@ -107,46 +124,61 @@ const clothes = [
     itemImg: clothes1,
     name: "의상1",
     style: { top: "123px", left: "90px", width: "40%" },
-  },
-  {
-    itemImg: clothes2,
-    name: "의상2",
-    style: { top: "126px", left: "91px", width: "38%" },
-  },
-  {
-    itemImg: clothes3,
-    name: "의상3",
-    style: { top: "123px", left: "96px", width: "35%" },
-  },
-  {
-    itemImg: clothes4,
-    name: "의상4",
-    style: { top: "123px", left: "92.5px", width: "38%" },
-  },
-  {
-    itemImg: clothes5,
-    name: "의상5",
-    style: { top: "125px", left: "92.5px", width: "38%" },
-  },
-  {
-    itemImg: clothes6,
-    name: "의상6",
-    style: { top: "122.5px", left: "92px", width: "38%" },
-  },
-  {
-    itemImg: clothes7,
-    name: "의상7",
-    style: { top: "125px", left: "97.5px", width: "35%" },
+    unlocked: true,
   },
   {
     itemImg: clothes8,
     name: "의상8",
     style: { top: "125px", left: "97px", width: "35%" },
+    unlocked: true,
+  },
+  {
+    itemImg: clothes2,
+    name: "의상2",
+    style: { top: "126px", left: "91px", width: "38%" },
+    unlocked: true,
+  },
+    {
+    itemImg: clothes3,
+    name: "의상3",
+    style: { top: "123px", left: "96px", width: "35%" },
+    unlocked: false,
+    price: 300,
+  },
+  {
+    itemImg: clothes7,
+    name: "의상7",
+    style: { top: "125px", left: "97.5px", width: "35%" },
+    unlocked: false,
+    price: 300,
+  },
+  {
+    itemImg: clothes4,
+    name: "의상4",
+    style: { top: "123px", left: "92.5px", width: "38%" },
+    unlocked: false,
+    price: 500,
+  },
+  {
+    itemImg: clothes6,
+    name: "의상6",
+    style: { top: "122.5px", left: "92px", width: "38%" },
+    unlocked: false,
+    price: 500,
+  },
+  {
+    itemImg: clothes5,
+    name: "의상5",
+    style: { top: "125px", left: "92.5px", width: "38%" },
+    unlocked: false,
+    price: 700,
   },
   {
     itemImg: clothes9,
     name: "의상9",
     style: { top: "125px", left: "94px", width: "37%" },
+    unlocked: false,
+    price: 700,
   },
 ];
 
@@ -155,46 +187,61 @@ const shoes = [
     itemImg: shoes1,
     name: "신발1",
     style: { top: "262.5px", left: "94px", width: "37%" },
+    unlocked: true,
   },
   {
     itemImg: shoes2,
     name: "신발2",
     style: { top: "263px", left: "94px", width: "37%" },
+    unlocked: true,
   },
   {
     itemImg: shoes3,
     name: "신발3",
     style: { top: "257px", left: "102px", width: "32%" },
-  },
-  {
-    itemImg: shoes4,
-    name: "신발4",
-    style: { top: "241px", left: "94px", width: "37%" },
-  },
-  {
-    itemImg: shoes5,
-    name: "신발5",
-    style: { top: "260px", left: "93px", width: "38%" },
-  },
-  {
-    itemImg: shoes6,
-    name: "신발6",
-    style: { top: "264x", left: "93px", width: "38%" },
+    unlocked: true,
   },
   {
     itemImg: shoes7,
     name: "신발7",
     style: { top: "263px", left: "93px", width: "38%" },
+    unlocked: false,
+    price: 200,
+  },
+  {
+    itemImg: shoes5,
+    name: "신발5",
+    style: { top: "260px", left: "93px", width: "38%" },
+    unlocked: false,
+    price: 200,
+  },
+  {
+    itemImg: shoes6,
+    name: "신발6",
+    style: { top: "264px", left: "93px", width: "38%" },
+    unlocked: false,
+    price: 200,
+  },
+  {
+    itemImg: shoes4,
+    name: "신발4",
+    style: { top: "241px", left: "94px", width: "37%" },
+    unlocked: false,
+    price: 400,
   },
   {
     itemImg: shoes8,
     name: "신발8",
     style: { top: "257px", left: "92px", width: "38%" },
+    unlocked: false,
+    price: 400,
   },
   {
     itemImg: shoes9,
     name: "신발9",
     style: { top: "263px", left: "91px", width: "39%" },
+    unlocked: false,
+    price: 400,
   },
 ]
 
@@ -202,47 +249,62 @@ const accessory = [
   {
     itemImg: itemHeadband,
     name: "머리띠",
-    style: { top: "-35px", left: "36%", width: "25%" }, 
-  },
-  {
-  itemImg: itemHeadband2,
-    name: "머리띠2",
-    style: { top: "-20px", left: "110px", width: "25%" },
-  },
-  {
-    itemImg: itemHat,
-    name: "모자",
-    style: { top: "-30px", left: "117px", width: "28%" },
-  },
-  {
-    itemImg: itemGlasses,
-    name: "안경",
-    style: { top: "30px", left: "35%", width: "30%" },
-  },
-  {
-    itemImg: itemCrown,
-    name: "왕관",
-    style: { top: "-25px", left: "37%", width: "25%" },
-  },
-  {
-    itemImg: itemTie,
-    name: "넥타이",
-    style: { top: "110px", left: "37.5%", width: "25%" },
-  },
-  {
-    itemImg: itemBadge,
-    name: "뱃지",
-    style: { top: "130px", left: "48%", width: "10%" },
-  },
-  {
-    itemImg: itemBag,
-    name: "가방",
-    style: { top: "190px", left: "55px", width: "25%" },
+    style: { top: "-35px", left: "36%", width: "25%" },
+    unlocked: true, 
   },
   {
     itemImg: itemRibbon,
     name: "리본",
     style: { top: "35%", left: "118px", width: "20%" },
+    unlocked: true,
+  },
+  {
+    itemImg: itemHat,
+    name: "모자",
+    style: { top: "-30px", left: "117px", width: "28%" },
+    unlocked: true,
+  },
+  {
+    itemImg: itemGlasses,
+    name: "안경",
+    style: { top: "30px", left: "35%", width: "30%" },
+    unlocked: false,
+    price: 100, 
+  },
+  {
+    itemImg: itemCrown,
+    name: "왕관",
+    style: { top: "-25px", left: "37%", width: "25%" },
+    unlocked: false,
+    price: 100, 
+  },
+  {
+    itemImg: itemTie,
+    name: "넥타이",
+    style: { top: "110px", left: "37.5%", width: "25%" },
+    unlocked: false,
+    price: 100, 
+  },
+  {
+    itemImg: itemBadge,
+    name: "뱃지",
+    style: { top: "130px", left: "48%", width: "10%" },
+    unlocked: false,
+    price: 300, 
+  },
+  {
+    itemImg: itemBag,
+    name: "가방",
+    style: { top: "190px", left: "55px", width: "25%" },
+    unlocked: false, 
+    price: 300, 
+  },
+  {
+  itemImg: itemHeadband2,
+    name: "머리띠2",
+    style: { top: "-20px", left: "110px", width: "25%" },
+    unlocked: false,
+    price: 300, 
   },
     
 ];
@@ -258,6 +320,10 @@ function DiagnosisPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const navigate = useNavigate();
+
+  const { childId } = useParams(); 
+  const location = useLocation();
+  const childData = location.state?.child;
 
   let items;
   if (currentIndex === 0) {
@@ -275,6 +341,12 @@ function DiagnosisPage() {
   }
 
   const handleItemClick = (item) => {
+    if (!item.unlocked) {
+      // 잠금 상태면 클릭 불가
+      alert("크레딧이 부족합니다! 🔒");
+      return;
+    }
+
     if (currentIndex === 0) {
       // '머리' 탭일 때
       if (selectedHair?.name === item.name) {
@@ -319,10 +391,7 @@ function DiagnosisPage() {
         scale: scale,
         backgroundColor: null, // 배경 투명하게 캡처
         useCORS: true, 
-        y:-40,
-        /*x: 10,  // ← 왼쪽 여백 잘라내기
-        scrollX: 0,
-        scrollY: 0,*/
+        y:-35,
       });
 
       const sourceY = 0; // 초기 크롭 시작점을 0으로 설정하여 전체 캡처
@@ -356,31 +425,37 @@ function DiagnosisPage() {
         const formData = new FormData();
         formData.append("image", blob, "avatar.png");
 
+        //if (!student) {
+        //  alert("학생 프로필 정보가 없습니다. 다시 로그인해주세요.");
+        //  navigate("/login");
+        //  return;
+        //}
+        formData.append("childId", Number(childId));
+
+        // (참고: 아래 값들은 지금 백엔드가 사용하지 않는 값)
         formData.append("selectedHair", selectedHair?.name || "");
         formData.append("selectedClothes", selectedClothes?.name || "");
         formData.append("selectedShoes", selectedShoes?.name || "");
         formData.append("selectedAccessory", selectedAccessory?.name || "");
-        
+
         for (let [key, value] of formData.entries()) {
           console.log("FormData Key:", key, "Value:", value);
         }
 
-      const response = await defaultInstance.post("/user/character", formData); // axios 자동 처리
+        const response = await saveCharacterAPI(formData);
 
-      if (response.status === 200) {
-        console.log("업로드 성공:", response.data);
-        console.log("응답 전체:", response);
-        console.log("응답 데이터:", response.data);
-        alert("서버 전송 완료");
-        navigate("/diagnosisEnd", { state: { imageUrl: response.data.responseDto.message } });
-      } else {
-        console.error("업로드 실패:", response.statusText);
-        alert("이미지 업로드 실패");
-      } 
-    } catch (error) {
-      console.error("전송 오류:", error);
-      alert("백엔드 전송 중 오류 발생");
-    }
+        if (response.status === 200) {
+          alert("서버 전송 완료");
+          navigate("/diagnosisEnd", {
+            state: { imageUrl: response.data.responseDto.imageUrl }
+          });
+        } else {
+          alert("이미지 업로드 실패");
+        }
+      } catch (error) {
+        console.error("전송 오류:", error);
+        alert("백엔드 전송 중 오류 발생");
+      }
       
       const link = document.createElement("a");
       link.href = imgData;
@@ -389,9 +464,6 @@ function DiagnosisPage() {
       link.click();
       document.body.removeChild(link);
 
-      setTimeout(() => {
-        navigate("/diagnosisEnd");
-      }, 600);
     } else {
       // avatarElement를 찾지 못했거나 캡처할 필요가 없는 경우
       navigate("/diagnosisEnd");
@@ -449,7 +521,11 @@ function DiagnosisPage() {
             )}
           </div>
           {/* 완료 버튼 */}
-          <button className={styles.submitButton} onClick={handleCapture}>
+          <button className={styles.submitButton} onClick={handleCapture}
+          disabled={
+            selectedAccessory && selectedAccessory.unlocked === false // 잠금 아이템 선택 시 비활성화
+          }
+          >
             완료
           </button>
         </div>
@@ -470,24 +546,36 @@ function DiagnosisPage() {
                 </button>
               ))}
             </div>
+            
             <div className={styles.items}>
-              {/* 현재 탭에 맞는 아이템 목록을 렌더링 */}
               {items.map((item, index) => (
-                <img
+                <div
                   key={index}
+                  className={`${styles.itemBox} ${!item.unlocked ? styles.lockedItem : ""
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
+                <img
                   src={item.itemImg}
                   className={`${styles.itemImg} ${
                     (currentIndex === 0 && selectedHair?.name === item.name) ||
                     (currentIndex === 1 && selectedClothes?.name === item.name) ||
                     (currentIndex === 2 && selectedShoes?.name === item.name) ||
                     (currentIndex === 3 && selectedAccessory?.name === item.name)
-                      ? styles.selectedItem // 선택된 아이템에만 스타일 적용
+                      ? styles.selectedItem
                       : ""
                   }`}
                   alt={item.name}
-                  onClick={() => handleItemClick(item)}
                 />
-              ))}
+              
+                {!item.unlocked && (
+                  <div className={styles.coinOverlay}>
+                    <img src={coinIcon} alt="coin" className={styles.coinIcon} />
+                    <span>{item.price}</span>
+                  </div>
+                )}
+              </div>
+            ))}
             </div>
           </div>
         </div>
@@ -495,5 +583,6 @@ function DiagnosisPage() {
     </div>
   );
 }
+
 
 export default DiagnosisPage;

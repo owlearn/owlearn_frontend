@@ -4,6 +4,7 @@ import styles from "./LoginProfile.module.css";
 import defaultAvatar from "../assets/owl_hi.png";
 import parentIcon from "../assets/parentModeLogo.png";
 import { getChildAPI } from "../api/user";
+import { getCharacterAPI } from "../api/user";
 
 function ProfileSelectionPage() {
   const navigate = useNavigate();
@@ -14,38 +15,58 @@ function ProfileSelectionPage() {
   // userId는 참고용 저장, 실제 조회는 JWT 토큰으로 백엔드에서 부모 ID 호출
   // 자녀 목록 불러오기
   useEffect(() => {
-    const fetchChildren = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        console.log("저장된 토큰:", token);
-        const userId = localStorage.getItem("userId");
+  const fetchChildren = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
 
-        if (!token || !userId) {
-          alert("로그인이 필요합니다.");
-          navigate("/login");
-          return;
-        }
-
-        const data = await getChildAPI();
-        console.log("받은 자녀 목록:", data);
-
-        if (Array.isArray(data)) {
-          setChildren(data);
-        } else {
-          setChildren([]);
-        }
-
-      } catch (err) {
-        console.error("자녀 목록 불러오기 실패:", err);
-        setError("자녀 목록을 불러오지 못했습니다.");
-        setChildren([]);
-      } finally {
-        setLoading(false);
+      if (!token || !userId) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
       }
-    };
 
-    fetchChildren();
-  }, [navigate]);
+      const data = await getChildAPI(); // 자녀 목록
+
+      if (!Array.isArray(data)) {
+        setChildren([]);
+        return;
+      }
+
+      // 자녀별 캐릭터 이미지 조회
+      const updatedChildren = await Promise.all(
+        data.map(async (child) => {
+          try {
+            console.log("보내는 childId:", child.id);
+            const res = await getCharacterAPI(child.id);
+
+            if (res.data?.responseDto?.imageUrl) {
+              // 백엔드에서 준 이미지 URL 저장
+              child.avatar = res.data.responseDto.imageUrl;
+            } else {
+              child.avatar = null;
+            }
+          } catch (e) {
+            child.avatar = null;
+          }
+
+          return child;
+        })
+      );
+
+      setChildren(updatedChildren);
+
+    } catch (err) {
+      console.error("자녀 목록 불러오기 실패:", err);
+      setError("자녀 목록을 불러오지 못했습니다.");
+      setChildren([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchChildren();
+}, [navigate]);
 
   // 자녀 선택시 studyMain 이동 + 선택한 자녀 정보 저장
   const handleChildSelect = (child) => {

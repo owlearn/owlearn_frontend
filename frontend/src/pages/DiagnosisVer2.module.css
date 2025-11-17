@@ -14,18 +14,18 @@
 .diagnosisPage {
   background-color: #dddddd;
   display: flex;
-  flex-direction: column; /* Changed from row to column */
-  align-items: center; /* Center children horizontally */
+  flex-direction: column;
+  align-items: center; 
   font-family: "HakgyoansimGeurimilgi", sans-serif;
   margin-top: 2%;
-  gap: 1rem; /* Adjusted gap */
+  gap: 1rem; 
 }
 
 .mainContent {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start;
   width: 70%;
   gap: 3%;
 }
@@ -36,6 +36,7 @@
   align-items: center;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   width: 40%; /* Adjusted width */
   height: 60vh;
   /* margin: auto 0 auto 20%; Removed margin for flexbox to handle spacing */
@@ -118,7 +119,7 @@
   margin: 0;
   overflow: hidden;
   width: fit-content;
-  margin: 24px auto 0 auto; /* 가운데 정렬 */
+  margin: 24px auto 0 auto; 
   background-color: #fff;
 }
 
@@ -171,3 +172,35 @@
   box-shadow: 0 0 8px #869b73;
   background-color: #d9e0d4;
 }
+
+
+.lockedItem {
+  position: relative;
+  opacity: 0.5;
+  /*pointer-events: none; /* 클릭 막기 */
+}
+
+
+.coinOverlay {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.coinIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.coinOverlay span {
+  font-size: 20px; /*가격 글자크기*/
+}
+
+

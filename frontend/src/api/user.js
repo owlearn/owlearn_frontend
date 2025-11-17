@@ -29,8 +29,8 @@ export const saveCharacterAPI = (formData) => {
 };
 
 // 캐릭터 커스터마이징 조회
-export const getCharacterAPI = () => {
-  return request(userInstance, "get", "/character");
+export const getCharacterAPI = (childId) => {
+  return request(userInstance, "get", `/character/${childId}`);
 };
 
 // 자녀 추가
