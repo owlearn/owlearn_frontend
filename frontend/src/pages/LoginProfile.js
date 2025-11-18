@@ -12,6 +12,8 @@ function ProfileSelectionPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const BASE_URL = process.env.REACT_APP_URL; // 배포 도메인
+
   // userId는 참고용 저장, 실제 조회는 JWT 토큰으로 백엔드에서 부모 ID 호출
   // 자녀 목록 불러오기
   useEffect(() => {
@@ -72,7 +74,7 @@ function ProfileSelectionPage() {
   const handleChildSelect = (child) => {
     console.log("선택한 child:", child);
     localStorage.setItem("selectedChild", JSON.stringify(child));
-    if (!child.characterImageUrl) {
+    if (!child.avatar) {
       // 진단 필요
       navigate(`/diagnosis/${child.id}`);
     } else { // 학습 메인 페이지로 이동
@@ -91,7 +93,16 @@ function ProfileSelectionPage() {
   };
 
   // 기본 아바타가 없는 경우 방어
-  const resolveAvatar = (child) => child.avatar || defaultAvatar;
+  const resolveAvatar = (child) => {
+    if (child.avatar) {
+      // 절대경로면 그대로
+      if (child.avatar.startsWith("http")) return child.avatar;
+
+      // 상대경로면 도메인 붙이기
+      return `${BASE_URL}${child.avatar}`;
+    }
+    return defaultAvatar;
+  };
 
   return (
     <div className={styles.page}>

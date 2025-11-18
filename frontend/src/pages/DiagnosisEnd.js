@@ -8,6 +8,7 @@ const DiagnosisEnd = () => {
   const location = useLocation(); 
   
   const receivedUrl = location.state?.imageUrl;
+  const BASE_URL = process.env.REACT_APP_URL; // 배포 도메인
 
   const [imageUrl, setImageUrl] = useState(
     receivedUrl || sessionStorage.getItem("imageUrl") || ""
@@ -43,7 +44,11 @@ const DiagnosisEnd = () => {
       
       <div className={styles.avatarBox}>
         {imageUrl && (
-         <img src={imageUrl} alt="완성된 아바타" className={styles.avatarImg} />
+         <img 
+          src={`${BASE_URL}${imageUrl}`}
+            alt="완성된 아바타"
+            className={styles.avatarImg}
+          />
         )}
       </div>
       
