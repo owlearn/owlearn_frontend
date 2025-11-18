@@ -49,7 +49,7 @@ const StudyMain = () => {
     const fetchRecommendedTale = async () => {
       try {
         const res = await getTaleListAPI(); // 백에서 리스트 받아오기. 우선은 전체동화에서 랜덤선택이지만 추후에는 기성동화 db에서 가져올것
-        const list = res?.data || []; // ← 핵심!
+        const list = res?.data.responseDto || [];
         if (!Array.isArray(list) || list.length === 0) return;
         console.log("동화 수:", list.length);
 
