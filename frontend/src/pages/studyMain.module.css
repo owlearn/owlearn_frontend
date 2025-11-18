@@ -190,6 +190,41 @@
   margin-top: 4px;
 }
 
+/* 로딩 오버레이 */
+.loadingOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  gap: 12px;
+  color: #3b3b3b;
+  font-weight: 700;
+}
+
+.loader {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 6px solid #e6e6e6;
+  border-top-color: #4f653a;
+  animation: spin 0.9s linear infinite;
+}
+
+.loadingText {
+  font-size: 1.1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* 반응형 */
 @media (max-width: 768px) {
   .headerContent {
