@@ -6,7 +6,7 @@ export const getTale = (taleId) => request(taleInstance, "get", `/${taleId}`);
 
 // 기성동화 이미지 생성요청
 export const oldTaleImageGen = (taleId, childId) => {
-  return request(taleInstance, "get", ``, {
+  return request(taleInstance, "post", ``, {
     taleId: taleId,
     childId: childId,
   });
