@@ -243,6 +243,6 @@
 /* 큰 화면일 때 아바타 자연스럽게 확대 */
 @media (min-width: 1400px) {
   .owl {
-    width: 180px;
+    width: 170px;
   }
 }

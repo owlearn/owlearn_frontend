@@ -24,6 +24,10 @@ promptInstance.defaults.baseURL += "/gemini";
 // 서버 저장된 이미지 접근용 인스턴스
 const imageBaseUrl = `${BASE_URL}`;
 
+// 독후감 인스턴스
+const reportInstance = axios.create(defaultInstance.defaults);
+reportInstance.defaults.baseURL += "/review";
+
 //인증 토큰 붙이기
 const attachToken = (instance) => {
   instance.interceptors.request.use(
@@ -41,6 +45,7 @@ const attachToken = (instance) => {
 //토큰이 필요한 인스턴스
 attachToken(userInstance);
 attachToken(taleInstance);
+attachToken(reportInstance);
 
 export {
   defaultInstance,
@@ -49,4 +54,5 @@ export {
   quizzesInstance,
   promptInstance,
   imageBaseUrl,
+  reportInstance,
 };

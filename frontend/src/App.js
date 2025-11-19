@@ -27,7 +27,7 @@ import Prompting from "./pages/Prompting";
 import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
-import Report from "./pages/report";
+import Report from "./pages/reportPage";
 
 function App() {
   return (
