@@ -5,6 +5,14 @@ import styles from "./header.module.css";
 function Header() {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("user"); 
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+    localStorage.removeItem("selectedChild"); 
+    navigate("/login");
+  };
+
   return (
     <div>
       <div className={styles.header}>
@@ -18,11 +26,12 @@ function Header() {
         </div>
 
         <div className={styles.rightGroup}>
-          <button className={styles.rightbtn}>Logout</button>
+          <button className={styles.rightbtn} onClick={handleLogout}>
+            Logout
+          </button>
           <span>|</span>
           <button
-            // onClick={() => navigate(`/mypage`)}
-            // //마이페이지 구현 후 활성화
+            onClick={() => navigate(`/mypage`)}
             className={styles.rightbtn}
           >
             MyPage
