@@ -27,13 +27,8 @@ export const insertTaleAPI = ({ title, contents }) => {
 export const getTaleListAPI = () => request(taleInstance, "get", "");
 
 // 관리자 특정동화수정
-export const editTaleAPI = (taleId, title, contents, imageUrls, quizzes) => {
-  return request(taleInstance, "put", `/${taleId}`, {
-    title: title,
-    contents: contents,
-    imageUrls: imageUrls,
-    quizzes: quizzes,
-  });
+export const editTaleAPI = (taleId, data) => {
+  return request(taleInstance, "put", `/${taleId}`, data);
 };
 
 // 관리자 특정동화삭제

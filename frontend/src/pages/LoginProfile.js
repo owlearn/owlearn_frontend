@@ -22,7 +22,7 @@ function ProfileSelectionPage() {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
 
-      if (!token || !userId) {
+      if (!token) {
         alert("로그인이 필요합니다.");
         navigate("/login");
         return;
