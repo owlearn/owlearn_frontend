@@ -4,13 +4,16 @@ import { request } from "../utils/request";
 // 동화 조회 요청
 export const getTale = (taleId) => request(taleInstance, "get", `/${taleId}`);
 
-// 기존동화 생성요청
-export const oldTale = (taleId, childId) => {
-  return request(taleInstance, "get", ``, {
+// 기성동화 이미지 생성요청
+export const oldTaleImageGen = (taleId, childId) => {
+  return request(taleInstance, "post", ``, {
     taleId: taleId,
     childId: childId,
   });
 };
+
+// 기성동화 조회
+export const getOldTale = () => request(taleInstance, "get", "/premade");
 
 // 관리자 동화삽입 (기성동화 텍스트 삽입)
 export const insertTaleAPI = ({ title, contents }) => {

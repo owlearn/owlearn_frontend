@@ -27,24 +27,26 @@
 }
 
 .owl {
-  width: 160px;
+  width: clamp(100px, 20vw, 150px); /* 화면 크기 반응형 개선 */
   height: auto;
+  margin-bottom: 3vh;
 }
 
 .welcomeBox {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 10px; /* 좌우 균형 보정 */
 }
 
 .name {
-  font-size: 2.6rem;
+  font-size: 2.8rem; /* 아바타 확대에 맞춰 글씨 확대 */
   font-weight: 700;
   color: #5f7d52;
 }
 
 .welcome {
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: #444;
 }
@@ -62,7 +64,7 @@
   justify-content: space-between;
   gap: 24px;
   width: 100%;
-  max-width: 640px; /* 아래 박스들과 가로폭 통일 */
+  max-width: 640px;
   padding: 28px 40px;
   border-radius: 22px;
   background: #fffaf0;
@@ -146,7 +148,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; /* 완전 중앙 정렬 */
+  justify-content: center;
   font-size: 20px;
   font-weight: 700;
   gap: 20px;
@@ -161,6 +163,7 @@
   background: #edd2d2;
   color: #4f653a;
 }
+
 .boxStudy:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 18px rgba(175, 140, 140, 0.25);
@@ -171,6 +174,7 @@
   background: #d7e3f5;
   color: #3b5774;
 }
+
 .boxBadge:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 18px rgba(130, 160, 210, 0.25);
@@ -183,7 +187,42 @@
   object-fit: contain;
   display: flex;
   align-self: center;
-  margin-top: 4px; /* 시각적 중심 보정 */
+  margin-top: 4px;
+}
+
+/* 로딩 오버레이 */
+.loadingOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  gap: 12px;
+  color: #3b3b3b;
+  font-weight: 700;
+}
+
+.loader {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 6px solid #e6e6e6;
+  border-top-color: #4f653a;
+  animation: spin 0.9s linear infinite;
+}
+
+.loadingText {
+  font-size: 1.1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 반응형 */
@@ -198,5 +237,12 @@
   }
   .menuGrid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* 큰 화면일 때 아바타 자연스럽게 확대 */
+@media (min-width: 1400px) {
+  .owl {
+    width: 170px;
   }
 }

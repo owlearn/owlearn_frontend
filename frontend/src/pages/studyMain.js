@@ -8,8 +8,9 @@ import quiz from "../assets/studyMainQuiz.png"; //생성동화 아이콘
 import badge from "../assets/studyMainBadge.png";
 
 // import { getTale } from "../api/tale";
-import { getTaleListAPI } from "../api/tale";
-import { getCharacterAPI } from "../api/instance";
+import { imageBaseUrl } from "../api/instance"; //백엔드 이미지 서버
+import { getOldTale } from "../api/tale"; //기성동화조회
+import { oldTaleImageGen } from "../api/tale"; //기성동화이미지생성
 
 // const recommendation = [
 //   {
@@ -34,23 +35,26 @@ const StudyMain = () => {
     avatar: "",
   });
   const [recommendedTale, setRecommendedTale] = useState(null);
+  const [child, setChild] = useState(null); // 로컬스토리지에 저장된 아이 상태
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const child = getStoredChild(); //json 파싱된 선택된 child
-    if (child) {
+    const localChild = getStoredChild(); //json 파싱된 선택된 child
+    if (localChild) {
+      setChild(localChild);
       setChildProfile({
-        name: child.name || "이름 없음",
-        avatar: child.avatar || defaultAvatar,
+        name: localChild.name || "이름 없음",
+        avatar: localChild.avatar || defaultAvatar,
       });
     }
 
     // 추천 동화 불러오기
     const fetchRecommendedTale = async () => {
       try {
-        const res = await getTaleListAPI(); // 백에서 리스트 받아오기. 우선은 전체동화에서 랜덤선택이지만 추후에는 기성동화 db에서 가져올것
+        const res = await getOldTale(); // 기성동화 db에서 가져올것
         const list = res?.data.responseDto || [];
-        if (!Array.isArray(list) || list.length === 0) return;
+        //if (!Array.isArray(list) || list.length === 0) return;
         console.log("동화 수:", list.length);
 
         const randomIndex = Math.floor(Math.random() * list.length);
@@ -71,12 +75,31 @@ const StudyMain = () => {
     return stored ? JSON.parse(stored) : null;
   };
 
-  const handleStartClassicStudy = () => {
-    if (!recommendedTale) return;
+  const handleStartClassicStudy = async () => {
+    if (!recommendedTale) {
+      alert("추천 동화 오류");
+      return;
+    }
+    const childId = child?.id;
+    if (!childId) {
+      alert("아이 정보 오류");
+      return;
+    }
 
-    navigate("/tale/study", {
-      state: { taleId: recommendedTale.id },
-    });
+    // 기성동화학습 누르면 로딩
+    setLoading(true);
+
+    try {
+      const res = await oldTaleImageGen(recommendedTale.id, childId);
+      const newTaleId = res.data.responseDto.taleId;
+
+      navigate("/tale/study", { state: { taleId: newTaleId } });
+    } catch (err) {
+      console.error("기성 동화 이미지 생성 실패:", err);
+      alert("동화를 준비하는 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAiBook = () => {
@@ -87,12 +110,18 @@ const StudyMain = () => {
     navigate("/mypage");
   };
 
+  const getAvatarSrc = () => {
+    const avatar = childProfile.avatar;
+    if (!avatar) return defaultAvatar; // 없으면 기본 이미지
+    return `${imageBaseUrl}${avatar}`; // backend path
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.headerRow}>
         <div className={styles.headerContent}>
           <img
-            src={childProfile.avatar || defaultAvatar}
+            src={getAvatarSrc()}
             className={styles.owl}
             alt="선택된 아바타"
           />
@@ -128,8 +157,9 @@ const StudyMain = () => {
             type="button"
             className={styles.recommendationButton}
             onClick={handleStartClassicStudy}
+            disabled={loading}
           >
-            학습하기
+            {loading ? "준비 중..." : "학습하기"}
           </button>
         </div>
       )}
@@ -146,6 +176,12 @@ const StudyMain = () => {
           관리
         </button>
       </div>
+      {loading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loader} />
+          <div className={styles.loadingText}>동화를 재구성중이에요…</div>
+        </div>
+      )}
     </div>
   );
 };
