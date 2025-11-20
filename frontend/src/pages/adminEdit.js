@@ -40,9 +40,8 @@ function EditTalePage() {
 
     try {
       await editTaleAPI(taleId, { title, contents, imageUrls });
-      setMessage("수정이 완료되었습니다!");
-      alert(message);
-      setTimeout(() => navigate(`/admin/view/${taleId}`), 1000);
+      alert("수정이 완료되었습니다!");
+      setTimeout(() => navigate(`/admin/tale/${taleId}`), 1000);
     } catch (error) {
       console.error("수정 실패:", error);
       setMessage("수정 중 오류가 발생했습니다.");
