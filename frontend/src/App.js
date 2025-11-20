@@ -28,6 +28,9 @@ import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
 import Report from "./pages/reportPage";
+import Report from "./pages/report";
+import PrivateRoute from "./component/PrivateRoute";
+import AdminRoute from "./component/AdminRoute";
 
 function App() {
   return (
@@ -51,31 +54,34 @@ function AppContent() {
     <>
       {showHeaderBeforeLogin ? <HeaderBeforeLogin /> : <Header />}
       <Routes>
+        {/* 로그인 필요 없음 */}
         <Route path="/" element={<StartPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/diagnosis" element={<Diagnosis />} />
-        <Route path="/diagnosis/:childId" element={<DiagnosisVer2 />} />
-        <Route path="/diagnosisEnd" element={<DiagnosisEnd />} />
-        <Route path="/customStudy" element={<CustomStudy />} />
-        <Route path="/output" element={<OutputPage />} />
-        <Route path="/create" element={<CreationPage />} />
-        <Route path="/loginProfile" element={<LoginProfile />} />
-        <Route path="/addProfile" element={<AddProfile />} />
-        <Route path="/studyMain" element={<StudyMain />} />
-        <Route path="/tale/study/:taleId?" element={<StudyProgress />} />
-        <Route path="/tale/quiz" element={<Quiz />} />
-        <Route path="/tale/quiz/answer" element={<QuizAnswer />} />
-        <Route path="/tale/report" element={<Report />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/insert" element={<AdminInsert />} />
-        <Route path="/admin/list" element={<AdminList />} />
-        <Route path="/admin/prompting" element={<Prompting />} />
-        <Route path="/admin/edit/:taleId" element={<AdminEdit />} />
-        <Route path="/admin/tale/:taleId" element={<AdminTaleView />} />
-        <Route path="/parentMain" element={<ParentMain />} />
-        <Route path="/parent/:childId/detail" element={<ParentDetail />} />
-        <Route path="/mypage" element={<ChildMyPage />} />
+
+        {/* 로그인 필요 */}
+        <Route path="/diagnosis" element={<PrivateRoute> <Diagnosis /> </PrivateRoute>} />
+        <Route path="/diagnosis/:childId" element={<PrivateRoute> <DiagnosisVer2 /> </PrivateRoute>} />
+        <Route path="/diagnosisEnd" element={<PrivateRoute> <DiagnosisEnd /> </PrivateRoute>} />
+        <Route path="/customStudy" element={<PrivateRoute> <CustomStudy /> </PrivateRoute>} />
+        <Route path="/output" element={<PrivateRoute> <OutputPage /> </PrivateRoute>} />
+        <Route path="/create" element={<PrivateRoute> <CreationPage /> </PrivateRoute>} />
+        <Route path="/loginProfile" element={<PrivateRoute> <LoginProfile /> </PrivateRoute>} />
+        <Route path="/addProfile" element={<PrivateRoute> <AddProfile /> </PrivateRoute>} />
+        <Route path="/studyMain" element={<PrivateRoute> <StudyMain /> </PrivateRoute>} />
+        <Route path="/tale/study/:taleId?" element={<PrivateRoute> <StudyProgress /> </PrivateRoute>} />
+        <Route path="/tale/quiz" element={<PrivateRoute> <Quiz /> </PrivateRoute>} />
+        <Route path="/tale/quiz/answer" element={<PrivateRoute> <QuizAnswer /> </PrivateRoute>} />
+        <Route path="/tale/report" element={<PrivateRoute> <Report /> </PrivateRoute>} />
+        <Route path="/register" element={<PrivateRoute> <Register /> </PrivateRoute>} />
+        <Route path="/admin" element={<AdminRoute> <Admin /> </AdminRoute>} />
+        <Route path="/admin/insert" element={<AdminRoute> <AdminInsert /> </AdminRoute>} />
+        <Route path="/admin/list" element={<AdminRoute> <AdminList /> </AdminRoute>} />
+        <Route path="/admin/prompting" element={<AdminRoute> <Prompting /> </AdminRoute>} />
+        <Route path="/admin/edit/:taleId" element={<AdminRoute> <AdminEdit /> </AdminRoute>} />
+        <Route path="/admin/tale/:taleId" element={<AdminRoute> <AdminTaleView /> </AdminRoute>} />
+        <Route path="/parentMain" element={<PrivateRoute> <ParentMain /> </PrivateRoute>} />
+        <Route path="/parent/:childId/detail" element={<PrivateRoute> <ParentDetail /> </PrivateRoute>} />
+        <Route path="/mypage" element={<PrivateRoute> <ChildMyPage /> </PrivateRoute>} />
       </Routes>
     </>
   );
