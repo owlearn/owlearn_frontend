@@ -28,7 +28,6 @@ import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
 import Report from "./pages/reportPage";
-import Report from "./pages/report";
 import PrivateRoute from "./component/PrivateRoute";
 import AdminRoute from "./component/AdminRoute";
 
