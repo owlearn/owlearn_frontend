@@ -1,8 +1,9 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./customStudy.module.css";
 import myAvatar from "../assets/myAvatar.png";
-import axios from "axios"; //  나중에 API 연결 시 사용
+import { AiTaleGen } from "../api/tale";
+import { imageBaseUrl } from "../api/instance";
 
 const optionGroups = [
   { key: "theme", label: "주제", options: ["우정", "가족", "모험", "성장"] },
@@ -25,7 +26,7 @@ const optionGroups = [
 
 // 초기 상태
 const initialSelections = optionGroups.reduce(
-  (acc, group) => ({ ...acc, [group.key]: "" }), //누적 acc 객체에 빈 group 추가 -> 빈 초기값 설정
+  (acc, group) => ({ ...acc, [group.key]: "" }), //누적 acc 객체에 빈 group 초기값
   {}
 );
 
@@ -33,85 +34,94 @@ const CustomStoryPage = () => {
   const navigate = useNavigate();
   const [selections, setSelections] = useState(initialSelections); //option 선택 state
   const [isGenerating, setIsGenerating] = useState(false); //모든 옵션 선택 여부로 생성 state
-  const [bestStory, setBestStory] = useState(null); //베스트동화
+  // const [bestStory, setBestStory] = useState(null); // 베스트셀러 추천 (api 제작중)
   const [characterUrl, setCharacterUrl] = useState(myAvatar);
-
-  const userId = 8; //  로그인 후 실제 토큰에서 가져올 예정
-  const [taleId, setTaleId] = useState(0); //  현재 진행중인 동화 ID (더미 데이터)
+  const [selectedChild, setSelectedChild] = useState(null);
+  // const [statusMessage, setStatusMessage] = useState("");
+  // const [recommendLoading, setRecommendLoading] = useState(false);
 
   const isReady = useMemo(
     () => Object.values(selections).every((v) => Boolean(v)), //selections 값을 배열로 꺼내, 모두 true일때 true 반환
-    [selections] //selections 변경 시 재계산(useMemo)
+    [selections] //selections 변경 시 재계산
   );
 
-  // 옵션이 완성되면 자동으로 추천 스토리 갱신
   useEffect(() => {
-    if (!isReady) {
-      setBestStory(null);
-      return;
-    }
-
-    const { theme, mood, artStyle, ageGroup } = selections;
-
-    // 나중에 실제 추천 API 연결 시 이 부분 주석 해제
-    /*
-    const fetchRecommendedStory = async () => {
+    const storedChild = localStorage.getItem("selectedChild");
+    if (storedChild) {
       try {
-        const mapping = {
-          theme: { 우정: "FRIENDSHIP", 가족: "FAMILY", 모험: "ADVENTURE", 성장: "GROWTH" },
-          mood: { 따뜻한: "WARM", 신비로운: "MYSTERIOUS", 유쾌한: "CHEERFUL", 감동적인: "TOUCHING" },
-          artStyle: { 수채화: "WATERCOLOR", 동양화풍: "EAST_ASIAN", 일러스트: "ILLUSTRATION", 손그림: "HANDDRAWN" },
-          ageGroup: { "유아(3-5세)": "TODDLER_3_5", "초등저(6-8세)": "KIDS_6_8", "초등고(9-11세)": "KIDS_9_11" },
-        };
-
-        const payload = {
-          subject: mapping.theme[theme],
-          tone: mapping.mood[mood],
-          artStyle: mapping.artStyle[artStyle],
-          ageGroup: mapping.ageGroup[ageGroup],
-          userId: userId,
-        };
-
-        const res = await axios.post("/api/tales/recommend", payload, {
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const story = res.data?.responseDto;
-        if (story) {
-          setBestStory({
-            title: story.title || `${theme}의 ${mood} 동화`,
-            summary: story.summary || `${ageGroup} 독자를 위한 ${mood} 분위기의 ${theme} 이야기입니다.`,
-            mood,
-            artStyle,
-            ageGroup,
-            id: story.taleId,
-          });
-        } else {
-          setBestStory({
-            title: `${theme}의 ${mood} 동화`,
-            summary: `${ageGroup} 독자를 위한 ${mood} 분위기의 ${theme} 이야기입니다.`,
-            mood,
-            artStyle,
-            ageGroup,
-          });
+        const parsedChild = JSON.parse(storedChild);
+        setSelectedChild(parsedChild);
+        if (parsedChild?.avatar) {
+          setCharacterUrl(`${imageBaseUrl}${parsedChild.avatar}`);
         }
-      } catch (err) {
-        console.error("추천 동화 불러오기 오류:", err);
+      } catch (error) {
+        console.error("선택된 아이 정보 파싱 실패:", error);
       }
-    };
+    }
+  }, []);
 
-    fetchRecommendedStory();
-    */
-
-    //  지금은 더미 추천 표시만 사용
-    setBestStory({
-      title: `${theme}주제의 ${mood} 동화`,
-      summary: `${ageGroup} 독자를 위한 ${mood} 분위기의 ${theme} 이야기입니다.`,
-      mood,
-      artStyle,
-      ageGroup,
-    });
-  }, [selections, isReady]);
+  // 베스트셀러 추천 기능 (현재 미사용)
+  // useEffect(() => {
+  //   if (!isReady) {
+  //     setBestStory(null);
+  //     setStatusMessage("");
+  //     return;
+  //   }
+  //
+  //   if (!userId) {
+  //     setStatusMessage("로그인 정보를 확인해주세요.");
+  //     return;
+  //   }
+  //
+  //   const { theme, mood, artStyle, ageGroup } = selections;
+  //   let cancelled = false;
+  //   const fetchRecommendedStory = async () => {
+  //     try {
+  //       setRecommendLoading(true);
+  //       setStatusMessage("");
+  //       const payload = buildCustomPayload();
+  //       const res = await recommendCustomTaleAPI(payload);
+  //       if (cancelled) return;
+  //       const story = res.data?.responseDto;
+  //       if (story) {
+  //         setBestStory({
+  //           title: story.title || `${theme}의 ${mood} 동화`,
+  //           summary:
+  //             story.summary ||
+  //             `${ageGroup} 독자를 위한 ${mood} 분위기의 ${theme} 이야기입니다.`,
+  //           mood,
+  //           artStyle,
+  //           ageGroup,
+  //           taleId: story.taleId,
+  //         });
+  //       } else {
+  //         setBestStory({
+  //           title: `${theme}의 ${mood} 동화`,
+  //           summary: `${ageGroup} 독자를 위한 ${mood} 분위기의 ${theme} 이야기입니다.`,
+  //           mood,
+  //           artStyle,
+  //           ageGroup,
+  //           taleId: null,
+  //         });
+  //       }
+  //     } catch (err) {
+  //       if (cancelled) return;
+  //       console.error("추천 동화 불러오기 오류:", err);
+  //       setStatusMessage("추천 동화를 불러오지 못했어요.");
+  //       setBestStory(null);
+  //     } finally {
+  //       if (!cancelled) {
+  //         setRecommendLoading(false);
+  //       }
+  //     }
+  //   };
+  //
+  //   fetchRecommendedStory();
+  //
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  // }, [selections, isReady, buildCustomPayload, userId]);
 
   // 생성 버튼 클릭 시
   const handleGenerate = async () => {
@@ -120,53 +130,55 @@ const CustomStoryPage = () => {
       return;
     }
 
+    if (!selectedChild?.id) {
+      alert("학생 정보 오류");
+      return;
+    }
+
     setIsGenerating(true);
 
     try {
-      // 나중에 실제 동화 생성 API 연결 시 이 부분 주석 해제
-      /*
-      const mapping = {
-        theme: { 우정: "FRIENDSHIP", 가족: "FAMILY", 모험: "ADVENTURE", 성장: "GROWTH" },
-        mood: { 따뜻한: "WARM", 신비로운: "MYSTERIOUS", 유쾌한: "CHEERFUL", 감동적인: "TOUCHING" },
-        artStyle: { 수채화: "WATERCOLOR", 동양화풍: "EAST_ASIAN", 일러스트: "ILLUSTRATION", 손그림: "HANDDRAWN" },
-        ageGroup: { "유아(3-5세)": "TODDLER_3_5", "초등저(6-8세)": "KIDS_6_8", "초등고(9-11세)": "KIDS_9_11" },
-      };
+      const { theme, mood, artStyle, ageGroup } = selections;
 
-      const payload = {
-        subject: mapping.theme[selections.theme],
-        tone: mapping.mood[selections.mood],
-        artStyle: mapping.artStyle[selections.artStyle],
-        ageGroup: mapping.ageGroup[selections.ageGroup],
-        userId: userId,
-      };
-
-      const res = await axios.post("/api/tales/generate", payload, {
-        headers: { "Content-Type": "application/json" },
+      console.log("[선택]:", {
+        subject: theme,
+        tone: mood,
+        artStyle: artStyle,
+        ageGroup: ageGroup,
+        childId: selectedChild.id,
       });
 
+      const res = await AiTaleGen(
+        theme,
+        mood,
+        artStyle,
+        ageGroup,
+        selectedChild.id
+      );
+
       const newTaleId = res.data?.responseDto?.taleId;
+
       if (newTaleId) {
         alert("새로운 동화가 생성되었습니다!");
-        navigate("/study/progress", { state: { taleId: newTaleId } });
+        navigate("/tale/study", { state: { taleId: newTaleId } });
       } else {
-        alert("동화 생성에 실패했습니다.");
+        throw new Error("newTaleId 없음");
       }
-      */
-
-      //  지금은 더미 데이터 사용
-      setTimeout(() => {
-        const dummyTaleId = Math.floor(Math.random() * 1000) + 1;
-        alert("새로운 동화가 생성되었습니다!");
-        setTaleId(1);
-        navigate(`/tale/study/${taleId}`, { state: { taleId: dummyTaleId } });
-        setIsGenerating(false);
-      }, 1000);
     } catch (err) {
       console.error("동화 생성 오류:", err);
       alert("동화를 생성하는 중 오류가 발생했습니다.");
+    } finally {
       setIsGenerating(false);
     }
   };
+
+  // const handleStudy = () => {
+  //   if (!bestStory?.taleId) {
+  //     alert("추천 동화 정보를 불러온 뒤 이용해 주세요.");
+  //     return;
+  //   }
+  //   navigate("/tale/study", { state: { taleId: bestStory.taleId } });
+  // };
 
   // 각 옵션 선택 핸들러
   const handleSelect = (groupKey, option) => {
@@ -184,14 +196,14 @@ const CustomStoryPage = () => {
         <div className={styles.heroContent}>
           <div className={styles.characterBox}>
             <div className={styles.characterGlow}></div>
-            <img src={characterUrl} alt="내 캐릭터" />
-            {/* <p>당신의 캐릭터</p> */}
+            <img src={characterUrl} alt="개인캐릭터" />{" "}
           </div>
           <div className={styles.textArea}>
             <p className={styles.eyebrow}>AI 생성 동화</p>
             <h1>나만의 맞춤 동화 만들기</h1>
             <p className={styles.subText}>
-              선택한 옵션을 기반으로 AI가 생성 및 검수한 동화를 제시합니다.
+              선택한 옵션을 기반으로 AI가 생성하고, 검수까지 마친 동화를
+              제시합니다.
               <br />
               <strong>이 동화는 당신의 캐릭터를 기반으로 만들어집니다.</strong>
             </p>
@@ -234,43 +246,29 @@ const CustomStoryPage = () => {
 
       {/* 결과 영역 */}
       <section className={styles.resultsWrapper}>
-        {isReady && bestStory ? (
-          <div className={styles.bestStory}>
-            <div className={styles.bestHeader}>
-              <span className={styles.badge}>AI 추천 결과</span>
-            </div>
-            <h3>{bestStory.title}</h3>
-            <p className={styles.meta}>
-              {bestStory.mood} · {bestStory.artStyle} · {bestStory.ageGroup}
-            </p>
-            <p>{bestStory.summary}</p>
-
-            <div className={styles.buttonRow}>
-              <button
-                className={styles.primaryButton}
-                onClick={() =>
-                  navigate(`tale/study/${taleId}`, {
-                    state: { taleId: 2 },
-                  })
-                }
-              >
-                이 동화로 학습하기
-              </button>
-              <button
-                className={styles.secondaryButton}
-                onClick={handleGenerate}
-                disabled={isGenerating}
-              >
-                같은 조건으로 새로 생성하기
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.empty}>
-            모든 옵션을 선택하면 AI가 추천한 동화가 여기에 표시됩니다.
-          </div>
-        )}
+        {/* 베스트셀러 추천 영역 (현재 미사용)
+        ...
+        */}
+        <div className={styles.empty}>
+          베스트셀러 추천 기능 준비 중입니다. <br />
+        </div>
+        <div className={styles.buttonRow}>
+          <button
+            className={styles.secondaryButton}
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            type="button"
+          >
+            {isGenerating ? "생성 중..." : "선택한 옵션으로 새로 생성하기"}
+          </button>
+        </div>
       </section>
+      {isGenerating && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loader} />
+          <div className={styles.loadingText}>동화를 생성하고 있어요…</div>
+        </div>
+      )}
     </div>
   );
 };
