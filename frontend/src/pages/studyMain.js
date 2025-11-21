@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./studyMain.module.css";
 
 import defaultAvatar from "../assets/myAvatar.png";
@@ -37,15 +37,32 @@ const StudyMain = () => {
   const [recommendedTale, setRecommendedTale] = useState(null);
   const [child, setChild] = useState(null); // 로컬스토리지에 저장된 아이 상태
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const localChild = getStoredChild(); //json 파싱된 선택된 child
-    if (localChild) {
-      setChild(localChild);
+    const syncChild = () => {
+      const stateChild = location.state?.child;
+      if (stateChild) {
+        localStorage.setItem("selectedChild", JSON.stringify(stateChild));
+        return stateChild;
+      }
+      const stored = getStoredChild();
+      if (!stored) return null;
+      return stored;
+    };
+
+    const activeChild = syncChild();
+    if (activeChild) {
+      setChild(activeChild);
       setChildProfile({
-        name: localChild.name || "이름 없음",
-        avatar: localChild.avatar || defaultAvatar,
+        name: activeChild.name || "이름 없음",
+        avatar: activeChild.avatar || defaultAvatar,
+      });
+    } else {
+      setChildProfile({
+        name: "자녀를 선택해 주세요",
+        avatar: defaultAvatar,
       });
     }
 
@@ -68,7 +85,7 @@ const StudyMain = () => {
     };
 
     fetchRecommendedTale();
-  }, []);
+  }, [location.state]);
 
   const getStoredChild = () => {
     const stored = localStorage.getItem("selectedChild");
