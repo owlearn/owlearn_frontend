@@ -122,25 +122,34 @@ function TaleView({
       )}
 
       <div className={styles.body}>
-        {imageSrc && (
+        {imageSrc ? (
           <figure className={styles.imageWrap}>
             <img
               src={imageSrc}
               alt={`${title || "동화"} ${page}페이지 삽화`}
               className={styles.image}
             />
+            <section className={styles.storyBox}>
+              {totalPages === 0 ? (
+                <div className={styles.emptyContent}>
+                  아직 등록된 본문이 없습니다.
+                </div>
+              ) : (
+                <p className={styles.storyText}>{currentContent}</p>
+              )}
+            </section>
           </figure>
+        ) : (
+          <section className={styles.storyBoxStandalone}>
+            {totalPages === 0 ? (
+              <div className={styles.emptyContent}>
+                아직 등록된 본문이 없습니다.
+              </div>
+            ) : (
+              <p className={styles.storyText}>{currentContent}</p>
+            )}
+          </section>
         )}
-
-        <section className={styles.storyBox}>
-          {totalPages === 0 ? (
-            <div className={styles.emptyContent}>
-              아직 등록된 본문이 없습니다.
-            </div>
-          ) : (
-            <p className={styles.storyText}>{currentContent}</p>
-          )}
-        </section>
       </div>
 
       <div className={styles.controlsRow}>
