@@ -79,6 +79,55 @@
   background-color: #6e805c;
 }
 
+.optionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.optionColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.optionLabel {
+  font-weight: 600;
+  color: #4b583c;
+}
+
+.optionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.optionButton {
+  flex: 1 1 45%;
+  border: 1.5px solid #c9d7c0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f8fbf5;
+  color: #4b583c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionButton:hover {
+  /* border-color: #7a9166;
+  color: #7a9166; */
+  transform: translateY(-1px);
+}
+
+.active {
+  background: linear-gradient(120deg, #7fa269, #6c8759);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 3px 7px rgba(108, 135, 89, 0.25);
+}
+
 .uploadWrapper {
   display: flex;
   justify-content: center;

@@ -26,10 +26,21 @@ export const AiTaleGen = (subject, tone, artStyle, ageGroup, childId) =>
   });
 
 // 관리자 동화삽입 (기성동화 텍스트 삽입)
-export const insertTaleAPI = ({ title, contents }) => {
+export const insertTaleAPI = (
+  title,
+  contents,
+  subject,
+  tone,
+  artStyle,
+  ageGroup
+) => {
   return request(taleInstance, "post", "/insert", {
     title: title,
     contents: contents,
+    subject: subject,
+    tone: tone,
+    artStyle: artStyle,
+    ageGroup: ageGroup,
   });
 };
 

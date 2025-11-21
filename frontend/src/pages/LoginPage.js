@@ -27,26 +27,26 @@ function LoginPage() {
 
       if (token) {
         localStorage.setItem("token", token);
-         localStorage.setItem(
+        localStorage.setItem(
           "user",
           JSON.stringify({
             userId: id,
-            role: role
+            role: role,
           })
         );
         alert("로그인 성공!");
 
         // 관리자 여부 체크 -> 페이지 분기
         if (role === "ADMIN") {
-        navigate("/admin");
-      } else {
-        navigate("/loginProfile");
+          navigate("/admin");
+        } else {
+          navigate("/loginProfile");
+        }
       }
-      } 
     } catch (error) {
       console.error("로그인 중 오류 발생:", error);
 
-       // 서버가 status를 반환한 경우
+      // 서버가 status를 반환한 경우
       if (error.response) {
         if (error.response.status === 401) {
           alert("아이디 또는 비밀번호가 올바르지 않습니다.");
@@ -113,11 +113,11 @@ function LoginPage() {
           처음이신가요? <Link to="/register">회원가입</Link>
         </div>
 
-        <div className={styles.adminLink}>
+        {/* <div className={styles.adminLink}>
           <button onClick={goToAdmin} className={styles.adminButton}>
             관리자 대시보드
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
