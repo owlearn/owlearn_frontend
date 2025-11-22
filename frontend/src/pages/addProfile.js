@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 import { addChildAPI } from "../api/user";
@@ -9,12 +9,35 @@ const ChildProfilePage = () => {
   const [birthdate, setBirthdate] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 나이 계산 함수 (생년월일 기반)
+  // 만나이 계산 함수 (생년월일 기반)
   const calculateAge = (birthdate) => {
-    const birth = new Date(birthdate);
+    const birth = new Date(`${birthdate}T00:00:00`);
+    if (Number.isNaN(birth.getTime())) {
+      console.warn("[AgeCalc] 잘못된 생년월일 입력:", birthdate);
+      return null;
+    }
+
     const today = new Date();
-    return today.getFullYear() - birth.getFullYear();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    const dayDiff = today.getDate() - birth.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age -= 1;
+    }
+
+    return age;
   };
+
+  // 입력 변화 시 콘솔로 확인
+  useEffect(() => {
+    const age = birthdate ? calculateAge(birthdate) : null;
+    console.log("[AgeCalc] 입력 변경 확인:", {
+      childName,
+      birthdate,
+      age,
+    });
+  }, [childName, birthdate]);
 
   const handleCreateProfile = async () => {
     if (!childName.trim()) {
@@ -24,6 +47,12 @@ const ChildProfilePage = () => {
 
     if (!birthdate) {
       alert("자녀의 생년월일을 선택해주세요.");
+      return;
+    }
+
+    const age = calculateAge(birthdate);
+    if (age === null || age < 0) {
+      alert("생년월일이 올바르지 않습니다. 다시 확인해주세요.");
       return;
     }
 
@@ -39,7 +68,7 @@ const ChildProfilePage = () => {
     try {
       const response = await addChildAPI({
         childName: childName,
-        age: calculateAge(birthdate),
+        age,
       });
 
       console.log("addChild API 응답:", response);
@@ -54,8 +83,6 @@ const ChildProfilePage = () => {
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className={styles.page}>
