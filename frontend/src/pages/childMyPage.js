@@ -17,6 +17,9 @@ const ChildMyPage = () => {
   // 리포트 보기 팝업 관련 state
   const [isReportListOpen, setIsReportListOpen] = useState(false);
 
+  // 자녀 전환 기능
+  const goSwitchChild = () => navigate("/loginProfile");
+
   //로컬스토리지에서 자녀 정보 불러오기
   useEffect(() => {
     // 지금은 로컬스토리지 대신 더미데이터로 설정
@@ -162,6 +165,14 @@ const ChildMyPage = () => {
             className={styles.editBtnRight}
           >
             정보 수정
+          </button>
+
+          <button
+            type="button"
+            onClick={goSwitchChild}
+            className={styles.switchChildBtn}
+          >
+            자녀 전환
           </button>
         </div>
       </section>

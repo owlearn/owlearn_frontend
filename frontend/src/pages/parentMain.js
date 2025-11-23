@@ -40,9 +40,14 @@ const dummyChildren = [
 
 export default function ParentDashboard() {
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [children, setChildren] = useState([]);
   const [parentName, setParentName] = useState("");
+
+  // 삭제 모드
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [selectedToDelete, setSelectedToDelete] = useState([]);
 
   useEffect(() => {
     const name = localStorage.getItem("parentName") || parent_name;
@@ -56,32 +61,102 @@ export default function ParentDashboard() {
   };
 
   const goAddProfile = () => navigate("/addProfile");
-  const goSwitchChild = () => navigate("/loginProfile");
+  const goBack = () => navigate("/loginProfile");
+
+  // 체크박스 선택 토글
+  const toggleSelect = (childId) => {
+    setSelectedToDelete((prev) =>
+      prev.includes(childId)
+        ? prev.filter((id) => id !== childId)
+        : [...prev, childId]
+    );
+  };
+
+  const handleDeleteMode = () => {
+    if (!deleteMode) setSelectedToDelete([]);
+
+    setDeleteMode((prev) => !prev);
+  };
+
+  // 선택한 자녀 삭제
+  const handleDeleteConfirm = () => {
+    if (selectedToDelete.length === 0) return;
+
+    const yes = window.confirm("선택한 자녀를 삭제하시겠습니까?");
+    if (!yes) return;
+
+    setChildren((prev) =>
+      prev.filter((child) => !selectedToDelete.includes(child.id))
+    );
+
+    setDeleteMode(false);
+    setSelectedToDelete([]);
+  };
 
   if (loading) return <div className={styles.page}>불러오는 중…</div>;
 
   return (
     <div className={styles.page}>
-      {/* 학부모 인사 + 버튼 */}
+      {/* 상단 Greeting + 버튼 */}
       <section className={styles.greeting}>
         <div className={styles.greetText}>
-          <strong>{parentName || "학부모"}님</strong>, 자녀 학습 현황을 확인해
-          보세요.
+          <strong>{parentName || "학부모"}님</strong>, 자녀 학습 현황을 확인해 보세요.
         </div>
+
         <div className={styles.actions}>
-          <button onClick={goAddProfile} className={styles.primary}>
-            + 자녀 추가
-          </button>
-          <button onClick={goSwitchChild} className={styles.secondary}>
-            자녀 전환
-          </button>
+          {/* 일반 상태 */}
+          {!deleteMode && (
+            <>
+              <button onClick={goAddProfile} className={styles.primary}>
+                + 자녀 추가
+              </button>
+              <button onClick={handleDeleteMode} className={styles.deleteModeBtn}>
+                자녀 삭제
+              </button>
+            </>
+          )}
+
+          {/* 삭제 모드 상태 */}
+          {deleteMode && (
+            <>
+              <button
+                onClick={() => setDeleteMode(false)}
+                className={styles.cancelDelete}
+              >
+                취소
+              </button>
+
+              <button
+                onClick={handleDeleteConfirm}
+                className={styles.deleteConfirm}
+                disabled={selectedToDelete.length === 0}
+              >
+                선택 삭제
+              </button>
+            </>
+          )}
         </div>
       </section>
 
-      {/* 자녀 카드 */}
+      {/* 카드 리스트 */}
       <section className={styles.grid}>
         {children.map((child) => (
-          <article key={child.id} className={styles.card}>
+          <article
+            key={child.id}
+            className={`${styles.card} ${
+              deleteMode ? styles.cardDeleteMode : ""
+            }`}
+          >
+            {/* 체크박스 (삭제 모드일 때만 표시) */}
+            {deleteMode && (
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={selectedToDelete.includes(child.id)}
+                onChange={() => toggleSelect(child.id)}
+              />
+            )}
+
             <div className={styles.cardHeader}>
               <h3>{child.name}</h3>
               <span className={styles.ageBadge}>
@@ -89,26 +164,6 @@ export default function ParentDashboard() {
                   ? `${child.age}세`
                   : "나이 미입력"}
               </span>
-            </div>
-
-            <div className={styles.recent}>
-              {/* <div className={styles.thumbWrap}>
-                {child.recentBookCover ? (
-                  <img
-                    src={child.recentBookCover}
-                    alt={child.recentBook || "recent book"}
-                    className={styles.thumb}
-                  />
-                ) : (
-                  <div className={styles.thumbPlaceholder}>No Image</div>
-                )}
-              </div> */}
-              {/* <div className={styles.recentMeta}>
-                <div className={styles.recentLabel}>최근 읽은 책</div>
-                <div className={styles.recentTitle}>
-                  {child.recentBook || "-"}
-                </div>
-              </div> */}
             </div>
 
             <div className={styles.metrics}>
@@ -125,32 +180,36 @@ export default function ParentDashboard() {
             <div className={styles.topics}>
               <div className={styles.metricLabel}>선호 주제</div>
               <div className={styles.topicChips}>
-                {(child.favoriteTopics || [])
-                  .slice(0, 5)
-                  .map((topic, index) => (
-                    <span key={index} className={styles.chip}>
-                      {topic}
-                    </span>
-                  ))}
-                {(!child.favoriteTopics ||
-                  child.favoriteTopics.length === 0) && (
-                  <span className={styles.muted}>-</span>
-                )}
+                {(child.favoriteTopics || []).map((topic, index) => (
+                  <span key={index} className={styles.chip}>
+                    {topic}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className={styles.cardFooter}>
-              <button
-                type="button"
-                className={styles.secondary}
-                onClick={() => goChildDetail(child)}
-              >
-                상세 보기
-              </button>
-            </div>
+            {/* 상세 보기 버튼 (삭제 모드일 때는 숨김) */}
+            {!deleteMode && (
+              <div className={styles.cardFooter}>
+                <button
+                  type="button"
+                  className={styles.secondary}
+                  onClick={() => goChildDetail(child)}
+                >
+                  상세 보기
+                </button>
+              </div>
+            )}
           </article>
         ))}
       </section>
+
+      {/* 돌아가기 버튼 */}
+      <div className={styles.backWrapper}>
+        <button className={styles.backButton} onClick={goBack}>
+          ← 돌아가기
+        </button>
+      </div>
     </div>
   );
 }

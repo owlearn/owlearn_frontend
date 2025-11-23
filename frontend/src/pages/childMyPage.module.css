@@ -455,4 +455,21 @@
   transform: translateY(-1px);
 }
 
-/* 프로필 내부 크레딧 */
+.switchChildBtn {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 18px;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 12px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.switchChildBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
