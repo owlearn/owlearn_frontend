@@ -69,8 +69,14 @@ export default function ChildDetail() {
   const reportCount = reports.length;
   const reportBookTitles = extractReportBooks(reports, child.recentBook);
 
+  // 부모가 리포트 팝업 열기/닫기
+  const [isReportListOpen, setIsReportListOpen] = useState(false);
+
+  const openReportList = () => setIsReportListOpen(true);
+  const closeReportList = () => setIsReportListOpen(false);
+
   useEffect(() => {
-    // ✅ 실제 서버 연동 시:
+    // 실제 서버 연동 시:
     // const { data } = await defaultInstance.get(`/child/${childId}/summary`);
     // setChild(data);
     // setRecommendation(data.recommendation);
@@ -80,137 +86,181 @@ export default function ChildDetail() {
   const handleBookAction = (action) => {
     if (action === "reserve") {
       alert(`"${recommendation.title}"을(를) 자녀에게 추천했습니다.`);
-      // 서버에 parent_recommended = true 로 전송
     } else if (action === "skip") {
       alert("이 동화를 추천에서 제외했습니다.");
     }
   };
 
   return (
-    <div className={styles.page}>
-      <button
-        className={styles.backButton}
-        onClick={() => navigate("/parentMain")}
-      >
-        ← 목록으로
-      </button>
+    <>
+      <div className={styles.page}>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/parentMain")}
+        >
+          ← 목록으로
+        </button>
 
-      <section className={styles.childSummary}>
-        <div className={styles.headerBox}>
-          <img
-            src={child.recentBookCover}
-            alt="book cover"
-            className={styles.bookImg}
-          />
-          <div className={styles.childInfo}>
-            <h2>{child.name}</h2>
-            <p>
-              최근 읽은 책: <strong>{child.recentBook}</strong>
-            </p>
-            <div className={styles.reportOverview}>
-              <div className={styles.reportCount}>
-                <span className={styles.reportLabel}>작성한 리포트</span>
-                <span className={styles.reportValue}>{reportCount}건</span>
-              </div>
-              <div className={styles.reportBooks}>
-                {reportBookTitles.length > 0 ? (
-                  reportBookTitles.map((title) => (
-                    <span key={title} className={styles.bookChip}>
-                      {title}
-                    </span>
-                  ))
-                ) : (
-                  <span className={styles.reportEmpty}>
-                    아직 작성한 리포트가 없어요.
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        <section className={styles.childSummary}>
+          <div className={styles.headerBox}>
+            <img
+              src={child.recentBookCover}
+              alt="book cover"
+              className={styles.bookImg}
+            />
 
-      {/* 우선보류 */}
-      {/* 맞춤형 동화 큐레이션
-      <section className={styles.recommendation}>
-        <h3> 이번 주 추천 동화</h3>
-        <div className={styles.recCard}>
-          <div className={styles.recMedia}>
-            <img src={defaultCover} alt={`${recommendation.title} 표지`} />
-          </div>
-          <div className={styles.recBody}>
-            <div className={styles.recTitle}>{recommendation.title}</div>
-            <div className={styles.recReason}>{recommendation.reason}</div>
-            <div className={styles.topicTags}>
-              {recommendation.topics.map((t, i) => (
-                <span key={i} className={styles.tag}>
-                  #{t}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.recButtons}>
-            <button onClick={() => handleBookAction("reserve")}>
-              읽기 예약
-            </button>
-            <button onClick={() => handleBookAction("skip")}>추천 제외</button>
-          </div>
-        </div>
-      </section> */}
+            <div className={styles.childInfo}>
+              <h2>{child.name}</h2>
+              <p>
+                최근 읽은 책: <strong>{child.recentBook}</strong>
+              </p>
 
-      {/* 학습 주제 밸런스 */}
-      <section className={styles.topicBalance}>
-        <h3>학습 주제 밸런스</h3>
-        <p className={styles.topicNote}>
-          자녀의 학습 주제 편향을 한눈에 볼 수 있습니다.
-        </p>
-        <div className={styles.topicBars}>
-          {topics.map((t, i) => (
-            <div key={i} className={styles.topicRow}>
-              <span className={styles.topicLabel}>{t.topic}</span>
-              <div className={styles.topicBarWrap}>
+              <div className={styles.reportOverview}>
+                {/* 클릭해서 팝업 열기 */}
                 <div
-                  className={styles.topicBar}
-                  style={{
-                    width: `${t.percent}%`, //비율만큼 길이
-                    backgroundColor: getColor(t.topic), //주제별 색 다르게
-                  }}
-                ></div>
+                  className={styles.reportCount}
+                  onClick={openReportList}
+                  style={{ cursor: "pointer" }}
+                >
+                  <span className={styles.reportLabel}>작성한 리포트</span>
+                  <span className={styles.reportValue}>{reportCount}건</span>
+                </div>
+
+                <div className={styles.reportBooks}>
+                  {reportBookTitles.length > 0 ? (
+                    reportBookTitles.map((title) => (
+                      <span key={title} className={styles.bookChip}>
+                        {title}
+                      </span>
+                    ))
+                  ) : (
+                    <span className={styles.reportEmpty}>
+                      아직 작성한 리포트가 없어요.
+                    </span>
+                  )}
+                </div>
               </div>
-              <span className={styles.topicValue}>{t.percent}%</span>
             </div>
-          ))}
+          </div>
+        </section>
+
+        {/* 우선보류 */}
+        {/* 맞춤형 동화 큐레이션
+        <section className={styles.recommendation}>
+          <h3> 이번 주 추천 동화</h3>
+          <div className={styles.recCard}>
+            <div className={styles.recMedia}>
+              <img src={defaultCover} alt={`${recommendation.title} 표지`} />
+            </div>
+            <div className={styles.recBody}>
+              <div className={styles.recTitle}>{recommendation.title}</div>
+              <div className={styles.recReason}>{recommendation.reason}</div>
+              <div className={styles.topicTags}>
+                {recommendation.topics.map((t, i) => (
+                  <span key={i} className={styles.tag}>
+                    #{t}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className={styles.recButtons}>
+              <button onClick={() => handleBookAction("reserve")}>
+                읽기 예약
+              </button>
+              <button onClick={() => handleBookAction("skip")}>추천 제외</button>
+            </div>
+          </div>
+        </section> */}
+
+
+        {/* 학습 주제 밸런스 */}
+        <section className={styles.topicBalance}>
+          <h3>학습 주제 밸런스</h3>
+          <p className={styles.topicNote}>
+            자녀의 학습 주제 편향을 한눈에 볼 수 있습니다.
+          </p>
+
+          <div className={styles.topicBars}>
+            {topics.map((t, i) => (
+              <div key={i} className={styles.topicRow}>
+                <span className={styles.topicLabel}>{t.topic}</span>
+
+                <div className={styles.topicBarWrap}>
+                  <div
+                    className={styles.topicBar}
+                    style={{
+                      width: `${t.percent}%`,
+                      backgroundColor: getColor(t.topic),
+                    }}
+                  ></div>
+                </div>
+
+                <span className={styles.topicValue}>{t.percent}%</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* 리포트 팝업 */}
+      {isReportListOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalPanel}>
+            <div className={styles.modalHeader}>
+              <h2>작성한 독후감 ({reports.length}개)</h2>
+              <button
+                type="button"
+                onClick={closeReportList}
+                className={styles.closeBtn}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className={styles.modalBody}>
+              {reports.length === 0 ? (
+                <div className={styles.reportEmpty}>
+                  <p>아직 작성한 독후감이 없어요.</p>
+                </div>
+              ) : (
+                <ul className={styles.reportList}>
+                  {reports.map((r) => (
+                    <li key={r.id} className={styles.reportItem}>
+                      <strong className={styles.reportItemTitle}>{r.title}</strong>
+                      <p className={styles.reportSummary}>{r.excerpt}</p>
+                      <span className={styles.reportDate}>{r.submittedAt}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
         </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 }
 
-//주제별 색 다르게 만들어주는 함수
-function getColor(topic, index) {
-  // 색상 팔레트
+// 주제별 색 다르게 만들어주는 함수
+function getColor(topic) {
   const colors = [
-    "#7CA982", // green
-    "#B5CDA3", // mint
-    "#EFC88B", // yellow
-    "#B8C480", // olive
-    "#F1A66A", // orange
-    "#99B2DD", // blue
-    "#CBAACB", // purple
+    "#7CA982",
+    "#B5CDA3",
+    "#EFC88B",
+    "#B8C480",
+    "#F1A66A",
+    "#99B2DD",
+    "#CBAACB",
   ];
-
-  // 주제 이름을 기반으로, 해시로 인덱스
   let hash = 0;
   for (let i = 0; i < topic.length; i++) {
     hash = topic.charCodeAt(i) + ((hash << 5) - hash);
   }
-  const colorIndex = Math.abs(hash) % colors.length;
-  return colors[colorIndex];
+  return colors[Math.abs(hash) % colors.length];
 }
 
 function collectReports(child) {
   if (!child) return [];
-
   let reports = [];
 
   if (Array.isArray(child.reports) && child.reports.length > 0) {
@@ -227,16 +277,16 @@ function collectReports(child) {
     ];
   }
 
-  return reports.sort((a, b) => {
-    const aTime = new Date(a.submittedAt || 0).getTime();
-    const bTime = new Date(b.submittedAt || 0).getTime();
-    return bTime - aTime;
-  });
+  return reports.sort(
+    (a, b) =>
+      new Date(b.submittedAt || 0).getTime() -
+      new Date(a.submittedAt || 0).getTime()
+  );
 }
 
 function extractReportBooks(reports, fallbackBook) {
   const titles = reports
-    .map((report) => report.bookTitle || fallbackBook)
+    .map((r) => r.bookTitle || fallbackBook)
     .filter(Boolean);
   return [...new Set(titles)];
 }
