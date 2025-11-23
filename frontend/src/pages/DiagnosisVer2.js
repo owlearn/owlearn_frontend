@@ -325,6 +325,15 @@ function DiagnosisPage() {
   const location = useLocation();
   const childData = location.state?.child;
 
+  const isSelected = (item) => {
+    if (currentIndex === 0) return selectedHair?.name === item.name;
+    if (currentIndex === 1) return selectedClothes?.name === item.name;
+    if (currentIndex === 2) return selectedShoes?.name === item.name;
+    if (currentIndex === 3) return selectedAccessory?.name === item.name;
+    return false;
+  };
+
+
   let items;
   if (currentIndex === 0) {
     items = hair; 
@@ -391,7 +400,7 @@ function DiagnosisPage() {
         scale: scale,
         backgroundColor: null, // 배경 투명하게 캡처
         useCORS: true, 
-        y:-35,
+        y:-30,
       });
 
       const sourceY = 0; // 초기 크롭 시작점을 0으로 설정하여 전체 캡처
@@ -532,57 +541,48 @@ function DiagnosisPage() {
 
         {/* 아이템 선택 UI 영역 */}
         <div className={styles.itemContainer}>
-          <div className={styles.container}>
-            <div className={styles.tabs}>
-              {tabList.map((tab, i) => (
-                <button
-                  key={i}
-                  className={`${styles.tab} ${
-                    currentIndex === i ? styles.active : ""
-                  }`}
-                  onClick={() => setCurrentIndex(i)} 
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            
-            <div className={styles.items}>
-              {items.map((item, index) => (
-                <div
-                  key={index}
-                  className={`${styles.itemBox} ${!item.unlocked ? styles.lockedItem : ""
+          <div className={styles.tabs}>
+            {tabList.map((tab, idx) => (
+              <button
+                key={idx}
+                className={`${styles.tab} ${
+                  currentIndex === idx ? styles.active : ""
                 }`}
+                onClick={() => setCurrentIndex(idx)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          <div className={styles.items}>
+            {items.map((item, i) => (
+              <div
+                key={i}
+                className={`${styles.itemBox} ${
+                  isSelected(item) ? styles.selectedBox : ""
+                } ${!item.unlocked ? styles.lockedItem : ""}`}
                 onClick={() => handleItemClick(item)}
               >
                 <img
                   src={item.itemImg}
-                  className={`${styles.itemImg} ${
-                    (currentIndex === 0 && selectedHair?.name === item.name) ||
-                    (currentIndex === 1 && selectedClothes?.name === item.name) ||
-                    (currentIndex === 2 && selectedShoes?.name === item.name) ||
-                    (currentIndex === 3 && selectedAccessory?.name === item.name)
-                      ? styles.selectedItem
-                      : ""
-                  }`}
+                  className={styles.itemImg}
                   alt={item.name}
                 />
-              
+
                 {!item.unlocked && (
                   <div className={styles.coinOverlay}>
-                    <img src={coinIcon} alt="coin" className={styles.coinIcon} />
+                    <img src={coinIcon} className={styles.coinIcon} alt="" />
                     <span>{item.price}</span>
                   </div>
                 )}
               </div>
             ))}
-            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
 
 export default DiagnosisPage;
