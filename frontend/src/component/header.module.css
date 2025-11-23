@@ -49,3 +49,11 @@
 .rightbtn:hover {
   font-weight: bold;
 }
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 180px; 
+  justify-content: flex-end; 
+}
