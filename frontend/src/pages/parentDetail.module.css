@@ -199,3 +199,113 @@
   min-width: 40px;
   text-align: right;
 }
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(27, 35, 20, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  z-index: 999;
+}
+
+.modalPanel {
+  background: #ffffff;
+  width: min(900px, 70vw);
+  max-height: 85vh;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(28, 39, 19, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeUp 0.25s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  border-bottom: 1px solid #e5ead8;
+}
+
+.modalHeader h2 {
+  font-size: 24px;
+  color: #23301c;
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #58634b;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.closeBtn:hover {
+  color: #3a4530;
+}
+
+.modalBody {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.reportList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.reportItem {
+  border-radius: 20px;
+  background: #f6f9ee;
+  border: 1px solid #e0e8d5;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.15s ease;
+}
+.reportItem:hover {
+  transform: translateY(-2px);
+}
+
+.reportItemTitle {
+  font-size: 20px;
+  color: #27311e;
+  font-weight: 700;
+}
+
+.reportSummary {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #445137;
+  margin: 0;
+}
+
+.reportDate {
+  font-size: 14px;
+  color: #7b866d;
+}
+

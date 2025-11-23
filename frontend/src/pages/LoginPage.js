@@ -34,7 +34,6 @@ function LoginPage() {
             role: role,
           })
         );
-        alert("로그인 성공!");
 
         // 관리자 여부 체크 -> 페이지 분기
         if (role === "ADMIN") {

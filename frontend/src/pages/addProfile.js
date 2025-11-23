@@ -74,7 +74,6 @@ const ChildProfilePage = () => {
       console.log("addChild API 응답:", response);
       const childId = response.childId;
 
-      alert(`"${childName}" 프로필이 생성되었습니다.`);
       navigate(`/diagnosis/${childId}`);
     } catch (error) {
       console.error("프로필 생성 오류:", error);
