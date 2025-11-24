@@ -28,21 +28,20 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: #ffffff;
-  color: #333;
+  background: linear-gradient(135deg, #bfead0, #f7e4a6);
+  color: #2f3b2f;
   border: none;
   border-radius: 20px;
   padding: 14px 24px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.25s ease-in-out;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transition: opacity 0.2s ease;
 }
 
 .parentButton:hover {
-  transform: translateY(-3px);
-  background-color: #f5f5f5;
+  opacity: 0.9;
 }
 
 .parentIcon {
@@ -113,19 +112,19 @@
 }
 
 .selectButton {
-  background-color: #869b73;
-  color: #fff;
+  background: linear-gradient(135deg, #ffd7b3, #ffc27a);
+  color: #3f2b1a;
   border: none;
   border-radius: 8px;
   padding: 6px 26px;
   font-size: 14px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .selectButton:hover {
-  background-color: #6d865d;
+  opacity: 0.9;
 }
 
 /* 자녀 추가 카드 */

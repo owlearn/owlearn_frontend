@@ -63,20 +63,21 @@
 .uploadButton {
   width: 100%;
   padding: 12px;
-  background-color: #869b73;
-  color: white;
+  background-color: #f5f7f1;
+  color: #3f4f36;
   font-weight: bold;
-  border: none;
+  border: 1px solid #d8dfd1;
   border-radius: 8px;
   margin-top: 8px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .addPageButton:hover,
 .addQuizButton:hover,
 .uploadButton:hover {
-  background-color: #6e805c;
+  background-color: #e8eddf;
+  transform: translateY(-1px);
 }
 
 .optionGrid {
@@ -94,7 +95,7 @@
 
 .optionLabel {
   font-weight: 600;
-  color: #4b583c;
+  color: #2f3a2f;
 }
 
 .optionButtons {
@@ -105,27 +106,27 @@
 
 .optionButton {
   flex: 1 1 45%;
-  border: 1.5px solid #c9d7c0;
+  border: 1.5px solid #e1e6ec;
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 14px;
-  background: #f8fbf5;
-  color: #4b583c;
+  background: #f9fbfd;
+  color: #35485c;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .optionButton:hover {
-  /* border-color: #7a9166;
-  color: #7a9166; */
+  border-color: #cfd6df;
+  color: #2f3a2f;
   transform: translateY(-1px);
 }
 
 .active {
-  background: linear-gradient(120deg, #7fa269, #6c8759);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 3px 7px rgba(108, 135, 89, 0.25);
+  background: #f0f4eb;
+  color: #2f3a2f;
+  border-color: #d8dfd1;
+  box-shadow: none;
 }
 
 .uploadWrapper {
@@ -137,14 +138,14 @@
   max-width: 400px;
   margin: 0 auto 20px;
   font-size: 20px;
-  background-color: #6c8759;
-  color: white;
-  border: none;
+  background-color: #f5f7f1;
+  color: #3f4f36;
+  border: 1px solid #d8dfd1;
   border-radius: 8px;
   cursor: pointer;
   margin-left: 35%;
 }
 
 .uploadButton:hover {
-  background-color: #5e774e;
+  background-color: #e8eddf;
 }
