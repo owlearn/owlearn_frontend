@@ -64,13 +64,14 @@
   justify-content: space-between;
   gap: 24px;
   width: 100%;
-  max-width: 640px;
-  padding: 28px 40px;
-  border-radius: 22px;
+  max-width: 800px;
+  padding: 32px 44px;
+  border-radius: 26px;
   background: #fffaf0;
-  border: 1px solid #f1e6c9;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 48px;
+  border: 1px solid rgba(241, 230, 201, 0.8);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08),
+    inset 0 2px 6px rgba(255, 255, 255, 0.8);
+  margin-bottom: 42px;
 }
 
 .recommendationImage img {
@@ -113,13 +114,13 @@
 .recommendationButton {
   align-self: center;
   min-width: 140px;
-  height: 50px;
+  height: 54px;
   border: none;
   border-radius: 14px;
   background: #f3e4a0;
   font-size: 1.05rem;
   font-weight: 700;
-  color: #5a4d1a;
+  color: #3a2d10;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
@@ -136,7 +137,7 @@
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 28px;
   width: 100%;
-  max-width: 640px; /* 추천 동화 박스와 통일 */
+  max-width: 720px; /* 추천 동화 박스와 통일 */
 }
 
 /* 카드 공통 */
@@ -151,7 +152,7 @@
   justify-content: center;
   font-size: 20px;
   font-weight: 700;
-  gap: 20px;
+  gap: 10px;
   padding: 0 32px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -160,24 +161,30 @@
 
 /* 맞춤 동화 학습하기 */
 .boxStudy {
-  background: #edd2d2;
-  color: #4f653a;
+  background: center/330px no-repeat url("../assets/studyMainAI.png");
+  background-color: transparent;
+  width: 360px;
+  padding: 0;
+  box-shadow: none;
 }
 
 .boxStudy:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 18px rgba(175, 140, 140, 0.25);
+  transform: translateY(-6px);
+  box-shadow: none;
 }
 
 /* 정보 관리 */
 .boxBadge {
-  background: #d7e3f5;
-  color: #3b5774;
+  background: center/300px no-repeat url("../assets/myPage.png");
+  background-color: transparent;
+  width: 360px;
+  padding: 0;
+  box-shadow: none;
 }
 
 .boxBadge:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 18px rgba(130, 160, 210, 0.25);
+  transform: translateY(-6px);
+  box-shadow: none;
 }
 
 /* 아이콘 */

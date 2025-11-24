@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./register.module.css";
+import styles from "./addProfile.module.css";
 import { addChildAPI } from "../api/user";
 
 const ChildProfilePage = () => {
@@ -72,12 +72,15 @@ const ChildProfilePage = () => {
       });
 
       console.log("addChild API 응답:", response);
-      const childId = response.childId;
+      const childId = response?.childId || response?.data?.childId;
+      if (!childId) {
+        throw new Error("childId 누락");
+      }
 
       navigate(`/diagnosis/${childId}`);
     } catch (error) {
       console.error("프로필 생성 오류:", error);
-      alert("서버 전송 중 오류가 발생했습니다.");
+      alert("프로필 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
       setLoading(false);
     }
@@ -86,44 +89,74 @@ const ChildProfilePage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.title}>자녀 프로필 생성</h1>
-        <p className={styles.subtitle}>
-          자녀의 이름과 생년월일을 입력해 주세요.
-        </p>
-
-        <div className={styles.form}>
-          <div className={styles.formGroup}>
-            <label>자녀 이름</label>
-            <input
-              placeholder="이름을 입력하세요"
-              required
-              className={styles.input}
-              value={childName}
-              onChange={(e) => setChildName(e.target.value)}
-              disabled={loading}
-            />
+        <div className={styles.headerRow}>
+          <div className={styles.logoChip}>🪐 OwlLearn Kids</div>
+          <div className={styles.iconTray}>
+            <span className={styles.iconBubble}>💛</span>
+            <span className={styles.iconBubble}>🌈</span>
+            <span className={styles.iconBubble}>🎈</span>
           </div>
+        </div>
 
-          <div className={styles.formGroup}>
-            <label>생년월일</label>
-            <input
-              type="date"
-              required
-              className={styles.input}
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-              disabled={loading}
-            />
+        <div className={styles.heroRow}>
+          <div className={styles.heroText}>
+            <h1 className={styles.title}>자녀 프로필 생성</h1>
+            <p className={styles.subtitle}>
+              따뜻한 우주 놀이터에서 만 나이 기준으로 아이의 학습 여정을
+              시작해요.
+            </p>
+            <div className={styles.chipRow}>
+              <span className={styles.chip}>🎉 만 나이 자동 계산</span>
+              <span className={styles.chip}>📚 맞춤 도서 추천 준비</span>
+            </div>
           </div>
+          <div className={styles.mascotCard}>
+            <div className={styles.mascotEmoji}>🦉</div>
+            <p className={styles.mascotText}>
+              만 나이로<br />단계를 추천해 드려요!
+            </p>
+          </div>
+        </div>
 
-          <button
-            type="button"
-            onClick={handleCreateProfile}
-            className={styles.signupButton}
-            disabled={loading}
-          >
-            {loading ? "생성 중..." : "프로필 생성"}
-          </button>
+        <div className={styles.formCard}>
+          <div className={styles.form}>
+            <div className={styles.formGroup}>
+              <label>자녀 이름</label>
+              <input
+                placeholder="우리 아이 이름을 적어주세요"
+                required
+                className={styles.input}
+                value={childName}
+                onChange={(e) => setChildName(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>생년월일 (만 나이)</label>
+              <input
+                type="date"
+                required
+                className={styles.input}
+                value={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleCreateProfile}
+              className={styles.signupButton}
+              disabled={loading}
+            >
+              {loading ? "생성 중..." : "만 나이로 프로필 생성"}
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.footerNote}>
+          🪄 만 나이 기준으로 맞춤 학습 단계를 안내해드려요.
         </div>
       </div>
     </div>
