@@ -30,6 +30,7 @@ import ChildMyPage from "./pages/childMyPage";
 import Report from "./pages/reportPage";
 import PrivateRoute from "./component/PrivateRoute";
 import AdminRoute from "./component/AdminRoute";
+import ReviewDetail from "./pages/reviewDetail";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function AppContent() {
       <Routes>
         {/* 로그인 필요 없음 */}
         <Route path="/" element={<StartPage />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LoginPage />} />
 
         {/* 로그인 필요 */}
@@ -71,7 +73,6 @@ function AppContent() {
         <Route path="/tale/quiz" element={<PrivateRoute> <Quiz /> </PrivateRoute>} />
         <Route path="/tale/quiz/answer" element={<PrivateRoute> <QuizAnswer /> </PrivateRoute>} />
         <Route path="/tale/report" element={<PrivateRoute> <Report /> </PrivateRoute>} />
-        <Route path="/register" element={<PrivateRoute> <Register /> </PrivateRoute>} />
         <Route path="/admin" element={<AdminRoute> <Admin /> </AdminRoute>} />
         <Route path="/admin/insert" element={<AdminRoute> <AdminInsert /> </AdminRoute>} />
         <Route path="/admin/list" element={<AdminRoute> <AdminList /> </AdminRoute>} />
@@ -81,6 +82,7 @@ function AppContent() {
         <Route path="/parentMain" element={<PrivateRoute> <ParentMain /> </PrivateRoute>} />
         <Route path="/parent/:childId/detail" element={<PrivateRoute> <ParentDetail /> </PrivateRoute>} />
         <Route path="/mypage" element={<PrivateRoute> <ChildMyPage /> </PrivateRoute>} />
+        <Route path="/review/:reviewId" element={<PrivateRoute> <ReviewDetail /> </PrivateRoute>} />
       </Routes>
     </>
   );
