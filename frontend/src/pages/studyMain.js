@@ -4,9 +4,6 @@ import styles from "./studyMain.module.css";
 
 import defaultAvatar from "../assets/myAvatar.png";
 import book from "../assets/studyMainBook.png"; //추천동화 아이콘
-import quiz from "../assets/studyMainQuiz.png"; //생성동화 아이콘
-import badge from "../assets/studyMainBadge.png";
-
 // import { getTale } from "../api/tale";
 import { imageBaseUrl } from "../api/instance"; //백엔드 이미지 서버
 import { getOldTale } from "../api/tale"; //기성동화조회
@@ -181,16 +178,12 @@ const StudyMain = () => {
         </div>
       )}
       <div className={styles.menuGrid}>
-        <button className={styles.boxStudy} onClick={handleAiBook}>
-          <img src={quiz} className={styles.icon} alt="맞춤 동화 놀이터" />
-          맞춤 동화
-          <br />
-          학습하기
-        </button>
+        <button
+          className={styles.boxStudy}
+          onClick={handleAiBook}
+          aria-label="맞춤 동화 학습하기"
+        />
         <button className={styles.boxBadge} onClick={handleMypage}>
-          <img src={badge} className={styles.icon} alt="정보 관리" />
-          정보 <br />
-          관리
         </button>
       </div>
       {loading && (
