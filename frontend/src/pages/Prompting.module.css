@@ -168,7 +168,7 @@
 .customCheckbox {
   height: 24px;
   width: 24px;
-  background-color: #d9d9d9;
+  background-color: #ffe9c7;
   display: inline-block;
   border-radius: 4px;
   margin-right: 8px;
@@ -178,7 +178,7 @@
 }
 
 .mainCharacterCheckbox input[type="checkbox"]:checked + .customCheckbox {
-  background-color: #869b73;
+  background: linear-gradient(135deg, #ffcd7a, #ff9d3a);
 }
 
 .mainCharacterCheckbox input[type="checkbox"]:checked + .customCheckbox::after {
@@ -197,27 +197,29 @@
 }
 
 .ghostBtn {
-  background: #dfe4db;
-  color: #717171;
-  border: 1px;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #5f4f32;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 14px;
   padding: 12px 36px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .primaryBtn {
-  background: #869b73;
-  color: #fff;
+  background: linear-gradient(135deg, #ffcd7a, #ff9d3a);
+  color: #3a1d00;
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
   padding: 12px 30px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 14px 30px rgba(255, 157, 58, 0.35);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .subBtn {

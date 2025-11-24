@@ -11,8 +11,8 @@
   height: 25vh;
   margin-bottom: 30px;
   border-radius: 24px;
-  background: linear-gradient(135deg, #f1f4ff 0%, #ffffff 100%);
-  box-shadow: 0 8px 26px rgba(90, 100, 255, 0.08);
+  background: linear-gradient(135deg, #e9f3ff 0%, #f9fdff 100%);
+  box-shadow: 0 8px 26px rgba(90, 155, 255, 0.08);
   overflow: hidden;
 }
 
@@ -56,7 +56,7 @@
   height: 150%;
   background: radial-gradient(
     circle,
-    rgba(100, 120, 255, 0.15),
+    rgba(100, 170, 255, 0.18),
     transparent 70%
   );
   z-index: -1;
@@ -74,21 +74,21 @@
 
 .eyebrow {
   font-size: 14px;
-  color: #7c80a3;
+  color: #5f86b5;
   margin-bottom: 6px;
 }
 
 .textArea h1 {
   font-size: 26px;
   font-weight: 700;
-  color: #1f2238;
+  color: #1f3045;
   margin-bottom: 10px;
 }
 
 .subText {
   font-size: 15px;
   line-height: 1.7;
-  color: #5a5f7a;
+  color: #4a6275;
   max-width: 480px;
 }
 
@@ -98,14 +98,14 @@
   right: 24px;
   border: none;
   background: transparent;
-  color: #7a7fb6;
+  color: #4b7bb2;
   font-size: 14px;
   cursor: pointer;
   transition: color 0.25s ease;
 }
 
 .backButton:hover {
-  color: #5a63ff;
+  color: #2f6fb8;
 }
 
 .optionsCard {
@@ -137,7 +137,7 @@
 
 .optionLabel {
   font-weight: 600;
-  color: #2b2e4a;
+  color: #1f3045;
 }
 
 .optionButtons {
@@ -148,27 +148,27 @@
 
 .optionButton {
   flex: 1 1 45%;
-  border: 1.5px solid #d8def3;
+  border: 1.5px solid #c8dff8;
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 14px;
   background: #fff;
-  color: #4b4f70;
+  color: #2f5075;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .optionButton:hover {
-  border-color: #7a67ff;
-  color: #7a67ff;
+  border-color: #58a6ff;
+  color: #2f7ccf;
   transform: translateY(-1.5px);
 }
 
 .active {
-  background: linear-gradient(120deg, #8a7bff, #6b8eff);
+  background: linear-gradient(120deg, #67b7ff, #4b9eff);
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 5px 10px rgba(120, 110, 255, 0.35);
+  box-shadow: 0 5px 10px rgba(75, 158, 255, 0.35);
 }
 
 /* 결과 영역 */
@@ -180,10 +180,10 @@
 }
 
 .bestStory {
-  border: 1.5px solid #cfd4ff;
+  border: 1.5px solid #c2dfff;
   border-radius: 14px;
   padding: 20px 24px;
-  background: #f9f9ff;
+  background: #f3f8ff;
 }
 
 .bestHeader {
@@ -218,7 +218,7 @@
 .primaryButton {
   border: none;
   border-radius: 999px;
-  background: linear-gradient(120deg, #7a5dfd, #5a87ff);
+  background: linear-gradient(120deg, #67b7ff, #4b9eff);
   color: #fff;
   padding: 10px 24px;
   font-size: 14px;
@@ -233,10 +233,10 @@
 }
 
 .secondaryButton {
-  border: 1.5px solid #7a5dfd;
+  border: 1.5px solid #4b9eff;
   border-radius: 999px;
   background: #fff;
-  color: #7a5dfd;
+  color: #2f7ccf;
   padding: 10px 24px;
   font-size: 14px;
   font-weight: 600;
@@ -245,7 +245,7 @@
 }
 
 .secondaryButton:hover {
-  background: rgba(122, 93, 253, 0.08);
+  background: rgba(75, 158, 255, 0.08);
   transform: translateY(-1px);
 }
 
@@ -288,7 +288,7 @@
   height: 52px;
   border-radius: 50%;
   border: 6px solid #e8e8e8;
-  border-top-color: #7a5dfd;
+  border-top-color: #4b9eff;
   animation: spin 0.9s linear infinite;
 }
 
