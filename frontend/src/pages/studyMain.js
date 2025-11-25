@@ -204,12 +204,32 @@ const StudyMain = () => {
             <h2 className={styles.recommendationTitle}>
               {recommendedTale.title}
             </h2>
-            {/* <span className={styles.recommendationMeta}>
-              {recommendedTale.genre} · {recommendedTale.length}
-            </span>
-            <p className={styles.recommendationSummary}>
-              {recommendedTale.summary}
-            </p> */}
+            <div className={styles.attributeRow}>
+              {recommendedTale.subject && (
+                <span className={styles.attributeChip}>
+                  <span className={styles.attributeLabel}>주제</span>
+                  {recommendedTale.subject}
+                </span>
+              )}
+              {recommendedTale.tone && (
+                <span className={styles.attributeChip}>
+                  <span className={styles.attributeLabel}>톤</span>
+                  {recommendedTale.tone}
+                </span>
+              )}
+              {recommendedTale.artStyle && (
+                <span className={styles.attributeChip}>
+                  <span className={styles.attributeLabel}>화풍</span>
+                  {recommendedTale.artStyle}
+                </span>
+              )}
+              {recommendedTale.ageGroup && (
+                <span className={styles.attributeChip}>
+                  <span className={styles.attributeLabel}>연령</span>
+                  {recommendedTale.ageGroup}
+                </span>
+              )}
+            </div>
           </div>
           <button
             type="button"
