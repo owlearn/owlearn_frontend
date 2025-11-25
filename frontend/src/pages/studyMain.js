@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./studyMain.module.css";
 
 import defaultAvatar from "../assets/myAvatar.png";
 import book from "../assets/studyMainBook.png"; //추천동화 아이콘
+import LoadingOverlay from "../component/LoadingOverlay";
 // import { getTale } from "../api/tale";
 import { imageBaseUrl } from "../api/instance"; //백엔드 이미지 서버
 import { getOldTale } from "../api/tale"; //기성동화조회
@@ -34,6 +35,8 @@ const StudyMain = () => {
   const [recommendedTale, setRecommendedTale] = useState(null);
   const [child, setChild] = useState(null); // 로컬스토리지에 저장된 아이 상태
   const [loading, setLoading] = useState(false);
+  const [loadingWord, setLoadingWord] = useState(null);
+  const loadingIntervalRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -89,6 +92,46 @@ const StudyMain = () => {
     return stored ? JSON.parse(stored) : null;
   };
 
+  const loadingWords = [
+    { word: "adventure", meaning: "모험, 신나는 경험" },
+    { word: "imagine", meaning: "상상하다" },
+    { word: "curious", meaning: "호기심 많은" },
+    { word: "sparkle", meaning: "반짝이다, 빛나다" },
+    { word: "journey", meaning: "여행, 여정" },
+    { word: "whisper", meaning: "속삭이다" },
+    { word: "wonder", meaning: "경이로움, 놀라움" },
+    { word: "brave", meaning: "용감한" },
+    { word: "dream", meaning: "꿈, 상상하다" },
+    { word: "explore", meaning: "탐험하다" },
+    { word: "gleam", meaning: "희미하게 빛나다" },
+  ];
+
+  const pickLoadingWord = () => {
+    const idx = Math.floor(Math.random() * loadingWords.length);
+    setLoadingWord(loadingWords[idx]);
+  };
+
+  useEffect(() => {
+    if (loading) {
+      pickLoadingWord();
+      loadingIntervalRef.current = setInterval(() => {
+        pickLoadingWord();
+      }, 4000);
+    } else {
+      if (loadingIntervalRef.current) {
+        clearInterval(loadingIntervalRef.current);
+        loadingIntervalRef.current = null;
+      }
+      setLoadingWord(null);
+    }
+    return () => {
+      if (loadingIntervalRef.current) {
+        clearInterval(loadingIntervalRef.current);
+        loadingIntervalRef.current = null;
+      }
+    };
+  }, [loading]);
+
   const handleStartClassicStudy = async () => {
     if (!recommendedTale) {
       alert("추천 동화 오류");
@@ -102,6 +145,7 @@ const StudyMain = () => {
 
     // 기성동화학습 누르면 로딩
     setLoading(true);
+    pickLoadingWord();
 
     try {
       const res = await oldTaleImageGen(recommendedTale.id, childId);
@@ -187,10 +231,11 @@ const StudyMain = () => {
         </button>
       </div>
       {loading && (
-        <div className={styles.loadingOverlay}>
-          <div className={styles.loader} />
-          <div className={styles.loadingText}>동화를 재구성중이에요…</div>
-        </div>
+        <LoadingOverlay
+          message="동화를 재구성중이에요…"
+          subMessage="약 1분 정도 걸려요. 잠시만 기다려주세요!"
+          word={loadingWord}
+        />
       )}
     </div>
   );
