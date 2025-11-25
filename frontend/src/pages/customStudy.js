@@ -1,9 +1,10 @@
-import React, { useMemo, useState, useEffect, useCallback } from "react";
+import React, { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./customStudy.module.css";
 import myAvatar from "../assets/myAvatar.png";
 import { AiTaleGen } from "../api/tale";
 import { imageBaseUrl } from "../api/instance";
+import LoadingOverlay from "../component/LoadingOverlay";
 
 const optionGroups = [
   { key: "theme", label: "주제", options: ["우정", "가족", "모험", "성장"] },
@@ -37,6 +38,8 @@ const CustomStoryPage = () => {
   // const [bestStory, setBestStory] = useState(null); // 베스트셀러 추천 (api 제작중)
   const [characterUrl, setCharacterUrl] = useState(myAvatar);
   const [selectedChild, setSelectedChild] = useState(null);
+  const [loadingWord, setLoadingWord] = useState(null);
+  const loadingIntervalRef = useRef(null);
   // const [statusMessage, setStatusMessage] = useState("");
   // const [recommendLoading, setRecommendLoading] = useState(false);
 
@@ -44,6 +47,44 @@ const CustomStoryPage = () => {
     () => Object.values(selections).every((v) => Boolean(v)), //selections 값을 배열로 꺼내, 모두 true일때 true 반환
     [selections] //selections 변경 시 재계산
   );
+
+  const loadingWords = [
+    { word: "create", meaning: "창조하다" },
+    { word: "story", meaning: "이야기" },
+    { word: "wonder", meaning: "경이로움" },
+    { word: "sparkle", meaning: "반짝이다" },
+    { word: "dream", meaning: "꿈" },
+    { word: "explore", meaning: "탐험하다" },
+    { word: "magic", meaning: "마법" },
+    { word: "imagine", meaning: "상상하다" },
+    { word: "journey", meaning: "여정" },
+  ];
+
+  const pickLoadingWord = () => {
+    const idx = Math.floor(Math.random() * loadingWords.length);
+    setLoadingWord(loadingWords[idx]);
+  };
+
+  useEffect(() => {
+    if (isGenerating) {
+      pickLoadingWord();
+      loadingIntervalRef.current = setInterval(() => {
+        pickLoadingWord();
+      }, 4000);
+    } else {
+      if (loadingIntervalRef.current) {
+        clearInterval(loadingIntervalRef.current);
+        loadingIntervalRef.current = null;
+      }
+      setLoadingWord(null);
+    }
+    return () => {
+      if (loadingIntervalRef.current) {
+        clearInterval(loadingIntervalRef.current);
+        loadingIntervalRef.current = null;
+      }
+    };
+  }, [isGenerating]);
 
   useEffect(() => {
     const storedChild = localStorage.getItem("selectedChild");
@@ -264,10 +305,11 @@ const CustomStoryPage = () => {
         </div>
       </section>
       {isGenerating && (
-        <div className={styles.loadingOverlay}>
-          <div className={styles.loader} />
-          <div className={styles.loadingText}>동화를 생성하고 있어요…</div>
-        </div>
+        <LoadingOverlay
+          message="동화를 생성하는 중이에요…"
+          subMessage="약 1분 정도 걸려요. 잠시만 기다려주세요!"
+          word={loadingWord}
+        />
       )}
     </div>
   );
