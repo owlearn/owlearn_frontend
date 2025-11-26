@@ -44,3 +44,9 @@ export const getChildAPI = async () => {
   const res = await userInstance.get("/child");
   return res.data.responseDto;   // 배열로 내려옴
 };
+
+// 자녀 상세 정보 조회
+export const getChildDetailAPI = async (childId) => {
+  const res = await userInstance.get(`/mypage/${childId}`);
+  return res.data.responseDto;
+};
