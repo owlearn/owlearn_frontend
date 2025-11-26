@@ -24,9 +24,11 @@ function LoginPage() {
 
       const token = response?.data?.responseDto?.token;
       const role = response?.data?.responseDto?.role; // 서버에서 주는 role
+      const name = response?.data?.responseDto?.name;
 
       if (token) {
         localStorage.setItem("token", token);
+        localStorage.setItem("name", name);
         localStorage.setItem(
           "user",
           JSON.stringify({
