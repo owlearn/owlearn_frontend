@@ -9,6 +9,7 @@ function Header() {
     localStorage.removeItem("user"); 
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
+    localStorage.removeItem("name");
     localStorage.removeItem("selectedChild"); 
     navigate("/login");
   };

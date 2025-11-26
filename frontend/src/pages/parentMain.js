@@ -1,42 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./parentMain.module.css";
-import book from "../assets/fairy.png"; // 더미 이미지
-
-// 더미 데이터
-const parent_name = "박가연";
-const dummyChildren = [
-  {
-    id: "child-1",
-    name: "김하늘",
-    recentBook: "우주 탐험대",
-    recentBookCover: book,
-    progress: 72,
-    favoriteTopics: ["과학", "우주", "탐험"],
-    age: 8,
-    credits: 320,
-  },
-  {
-    id: "child-2",
-    name: "이도윤",
-    recentBook: "숲속 친구들의 모험",
-    recentBookCover: book,
-    progress: 63,
-    favoriteTopics: ["자연", "모험", "감정 공감"],
-    age: 9,
-    credits: 210,
-  },
-  {
-    id: "child-3",
-    name: "최서연",
-    recentBook: "바닷속 신비",
-    recentBookCover: book,
-    progress: 54,
-    favoriteTopics: ["해양", "환경", "상상력"],
-    age: 10,
-    credits: 180,
-  },
-];
+import { getChildAPI } from "../api/user";
+import book from "../assets/fairy.png";
 
 export default function ParentDashboard() {
   const navigate = useNavigate();
@@ -50,10 +16,35 @@ export default function ParentDashboard() {
   const [selectedToDelete, setSelectedToDelete] = useState([]);
 
   useEffect(() => {
-    const name = localStorage.getItem("parentName") || parent_name;
-    setParentName(name);
-    setChildren(dummyChildren);
-    setLoading(false);
+    // 로그인 시 저장한 "name" 불러오기
+    const savedName = localStorage.getItem("name");
+    setParentName(savedName || "학부모");
+    
+    async function loadChildren() {
+      try {
+        const data = await getChildAPI();
+
+        // 응답 예시 기반 매핑
+        const mapped = data.map((c) => ({
+          id: c.id,
+          name: c.name,
+          age: c.age,
+          credits: c.taleCount * 10 ?? 0, // credits 없어서 임의 계산
+          favoriteTopics: [c.prefer], 
+          recentBook: "최근 기록 없음",
+          recentBookCover: book,
+          progress: 0, 
+        }));
+
+        setChildren(mapped);
+      } catch (e) {
+        console.error("자녀 조회 실패", e);
+        setChildren([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadChildren();
   }, []);
 
   const goChildDetail = (child) => {
@@ -168,7 +159,7 @@ export default function ParentDashboard() {
 
             <div className={styles.metrics}>
               <div className={styles.metric}>
-                <div className={styles.metricLabel}>누적 학습 포인트</div>
+                <div className={styles.metricLabel}>누적 크레딧</div>
                 <div className={styles.metricValue}>
                   {typeof child.credits === "number"
                     ? `${child.credits.toLocaleString()}점`

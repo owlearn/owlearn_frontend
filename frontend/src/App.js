@@ -31,7 +31,7 @@ import ChildMyPage from "./pages/childMyPage";
 import Report from "./pages/reportPage";
 import PrivateRoute from "./component/PrivateRoute";
 import AdminRoute from "./component/AdminRoute";
-//import ReviewDetail from "./pages/reviewDetail";
+import ReviewDetail from "./pages/reviewDetail";
 
 function App() {
   return (
@@ -270,7 +270,7 @@ function AppContent() {
             </PrivateRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/review/:reviewId"
           element={
             <PrivateRoute>
@@ -278,7 +278,7 @@ function AppContent() {
               <ReviewDetail />{" "}
             </PrivateRoute>
           }
-        /> */}
+        />
       </Routes>
     </>
   );

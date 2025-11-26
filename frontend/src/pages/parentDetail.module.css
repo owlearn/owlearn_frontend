@@ -35,6 +35,7 @@
 
 .reportOverview {
   margin-top: 16px;
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;

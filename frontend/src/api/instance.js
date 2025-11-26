@@ -43,6 +43,7 @@ const attachToken = (instance) => {
 };
 
 //토큰이 필요한 인스턴스
+attachToken(defaultInstance);
 attachToken(userInstance);
 attachToken(taleInstance);
 attachToken(reportInstance);
