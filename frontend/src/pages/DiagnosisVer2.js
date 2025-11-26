@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 import styles from "./DiagnosisVer2.module.css";
 import avatarBase from "../assets/avatar.png";
 import coinIcon from "../assets/credit.png";
-import { saveCharacterAPI } from "../api/user";
+import { saveCharacterAPI, getCharacterAPI } from "../api/user";
 
 import hairMale1 from "../assets/hair_boy_1.png";
 import hairMale2 from "../assets/hair_boy_2.png";
@@ -433,15 +433,9 @@ function DiagnosisPage() {
 
         const formData = new FormData();
         formData.append("image", blob, "avatar.png");
-
-        //if (!student) {
-        //  alert("학생 프로필 정보가 없습니다. 다시 로그인해주세요.");
-        //  navigate("/login");
-        //  return;
-        //}
         formData.append("childId", Number(childId));
 
-        // (참고: 아래 값들은 지금 백엔드가 사용하지 않는 값)
+        // 기존 착장 정보
         formData.append("selectedHair", selectedHair?.name || "");
         formData.append("selectedClothes", selectedClothes?.name || "");
         formData.append("selectedShoes", selectedShoes?.name || "");
@@ -454,7 +448,7 @@ function DiagnosisPage() {
         const response = await saveCharacterAPI(formData);
 
         if (response.status === 200) {
-          alert("서버 전송 완료");
+          alert("캐릭터 저장 완료!");
           navigate("/diagnosisEnd", {
             state: { imageUrl: response.data.responseDto.imageUrl }
           });
