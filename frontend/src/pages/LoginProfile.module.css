@@ -3,8 +3,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 80px;
-  font-family: "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  padding-top: 48px;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Noto Sans KR",
+    sans-serif;
   overflow-x: hidden; /* 페이지 전체 가로 스크롤 방지 */
 }
 
@@ -14,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
 .title {
@@ -28,20 +29,23 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(135deg, #bfead0, #f7e4a6);
-  color: #2f3b2f;
-  border: none;
+  background: #e5f1e8;
+  color: #3e523d;
+  border: 2px solid var(--accent, #658864);
   border-radius: 20px;
-  padding: 14px 24px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 15px 26px;
+  font-size: 17px;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  transition: opacity 0.2s ease;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+  transition: background 0.16s ease, transform 0.12s ease,
+    box-shadow 0.16s ease;
 }
 
 .parentButton:hover {
-  opacity: 0.9;
+  background: color-mix(in srgb, #e5f1e8 75%, var(--accent, #658864) 25%);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
 }
 
 .parentIcon {
@@ -60,6 +64,7 @@
   box-sizing: border-box;
   align-items: center;
   justify-content: center; /* 중앙 정렬 추가 */
+  margin-top: 12px;
 }
 
 .cardContainer::-webkit-scrollbar {
@@ -112,19 +117,21 @@
 }
 
 .selectButton {
-  background: linear-gradient(135deg, #ffd7b3, #ffc27a);
-  color: #3f2b1a;
+  background: var(--accent, #658864);
+  color: #fff;
   border: none;
   border-radius: 8px;
   padding: 6px 26px;
   font-size: 14px;
   cursor: pointer;
   font-weight: 600;
-  transition: opacity 0.15s ease;
+  transition: background 0.14s ease, transform 0.12s ease, box-shadow 0.14s ease;
 }
 
 .selectButton:hover {
-  opacity: 0.9;
+  background: color-mix(in srgb, var(--accent, #658864) 88%, #2f3a24 12%);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
 }
 
 /* 자녀 추가 카드 */
