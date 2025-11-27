@@ -46,7 +46,9 @@ function App() {
       </div>
       <Router>
         <div className="app-content">
-          <AppContent />
+          <div className="app-frame-global">
+            <AppContent />
+          </div>
         </div>
       </Router>
     </div>

@@ -3,14 +3,17 @@
   src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
 }
 
-/* 전체 컨테이너 */
-.container {
+.page {
+  width: 100%;
+  min-height: 100%;
   font-family: "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 18px 60px;
-  color: #2f2f2f;
+  padding: 12px 12px 36px;
+  color: var(--text-main);
+  box-sizing: border-box;
 }
 
 /* 상단 환영 섹션 */
@@ -18,44 +21,61 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1100px;
+  margin-bottom: 16px;
 }
 
 .headerContent {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
 }
 
 .owl {
   width: clamp(100px, 20vw, 150px); /* 화면 크기 반응형 개선 */
   height: auto;
-  margin-bottom: 3vh;
 }
 
 .welcomeBox {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 10px; /* 좌우 균형 보정 */
+  gap: 8px;
 }
 
 .name {
   font-size: 2.8rem; /* 아바타 확대에 맞춰 글씨 확대 */
   font-weight: 700;
-  color: #5f7d52;
+  color: #5b3a15;
 }
 
 .welcome {
   font-size: 2.8rem;
   font-weight: 700;
-  color: #444;
+  color: #7c6342;
+}
+
+.welcomeLine {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
 }
 
 .miniTytle {
   font-size: 1.25rem;
-  color: #555;
-  margin-top: 10px;
+  color: var(--text-sub);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #fff3c6;
+  border: 1px solid #f5c26a;
+  font-size: 0.95rem;
+  color: #6e4b1a;
+  width: fit-content;
 }
 
 /* 추천 동화 카드 */
@@ -63,20 +83,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 22px;
   width: 100%;
-  max-width: 820px;
-  padding: 32px 44px;
-  border-radius: 26px;
-  background: #fffaf0;
-  border: 1px solid rgba(241, 230, 201, 0.8);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08),
-    inset 0 2px 6px rgba(255, 255, 255, 0.8);
-  margin-bottom: 20px;
+  max-width: 960px;
+  padding: 28px 32px;
+  border-radius: var(--radius-xl);
+  background: #fffdf5;
+  border: 3px solid #ffcf73;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+  margin: 10px auto 22px;
 }
 
 .recommendationImage img {
-  width: 120px;
+  width: 110px;
   height: auto;
 }
 
@@ -90,13 +109,20 @@
 .sectionLabel {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #6b8c5f;
+  color: #7c6342;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff1d7;
+  border: 1px solid #f5c26a;
+  padding: 6px 12px;
+  border-radius: 12px;
 }
 
 .recommendationTitle {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #2f2f2f;
+  color: var(--text-main);
 }
 
 .recommendationMeta {
@@ -114,7 +140,7 @@
 .attributeRow {
   display: flex;
   flex-wrap: nowrap;
-  gap: 6px;
+  gap: 8px;
   margin-top: 6px;
   align-items: center;
   justify-content: flex-start;
@@ -127,25 +153,25 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
-  border-radius: 14px;
-  background: #f8f4eb;
-  color: #425443;
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: 0 6px 14px rgba(66, 84, 67, 0.08);
-  border: 1px solid rgba(116, 142, 104, 0.2);
+  padding: 8px 12px;
+  border-radius: 16px;
+  background: #fff6e0;
+  color: #7c6342;
+  font-weight: 700;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 16px rgba(123, 91, 37, 0.12);
+  border: 1px solid #f5c26a;
   flex: 0 0 auto;
 }
 
 .attributeLabel {
   display: inline-block;
-  padding: 4px 8px;
-  border-radius: 8px;
-  background: rgba(129, 164, 120, 0.2);
-  color: #5f7d52;
-  font-size: 0.78rem;
-  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: rgba(255, 193, 96, 0.24);
+  color: #5b3a15;
+  font-size: 0.8rem;
+  font-weight: 800;
 }
 
 @media (max-width: 640px) {
@@ -163,86 +189,74 @@
   min-width: 140px;
   height: 54px;
   border: none;
-  border-radius: 14px;
-  background: #f3e4a0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff9f5b, #ff7b3a);
   font-size: 1.05rem;
-  font-weight: 700;
-  color: #3a2d10;
+  font-weight: 800;
+  color: #fff;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  padding: 0 26px;
+  box-shadow: 0 14px 24px rgba(255, 140, 56, 0.4);
   transition: all 0.2s ease;
 }
 
 .recommendationButton:hover {
-  background: #ebd98f;
-  transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(255, 140, 56, 0.55);
+  transform: translateY(-1px);
 }
 
 /* 메뉴 카드 영역 */
 .menuGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  gap: 16px;
   width: 100%;
-  max-width: 720px; /* 추천 동화 박스와 통일 */
-  justify-items: center;
+  margin-top: 8px;
 }
 
-/* 카드 공통 */
-.boxStudy,
-.boxBadge {
-  border: none;
-  border-radius: 22px;
-  height: 150px;
+.menuCard {
+  border: 2px solid #f5c26a;
+  background: linear-gradient(145deg, #fff9ec, #ffeac5);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 700;
+  flex-direction: column;
   gap: 10px;
-  padding: 0 32px;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 340px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    border-color 0.12s ease;
+  text-align: left;
 }
 
-/* 맞춤 동화 학습하기 */
-.boxStudy {
-  background: center/88% no-repeat url("../assets/studyMainAI.png");
-  background-color: transparent;
-  padding: 0;
-  box-shadow: none;
+.menuCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
+  border-color: #ff9b54;
 }
 
-.boxStudy:hover {
-  transform: translateY(-6px);
-  box-shadow: none;
+.menuBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff3c6;
+  color: #6e4b1a;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid #f5c26a;
 }
 
-/* 정보 관리 */
-.boxBadge {
-  background: center/82% no-repeat url("../assets/studyMainBtn2.png");
-  background-color: transparent;
-  padding: 0;
-  box-shadow: none;
+.menuTitle {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #5b3a15;
 }
 
-.boxBadge:hover {
-  transform: translateY(-6px);
-  box-shadow: none;
-}
-
-/* 아이콘 */
-.icon {
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
-  display: flex;
-  align-self: center;
-  margin-top: 4px;
+.menuDesc {
+  font-size: 0.95rem;
+  color: var(--text-sub);
 }
 
 /* 로딩 오버레이 */
@@ -260,6 +274,12 @@
   }
   .menuGrid {
     grid-template-columns: 1fr;
+  }
+  .appFrame {
+    padding: 22px 20px 26px;
+  }
+  .recommendationSection {
+    align-items: flex-start;
   }
 }
 
