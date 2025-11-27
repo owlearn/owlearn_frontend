@@ -11,6 +11,9 @@ const emotionTags = [
   { label: "배울 게 많았어요", tone: "mint" },
   { label: "생각이 많아졌어요", tone: "sky" },
   { label: "다시 읽고 싶어요", tone: "sunset" },
+  { label: "지루했어요", tone: "ash" },
+  { label: "슬펐어요", tone: "teal" },
+  { label: "어려웠어요", tone: "sand" },
 ];
 
 const ReadingReflection = () => {
@@ -64,9 +67,6 @@ const ReadingReflection = () => {
   // 입력 상태값
   const [selectedTags, setSelectedTags] = useState([]);
   const [rating, setRating] = useState(4);
-  const [memorable, setMemorable] = useState("");
-  const [lesson, setLesson] = useState("");
-  const [questionText, setQuestionText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [payload, setPayload] = useState(null);
 
@@ -88,19 +88,8 @@ const ReadingReflection = () => {
       taleId,
       rating,
       feeling: selectedTags,
-      memorableScene: memorable,
-      lesson,
-      question: questionText,
     });
-  }, [
-    selectedChild?.id,
-    taleId,
-    rating,
-    selectedTags,
-    memorable,
-    lesson,
-    questionText,
-  ]);
+  }, [selectedChild?.id, taleId, rating, selectedTags]);
 
   useEffect(() => {
     if (!payload) return;
@@ -119,9 +108,6 @@ const ReadingReflection = () => {
       taleId,
       rating,
       feeling: selectedTags,
-      memorableScene: memorable,
-      lesson,
-      question: questionText,
     };
 
     console.log("[입력]", requestPayload);
@@ -159,7 +145,7 @@ const ReadingReflection = () => {
             나만의 언어로 기록해요
           </h1>
           <p className={styles.subtitle}>
-            느낀 감정, 기억에 남는 장면, 배운 점을 자유롭게 적어보세요.
+            느낀 감정과 별점만 간단히 남겨주세요.
           </p>
         </div>
 
@@ -229,49 +215,6 @@ const ReadingReflection = () => {
               ))}
             </div>
             <span className={styles.ratingValue}>{rating} / 5</span>
-          </div>
-        </section>
-
-        {/* 기억 남는 장면 & 배운 점 */}
-        <section className={styles.section}>
-          <div className={styles.sectionGrid}>
-            <div className={styles.fieldCard}>
-              <h3 htmlFor="memorable">가장 기억에 남는 장면</h3>
-              <textarea
-                id="memorable"
-                placeholder="어떤 장면이 특히 기억에 남았나요?"
-                value={memorable}
-                onChange={(e) => setMemorable(e.target.value)}
-                className={styles.textarea}
-              />
-            </div>
-
-            <div className={styles.fieldCard}>
-              <h3 htmlFor="lesson">이야기에서 배운 점</h3>
-              <textarea
-                id="lesson"
-                placeholder="이 동화가 주는 메시지는 무엇인가요?"
-                value={lesson}
-                onChange={(e) => setLesson(e.target.value)}
-                className={styles.textarea}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* 질문 마무리 */}
-        <section className={styles.section}>
-          <div className={styles.fieldCard}>
-            <h3 htmlFor="questionText">내 궁금증 작성하기</h3>
-
-            <textarea
-              id="questionText"
-              placeholder="이야기를 읽으며 떠오른 궁금증을 적어보세요. 
-              (예: 루루가 다시 나타나면 단이는 어떤 선택을 할까요?)"
-              value={questionText}
-              onChange={(e) => setQuestionText(e.target.value)}
-              className={styles.textarea}
-            />
           </div>
         </section>
 
