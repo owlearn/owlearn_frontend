@@ -1,6 +1,9 @@
 .page {
   padding: 40px;
   font-family: "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  width: 100%;
+  max-width: 1300px; 
+  margin: 0 auto;
 }
 
 .backButton {

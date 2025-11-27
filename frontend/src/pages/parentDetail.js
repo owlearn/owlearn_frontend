@@ -156,7 +156,7 @@ export default function ChildDetail() {
                     >
                       {/* 제목 */}
                       <strong className={styles.reportItemTitle}>
-                        Title
+                        {r.title}
                       </strong>
 
                       {/* 내용(memorableScene) */}

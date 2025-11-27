@@ -62,7 +62,7 @@ const StudyProgress = () => {
   }, [taleId]);
 
   const handleReport = () => {
-    navigate("/tale/report", { state: { taleId: taleId } });
+    navigate("/tale/feedback", { state: { taleId: taleId } });
   };
 
   if (loading) {
@@ -97,7 +97,7 @@ const StudyProgress = () => {
               className={styles.quizBtn}
               onClick={handleReport}
             >
-              REPORT
+              FINISH
             </button>
           ) : null
         }
