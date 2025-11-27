@@ -8,9 +8,9 @@
   --frame-border: #b7d89c;
   --text-main: #2f3a24;
   --text-sub: #4f6446;
-  --accent: #7fbb98;
-  --accent-soft: #e2f3e8;
-  --shadow-soft: 0 18px 40px rgba(47, 58, 36, 0.14);
+  --accent: #658864; /* 로고 톤 그린 */
+  --accent-soft: #e4eedf;
+  --shadow-soft: 0 18px 40px rgba(101, 136, 100, 0.18);
   --radius-xl: 32px;
   --radius-lg: 24px;
   --radius-md: 16px;

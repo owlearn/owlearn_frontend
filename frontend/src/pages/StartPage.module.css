@@ -63,8 +63,8 @@ body {
   min-width: 230px;
   height: 72px;
   padding: 0 30px;
-  background: linear-gradient(130deg, #88b27f, #658864);
-  box-shadow: 0 16px 30px rgba(101, 136, 100, 0.25);
+  background: var(--accent, #658864);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden;
   transition: transform 0.15s ease, box-shadow 0.26s ease, opacity 0.24s ease,
     width 0.42s ease, height 0.42s ease, border-radius 0.42s ease,
@@ -73,7 +73,8 @@ body {
 
 .progressButton:not(:disabled):hover {
   transform: translateY(-2px);
-  box-shadow: 0 22px 36px rgba(101, 136, 100, 0.3);
+  background: color-mix(in srgb, var(--accent, #658864) 88%, #2f3a24 12%);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.16);
 }
 
 .progressButton[aria-disabled="true"] {
