@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styles from "./reportPage.module.css";
+import { getReviewDetailAPI, updateReviewAPI } from "../api/review";
+import { getTale } from "../api/tale";
 
 const emotionTags = [
   { label: "재미있었어요", tone: "lavender" },
@@ -25,42 +27,37 @@ const ReviewDetail = () => {
   const [review, setReview] = useState(null);
   const [taleTitle, setTaleTitle] = useState("");
 
+  /* 수정 모드 상태
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  // 수정 데이터 상태
+  const [editData, setEditData] = useState({
+    feeling: [],
+    rating: 0,
+    memorableScene: "",
+    lesson: "",
+    question: ""
+  });*/
+
   useEffect(() => {
-    const fetchReview = async () => {
+  const fetchReview = async () => {
+    try {
+      const json = await getReviewDetailAPI(reviewId);
+      const dto = json.data.responseDto;
+
+      setReview(dto);
+
+      if (from === "parent") {
+        setTaleTitle("알 수 없는 동화");
+        return; 
+      }
+
       try {
-        const token = localStorage.getItem("token");
-
-        const res = await fetch(
-          `${process.env.REACT_APP_URL}/api/review/${reviewId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        const json = await res.json();
-        const dto = json.responseDto;
-
-        setReview(dto);
-
-        if (from === "parent") {
+          const taleJson = await getTale(dto.taleId);
+          setTaleTitle(taleJson.data.responseDto?.title || "알 수 없는 동화");
+        } catch {
           setTaleTitle("알 수 없는 동화");
           return;
-        }
-
-        try {
-          const taleRes = await fetch(
-            `${process.env.REACT_APP_URL}/api/tale/${dto.taleId}`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-
-          if (taleRes.ok) {
-            const taleJson = await taleRes.json();
-            setTaleTitle(taleJson.responseDto?.title || "알 수 없는 동화");
-          } else {
-            console.log("조회 불가");
-            setTaleTitle("알 수 없는 동화");
-          }
-        } catch (err) {
-          console.log("조회 중 오류:", err);
-          setTaleTitle("알 수 없는 동화");
         }
       } catch (err) {
         console.error("리뷰 조회 실패:", err);
@@ -69,8 +66,36 @@ const ReviewDetail = () => {
       }
     };
 
-    fetchReview();
-  }, [reviewId, from]);
+  fetchReview();
+}, [reviewId, from]);
+
+
+  /*const handleEdit = () => {
+    setIsEditMode(true);
+
+    setEditData({
+      feeling: review.feeling || [],
+      rating: review.rating || 0,
+      memorableScene: review.memorableScene || "",
+      lesson: review.lesson || "",
+      question: review.question || ""
+    });
+  };
+
+  const handleSave = async () => {
+    try {
+      await updateReviewAPI(reviewId, editData);
+
+      alert("수정되었습니다.");
+      setIsEditMode(false);
+
+      // 화면에 반영
+      setReview((prev) => ({ ...prev, ...editData }));
+
+    } catch (err) {
+      console.error("리뷰 수정 실패:", err);
+    }
+  };*/
 
   if (loading) return <div className={styles.page}>불러오는 중...</div>;
   if (!review)
@@ -93,7 +118,7 @@ const ReviewDetail = () => {
 
       <header className={styles.hero}>
         <div className={styles.heroText}>
-          <p className={styles.eyebrow}>독후감</p>
+          <p className={styles.eyebrow}>독후감 조회</p>
           <h1 className={styles.heroTitle}>
             {review.title || taleTitle || "알 수 없는 동화"}
           </h1>
