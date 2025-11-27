@@ -175,7 +175,7 @@ const StudyMain = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.page}>
       <div className={styles.headerRow}>
         <div className={styles.headerContent}>
           <img
@@ -184,16 +184,18 @@ const StudyMain = () => {
             alt="선택된 아바타"
           />
           <div className={styles.welcomeBox}>
-            <span>
+            <span className={styles.pill}>🧚‍♀️ 오늘의 동화 준비 완료</span>
+            <div className={styles.welcomeLine}>
               <span className={styles.name}>{childProfile.name}</span>
               <span className={styles.welcome}>님, 환영해요!</span>
-            </span>
+            </div>
             <div className={styles.miniTytle}>
               오늘은 어떤 동화를 읽어볼까요?
             </div>
           </div>
         </div>
       </div>
+
       {recommendedTale && (
         <div className={styles.recommendationSection}>
           <div className={styles.recommendationImage}>
@@ -241,15 +243,24 @@ const StudyMain = () => {
           </button>
         </div>
       )}
+
       <div className={styles.menuGrid}>
         <button
-          className={styles.boxStudy}
+          className={styles.menuCard}
           onClick={handleAiBook}
           aria-label="맞춤 동화 학습하기"
-        />
-        <button className={styles.boxBadge} onClick={handleMypage}>
+        >
+          <div className={styles.menuBadge}>AI 동화</div>
+          <div className={styles.menuTitle}>맞춤 동화 만들기</div>
+          <div className={styles.menuDesc}>아이 취향에 맞는 새로운 이야기</div>
+        </button>
+        <button className={styles.menuCard} onClick={handleMypage}>
+          <div className={styles.menuBadge}>My Page</div>
+          <div className={styles.menuTitle}>내 기록 보러가기</div>
+          <div className={styles.menuDesc}>학습 이력과 리포트를 확인해요</div>
         </button>
       </div>
+
       {loading && (
         <LoadingOverlay
           message="동화를 재구성중이에요…"
