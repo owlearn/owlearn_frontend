@@ -11,8 +11,8 @@
   height: 25vh;
   margin-bottom: 30px;
   border-radius: 24px;
-  background: linear-gradient(135deg, #e9f3ff 0%, #f9fdff 100%);
-  box-shadow: 0 8px 26px rgba(90, 155, 255, 0.08);
+  background: linear-gradient(135deg, #eef4e6 0%, #f9fbf6 100%);
+  box-shadow: 0 8px 26px rgba(101, 136, 100, 0.08);
   overflow: hidden;
 }
 
@@ -56,7 +56,7 @@
   height: 150%;
   background: radial-gradient(
     circle,
-    rgba(100, 170, 255, 0.18),
+    rgba(101, 136, 100, 0.18),
     transparent 70%
   );
   z-index: -1;
@@ -74,21 +74,21 @@
 
 .eyebrow {
   font-size: 14px;
-  color: #5f86b5;
+  color: #4f6a3f;
   margin-bottom: 6px;
 }
 
 .textArea h1 {
   font-size: 26px;
   font-weight: 700;
-  color: #1f3045;
+  color: #2f3a24;
   margin-bottom: 10px;
 }
 
 .subText {
   font-size: 15px;
   line-height: 1.7;
-  color: #4a6275;
+  color: #4f6446;
   max-width: 480px;
 }
 
@@ -98,14 +98,14 @@
   right: 24px;
   border: none;
   background: transparent;
-  color: #4b7bb2;
+  color: #658864;
   font-size: 14px;
   cursor: pointer;
   transition: color 0.25s ease;
 }
 
 .backButton:hover {
-  color: #2f6fb8;
+  color: #4c6a44;
 }
 
 .optionsCard {
@@ -148,27 +148,27 @@
 
 .optionButton {
   flex: 1 1 45%;
-  border: 1.5px solid #c8dff8;
+  border: 1.5px solid #d4dfc6;
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 14px;
   background: #fff;
-  color: #2f5075;
+  color: #2f3a24;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .optionButton:hover {
-  border-color: #58a6ff;
-  color: #2f7ccf;
+  border-color: #8fc28f;
+  color: #3f572d;
   transform: translateY(-1.5px);
 }
 
 .active {
-  background: linear-gradient(120deg, #67b7ff, #4b9eff);
+  background: linear-gradient(120deg, #8fc28f, #658864);
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 5px 10px rgba(75, 158, 255, 0.35);
+  box-shadow: 0 5px 12px rgba(101, 136, 100, 0.24);
 }
 
 /* 결과 영역 */
@@ -180,10 +180,10 @@
 }
 
 .bestStory {
-  border: 1.5px solid #c2dfff;
+  border: 1.5px solid #d4dfc6;
   border-radius: 14px;
   padding: 20px 24px;
-  background: #f3f8ff;
+  background: #f7f9f5;
 }
 
 .bestHeader {
@@ -193,8 +193,8 @@
 }
 
 .badge {
-  background: #ffe57a;
-  color: #6a5600;
+  background: #eef4e6;
+  color: #3f572d;
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 12px;
@@ -218,7 +218,7 @@
 .primaryButton {
   border: none;
   border-radius: 999px;
-  background: linear-gradient(120deg, #67b7ff, #4b9eff);
+  background: linear-gradient(120deg, #8fc28f, #658864);
   color: #fff;
   padding: 10px 24px;
   font-size: 14px;
@@ -233,10 +233,10 @@
 }
 
 .secondaryButton {
-  border: 1.5px solid #4b9eff;
+  border: 1.5px solid #8fc28f;
   border-radius: 999px;
   background: #fff;
-  color: #2f7ccf;
+  color: #3f572d;
   padding: 10px 24px;
   font-size: 14px;
   font-weight: 600;
@@ -245,7 +245,7 @@
 }
 
 .secondaryButton:hover {
-  background: rgba(75, 158, 255, 0.08);
+  background: rgba(101, 136, 100, 0.08);
   transform: translateY(-1px);
 }
 
@@ -262,10 +262,10 @@
   margin-bottom: 12px;
   padding: 12px 16px;
   border-radius: 12px;
-  background: #fff7ed;
-  color: #8b4a00;
+  background: #f7f9f5;
+  color: #3f572d;
   font-size: 13px;
-  border: 1px solid #ffd39c;
+  border: 1px solid #d4dfc6;
 }
 
 /* 로딩 오버레이는 LoadingOverlay 컴포넌트 스타일 사용 */

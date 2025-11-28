@@ -21,6 +21,10 @@ quizzesInstance.defaults.baseURL += "/quizzes";
 const promptInstance = axios.create(defaultInstance.defaults);
 promptInstance.defaults.baseURL += "/gemini";
 
+// 리텔링(장면 다시 쓰기) 인스턴스 - 향후 별도 엔티티/컨트롤러용
+const retellingInstance = axios.create(defaultInstance.defaults);
+retellingInstance.defaults.baseURL += "/retelling";
+
 // 서버 저장된 이미지 접근용 인스턴스
 const imageBaseUrl = `${BASE_URL}`;
 
@@ -47,6 +51,7 @@ attachToken(defaultInstance);
 attachToken(userInstance);
 attachToken(taleInstance);
 attachToken(reportInstance);
+attachToken(retellingInstance);
 
 export {
   defaultInstance,
@@ -54,6 +59,7 @@ export {
   userInstance,
   quizzesInstance,
   promptInstance,
+  retellingInstance,
   imageBaseUrl,
   reportInstance,
 };
