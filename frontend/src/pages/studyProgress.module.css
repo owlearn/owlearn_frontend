@@ -3,129 +3,53 @@
   src: url("../assets/fonts/HakgyoansimGeurimilgi.ttf") format("truetype");
 }
 
-.tytle {
-  margin: auto;
-  margin-top: 50px;
-  margin-bottom: 30px;
-  border-radius: 15px;
-  background: linear-gradient(270deg, #869b73 0.01%, #b7b78a 84.13%);
-  color: #ffffff;
-  width: 80%;
-  height: 90px;
-  color: #ffffff;
-  font-family: "HakgyoansimGeurimilgi";
-  font-size: 50px;
-  display: flex;
-  align-items: center; /* 수직 중앙 정렬 */
+/* 🔥 페이지 전체가 항상 스크롤 가능하게 */
+.page {
+  width: 100%;
+  min-height: 100vh; /* 화면 높이 이상이면 아래로 계속 늘어남 */
+  box-sizing: border-box;
+  padding: 8px 10px 18px;
+  font-family: "Pretendard", "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  display: block; /* flex 제거해서 높이 제한 안 받게 */
+  overflow-y: auto; /* 🔥 페이지 단위 스크롤 강제 */
+}
+
+/* 로딩/에러용 공통 메시지 */
+.stateMessage {
+  width: 100%;
+  max-width: 900px;
+  margin: 80px auto;
   text-align: center;
-  justify-content: center; /* 수평 중앙 정렬 */
+  font-size: 18px;
   font-weight: 600;
+  color: #555;
 }
 
-.rightContainer {
-  display: flex;
-  flex-direction: row;
-  margin-top: auto;
-  width: 85%;
-  margin: auto;
+.stateMessage.error {
+  color: #c0392b;
 }
 
-.illust {
-  /* width: 30%; */
-  height: 50vh;
-  margin: auto;
-  border-radius: 30px;
-}
-
-.storyBox {
-  margin: auto;
-  border-radius: 15px;
-  background: #fdfdfd;
-  box-shadow: 1px 2px 20px 1px rgba(0, 0, 0, 0.25);
-  width: 50%;
-  height: 50vh;
-  font-family: "Hakgyoansim Geurimilgi TTF";
-  font-size: 26px;
-  line-height: 1.4;
-  white-space: pre-line; /* 줄바꿈 \n 인식 */
-  padding-left: 50px;
-  padding-right: 50px;
-  display: flex; /* Flexbox 적용 */
-  flex-direction: column; /* 세로 방향 정렬 */
-  justify-content: center; /* 수직 중앙 정렬 */
-}
-.pageBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin-top: 20px;
-}
-.arrow {
-  background: rgba(255, 255, 255, 0.9);
-  color: #3a1d00;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 14px;
-  padding: 10px 16px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
-}
-
-.arrow:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
-}
-
-.bottomContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3개의 동일한 칼럼 */
-  margin: auto;
-  padding-top: 3%;
-}
-
-.speakerBtn {
-  border: none;
-  background: none;
-  font-size: 40px;
-  cursor: pointer;
-  width: 100px;
-  height: 50px;
-  display: flex;
-  margin: auto;
-}
-
-.progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 중간 정렬 */
-  font-size: 20px;
-  line-height: 1.4;
-}
-
-.bar {
-  margin: auto;
-}
+/* FINISH 버튼 */
 .quizBtn {
-  border-radius: 40px;
-  background: linear-gradient(135deg, #a98f7b, #786e65); /* 은은한 그라데이션 */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 더 큰 그림자 */
+  border-radius: 999px;
+  background: linear-gradient(135deg, #8fc28f, #658864);
+  box-shadow: 0 8px 16px rgba(101, 136, 100, 0.22);
   cursor: pointer;
   border: none;
-  width: 130px;
-  height: 50px;
+  min-width: 140px;
+  height: 46px;
   color: #ffffff;
-  font-weight: 600;
-  font-size: 20px;
-  letter-spacing: 1px;
-  transition: all 0.2s ease-in-out;
-  margin: auto;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.5px;
+  transition: all 0.18s ease-in-out;
+  margin: 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .quizBtn:hover {
-  background: linear-gradient(135deg, #7e6655, #5b5047); /* hover 시 어둡게 */
-  transform: translateY(-2px); /* 살짝 튀어오르는 효과 */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(101, 136, 100, 0.28);
 }
