@@ -56,14 +56,13 @@
 .cardContainer {
   display: flex;
   gap: 28px;
-  padding: 30px 80px; /* 좌우 여백 추가 */
+  padding: 30px 40px; /* 프레임 안에서 좌우 여백 균형 */
   width: 100%;
-  max-width: 100vw; /* 잘림방지로 끝까지 확장 */
-  overflow-x: auto;
+  overflow-x: auto; /* 카드만 가로 스크롤 */
   scroll-behavior: smooth;
   box-sizing: border-box;
   align-items: center;
-  justify-content: center; /* 중앙 정렬 추가 */
+  justify-content: flex-start; /* 왼쪽에서부터 자연스럽게 배치 */
   margin-top: 0;
 }
 
