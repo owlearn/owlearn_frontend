@@ -42,42 +42,45 @@ function TaleListPage() {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>전체 동화 목록</h2>
-      <ul className={styles.list}>
-        {tales.map((tale) => (
-          <li key={tale.id} className={styles.item}>
-            <div className={styles.textGroup}>
-              <div className={styles.titleRow}>
-                <strong>{tale.title}</strong>
-                <span className={styles.typeBadge}>
-                  {renderTypeLabel(tale.type)}
-                </span>
-              </div>
-              <span className={styles.idText}>ID: {tale.id}</span>
-            </div>
 
-            <div className={styles.buttonGroup}>
-              <button
-                className={styles.viewBtn}
-                onClick={() => navigate(`/admin/tale/${tale.id}`)}
-              >
-                보기
-              </button>
-              <button
-                className={styles.detailBtn}
-                onClick={() => navigate(`/admin/edit/${tale.id}`)}
-              >
-                수정
-              </button>
-              <button
-                className={styles.deleteBtn}
-                onClick={() => handleDelete(tale.id)}
-              >
-                삭제
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className={styles.pageWrapper}>
+        <ul className={styles.list}>
+          {tales.map((tale) => (
+            <li key={tale.id} className={styles.item}>
+              <div className={styles.textGroup}>
+                <div className={styles.titleRow}>
+                  <strong>{tale.title}</strong>
+                  <span className={styles.typeBadge}>
+                    {renderTypeLabel(tale.type)}
+                  </span>
+                </div>
+                <span className={styles.idText}>ID: {tale.id}</span>
+              </div>
+
+              <div className={styles.buttonGroup}>
+                <button
+                  className={styles.viewBtn}
+                  onClick={() => navigate(`/admin/tale/${tale.id}`)}
+                >
+                  보기
+                </button>
+                <button
+                  className={styles.detailBtn}
+                  onClick={() => navigate(`/admin/edit/${tale.id}`)}
+                >
+                  수정
+                </button>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => handleDelete(tale.id)}
+                >
+                  삭제
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

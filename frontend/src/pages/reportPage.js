@@ -7,7 +7,6 @@ import { getTale } from "../api/tale";
 const emotionTags = [
   { label: "재미있었어요", tone: "lavender" },
   { label: "감동적이었어요", tone: "rose" },
-  { label: "두근거렸어요", tone: "berry" },
   { label: "배울 게 많았어요", tone: "mint" },
   { label: "생각이 많아졌어요", tone: "sky" },
   { label: "다시 읽고 싶어요", tone: "sunset" },
@@ -129,38 +128,21 @@ const ReadingReflection = () => {
 
   return (
     <div className={styles.page}>
-      <button
-        type="button"
-        className={styles.backButton}
-        onClick={() => navigate(-1)}
-      >
-        ← 학습 목록으로
-      </button>
-      <header className={styles.hero}>
-        <div className={styles.heroText}>
-          <p className={styles.eyebrow}>독후감 작성</p>
-          <h1 className={styles.heroTitle}>
-            오늘 읽은 동화를
-            <br />
-            나만의 언어로 기록해요
-          </h1>
-          <p className={styles.subtitle}>
-            느낀 감정과 별점만 간단히 남겨주세요.
-          </p>
-        </div>
+      <h1 className={styles.heroTitle}>
+        오늘 읽은 동화를 나만의 언어로 기록해요
+      </h1>
 
-        <div className={styles.storyCard}>
-          <span className={styles.badge}>현재 작성 중</span>
-          <h2>{storyInfo.title || "동화 정보를 불러오는 중..."}</h2>
-          {/* {storyInfo.mood && <p className={styles.meta}>{storyInfo.mood}</p>}
+      <div className={styles.storyCard}>
+        <span className={styles.badge}>현재 작성 중</span>
+        <h2>{storyInfo.title || "동화 정보를 불러오는 중..."}</h2>
+        {/* {storyInfo.mood && <p className={styles.meta}>{storyInfo.mood}</p>}
           {storyInfo.summary && (
             <p className={styles.summary}>{storyInfo.summary}</p>
           )} */}
-          {storyLoading && (
-            <p className={styles.meta}>동화 정보를 불러오고 있어요...</p>
-          )}
-        </div>
-      </header>
+        {storyLoading && (
+          <p className={styles.meta}>동화 정보를 불러오고 있어요...</p>
+        )}
+      </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         {/* 감정 태그 */}

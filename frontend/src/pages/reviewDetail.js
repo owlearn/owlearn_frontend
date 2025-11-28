@@ -7,7 +7,6 @@ import { getTale } from "../api/tale";
 const emotionTags = [
   { label: "재미있었어요", tone: "lavender" },
   { label: "감동적이었어요", tone: "rose" },
-  { label: "두근거렸어요", tone: "berry" },
   { label: "배울 게 많았어요", tone: "mint" },
   { label: "생각이 많아졌어요", tone: "sky" },
   { label: "다시 읽고 싶어요", tone: "sunset" },
@@ -40,19 +39,19 @@ const ReviewDetail = () => {
   });*/
 
   useEffect(() => {
-  const fetchReview = async () => {
-    try {
-      const json = await getReviewDetailAPI(reviewId);
-      const dto = json.data.responseDto;
-
-      setReview(dto);
-
-      if (from === "parent") {
-        setTaleTitle("알 수 없는 동화");
-        return; 
-      }
-
+    const fetchReview = async () => {
       try {
+        const json = await getReviewDetailAPI(reviewId);
+        const dto = json.data.responseDto;
+
+        setReview(dto);
+
+        if (from === "parent") {
+          setTaleTitle("알 수 없는 동화");
+          return;
+        }
+
+        try {
           const taleJson = await getTale(dto.taleId);
           setTaleTitle(taleJson.data.responseDto?.title || "알 수 없는 동화");
         } catch {
@@ -66,9 +65,8 @@ const ReviewDetail = () => {
       }
     };
 
-  fetchReview();
-}, [reviewId, from]);
-
+    fetchReview();
+  }, [reviewId, from]);
 
   /*const handleEdit = () => {
     setIsEditMode(true);

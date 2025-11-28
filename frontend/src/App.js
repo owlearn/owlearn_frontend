@@ -29,6 +29,7 @@ import ParentMain from "./pages/parentMain";
 import ParentDetail from "./pages/parentDetail";
 import ChildMyPage from "./pages/childMyPage";
 import Report from "./pages/reportPage";
+import RetellingPage from "./pages/RetellingPage";
 import PrivateRoute from "./component/PrivateRoute";
 import AdminRoute from "./component/AdminRoute";
 import ReviewDetail from "./pages/reviewDetail";
@@ -189,6 +190,15 @@ function AppContent() {
             <PrivateRoute>
               {" "}
               <Report />{" "}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/tale/retelling"
+          element={
+            <PrivateRoute>
+              {" "}
+              <RetellingPage />{" "}
             </PrivateRoute>
           }
         />
