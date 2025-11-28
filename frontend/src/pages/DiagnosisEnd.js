@@ -5,8 +5,8 @@ import firework from "../assets/firework.png";
 
 const DiagnosisEnd = () => {
   const navigate = useNavigate();
-  const location = useLocation(); 
-  
+  const location = useLocation();
+
   const receivedUrl = location.state?.imageUrl;
   const BASE_URL = process.env.REACT_APP_URL; // 배포 도메인
 
@@ -30,31 +30,26 @@ const DiagnosisEnd = () => {
   return (
     <div className={styles.diagnosisEnd}>
       {/* 좌우에 불꽃 이미지 배치 */}
-      <img
-        src={firework}
-        alt=""
-        className={`${styles.firework} ${styles.left}`}
-      />
-      <img
-        src={firework}
-        alt=""
-        className={`${styles.firework} ${styles.right}`}
-      />
-      <h1 className={styles.title}>Complete!</h1>
-      
-      <div className={styles.avatarBox}>
-        {imageUrl && (
-         <img 
-          src={`${BASE_URL}${imageUrl}`}
-            alt="완성된 아바타"
-            className={styles.avatarImg}
-          />
-        )}
+
+      <div className={styles.card}>
+        <div className={styles.badge}>프로필 준비 완료</div>
+        <h1 className={styles.title}>완성되었습니다!</h1>
+        <p className={styles.subtitle}>만든 아바타로 학습을 이어가 볼까요?</p>
+
+        <div className={styles.avatarBox}>
+          {imageUrl && (
+            <img
+              src={`${BASE_URL}${imageUrl}`}
+              alt="완성된 아바타"
+              className={styles.avatarImg}
+            />
+          )}
+        </div>
+
+        <button className={styles.button} onClick={onClick}>
+          프로필 선택으로 이동
+        </button>
       </div>
-      
-      <button className={styles.button} onClick={onClick}>
-        확인
-      </button>
     </div>
   );
 };

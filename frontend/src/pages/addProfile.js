@@ -102,8 +102,7 @@ const ChildProfilePage = () => {
           <div className={styles.heroText}>
             <h1 className={styles.title}>자녀 프로필 생성</h1>
             <p className={styles.subtitle}>
-              따뜻한 우주 놀이터에서 만 나이 기준으로 아이의 학습 여정을
-              시작해요.
+              아이 정보 입력으로 학습 여정을 시작해요.
             </p>
             <div className={styles.chipRow}>
               <span className={styles.chip}>🎉 만 나이 자동 계산</span>
@@ -113,7 +112,9 @@ const ChildProfilePage = () => {
           <div className={styles.mascotCard}>
             <div className={styles.mascotEmoji}>🦉</div>
             <p className={styles.mascotText}>
-              만 나이로<br />단계를 추천해 드려요!
+              만 나이로
+              <br />
+              단계를 추천해 드려요!
             </p>
           </div>
         </div>
@@ -150,14 +151,14 @@ const ChildProfilePage = () => {
               className={styles.signupButton}
               disabled={loading}
             >
-              {loading ? "생성 중..." : "만 나이로 프로필 생성"}
+              {loading ? "생성 중..." : "프로필 생성"}
             </button>
           </div>
         </div>
 
-        <div className={styles.footerNote}>
-          🪄 만 나이 기준으로 맞춤 학습 단계를 안내해드려요.
-        </div>
+        {/* <div className={styles.footerNote}>
+          🪄 나이 기준으로 맞춤 학습을 안내해드려요.
+        </div> */}
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ const hair = [
     type: "male",
     style: { top: "-19.5px", left: "82px", width: "45%" },
     unlocked: false,
-    price: 200, 
+    price: 200,
   },
   {
     itemImg: hairFemale1,
@@ -83,7 +83,7 @@ const hair = [
     type: "male",
     style: { top: "7px", left: "80px", width: "45%" },
     unlocked: false,
-    price: 200, 
+    price: 200,
   },
   {
     itemImg: hairFemale2,
@@ -91,7 +91,7 @@ const hair = [
     type: "female",
     style: { top: "-4px", left: "82px", width: "45%" },
     unlocked: false,
-    price: 400, 
+    price: 400,
   },
   {
     itemImg: hairFemale3,
@@ -99,7 +99,7 @@ const hair = [
     type: "female",
     style: { top: "-4px", left: "82px", width: "45%" },
     unlocked: false,
-    price: 600, 
+    price: 600,
   },
   {
     itemImg: hairFemale5,
@@ -107,7 +107,7 @@ const hair = [
     type: "female",
     style: { top: "7px", left: "82px", width: "45%" },
     unlocked: false,
-    price: 600, 
+    price: 600,
   },
   {
     itemImg: hairMale2,
@@ -115,7 +115,7 @@ const hair = [
     type: "male",
     style: { top: "-18.5px", left: "80px", width: "45%" },
     unlocked: false,
-    price: 800, 
+    price: 800,
   },
 ];
 
@@ -138,7 +138,7 @@ const clothes = [
     style: { top: "126px", left: "91px", width: "38%" },
     unlocked: true,
   },
-    {
+  {
     itemImg: clothes3,
     name: "의상3",
     style: { top: "123px", left: "96px", width: "35%" },
@@ -243,19 +243,19 @@ const shoes = [
     unlocked: false,
     price: 400,
   },
-]
+];
 
 const accessory = [
   {
     itemImg: itemHeadband,
     name: "머리띠",
     style: { top: "-35px", left: "36%", width: "25%" },
-    unlocked: true, 
+    unlocked: true,
   },
   {
     itemImg: itemRibbon,
     name: "리본",
-    style: { top: "35%", left: "118px", width: "20%" },
+    style: { top: "55%", left: "120px", width: "20%" },
     unlocked: true,
   },
   {
@@ -268,48 +268,47 @@ const accessory = [
     itemImg: itemGlasses,
     name: "안경",
     style: { top: "30px", left: "35%", width: "30%" },
-    unlocked: false,
-    price: 100, 
+    unlocked: true,
+    price: 100,
   },
   {
     itemImg: itemCrown,
     name: "왕관",
     style: { top: "-25px", left: "37%", width: "25%" },
-    unlocked: false,
-    price: 100, 
+    unlocked: true,
+    price: 100,
   },
   {
     itemImg: itemTie,
     name: "넥타이",
-    style: { top: "110px", left: "37.5%", width: "25%" },
-    unlocked: false,
-    price: 100, 
+    style: { top: "63%", left: "37.5%", width: "25%" },
+    unlocked: true,
+    price: 100,
   },
   {
     itemImg: itemBadge,
     name: "뱃지",
-    style: { top: "130px", left: "48%", width: "10%" },
-    unlocked: false,
-    price: 300, 
+    style: { top: "140px", left: "50%", width: "10%" },
+    unlocked: true,
+    price: 300,
   },
   {
     itemImg: itemBag,
     name: "가방",
     style: { top: "190px", left: "55px", width: "25%" },
-    unlocked: false, 
-    price: 300, 
+    unlocked: true,
+    price: 300,
   },
   {
-  itemImg: itemHeadband2,
+    itemImg: itemHeadband2,
     name: "머리띠2",
     style: { top: "-20px", left: "110px", width: "25%" },
-    unlocked: false,
-    price: 300, 
+    unlocked: true,
+    price: 300,
   },
-    
 ];
 
-const tabList = ["머리","의상","신발","액세서리"];
+const tabList = ["머리", "의상", "신발", "액세서리"];
 
 function DiagnosisPage() {
   const [selectedHair, setSelectedHair] = useState(null);
@@ -321,7 +320,7 @@ function DiagnosisPage() {
 
   const navigate = useNavigate();
 
-  const { childId } = useParams(); 
+  const { childId } = useParams();
   const location = useLocation();
   const childData = location.state?.child;
 
@@ -333,16 +332,15 @@ function DiagnosisPage() {
     return false;
   };
 
-
   let items;
   if (currentIndex === 0) {
-    items = hair; 
+    items = hair;
   } else if (currentIndex === 1) {
-    items = clothes; 
+    items = clothes;
   } else if (currentIndex === 2) {
     items = shoes;
-  } else if (currentIndex === 3) { 
-    items = accessory; 
+  } else if (currentIndex === 3) {
+    items = accessory;
   } else {
     // 정의되지 않은 currentIndex 값에 대한 기본값 또는 오류 처리
     items = [];
@@ -359,36 +357,36 @@ function DiagnosisPage() {
     if (currentIndex === 0) {
       // '머리' 탭일 때
       if (selectedHair?.name === item.name) {
-        setSelectedHair(null); 
+        setSelectedHair(null);
       } else {
-        setSelectedHair(item); 
+        setSelectedHair(item);
       }
     } else if (currentIndex === 1) {
       // '의상' 탭일 때
       if (selectedClothes?.name === item.name) {
-        setSelectedClothes(null); 
+        setSelectedClothes(null);
       } else {
-        setSelectedClothes(item); 
+        setSelectedClothes(item);
       }
     } else if (currentIndex === 2) {
       // '신발' 탭일 때
       if (selectedShoes?.name === item.name) {
-        setSelectedShoes(null); 
+        setSelectedShoes(null);
       } else {
-        setSelectedShoes(item); 
+        setSelectedShoes(item);
       }
     } else if (currentIndex === 3) {
       // '액세서리' 탭일 때
       if (selectedAccessory?.name === item.name) {
-        setSelectedAccessory(null); 
+        setSelectedAccessory(null);
       } else {
-        setSelectedAccessory(item); 
+        setSelectedAccessory(item);
       }
     }
   };
 
   const handleCapture = async () => {
-    const avatarElement = document.querySelector(`.${styles.avatarLayerWrap}`);    
+    const avatarElement = document.querySelector(`.${styles.avatarLayerWrap}`);
     if (avatarElement) {
       const scale = 2; // 이미지 품질을 높이기 위한 스케일
       const captureWidth = 270;
@@ -399,8 +397,8 @@ function DiagnosisPage() {
         height: captureHeight,
         scale: scale,
         backgroundColor: null, // 배경 투명하게 캡처
-        useCORS: true, 
-        y:-30,
+        useCORS: true,
+        y: -30,
       });
 
       const sourceY = 0; // 초기 크롭 시작점을 0으로 설정하여 전체 캡처
@@ -414,18 +412,18 @@ function DiagnosisPage() {
 
       ctx.drawImage(
         canvas,
-        25*scale, 
-        sourceY, 
-        canvas.width, 
-        canvas.height - sourceY, 
+        25 * scale,
+        sourceY,
+        canvas.width,
+        canvas.height - sourceY,
         0,
-        0, 
+        0,
         croppedCanvasWidth,
-        croppedCanvasHeight 
+        croppedCanvasHeight
       );
 
       const imgData = croppedCanvas.toDataURL("image/png");
-      
+
       // 백엔드 전송 로직
       try {
         // base64 → Blob 변환
@@ -450,7 +448,7 @@ function DiagnosisPage() {
         if (response.status === 200) {
           alert("캐릭터 저장 완료!");
           navigate("/diagnosisEnd", {
-            state: { imageUrl: response.data.responseDto.imageUrl }
+            state: { imageUrl: response.data.responseDto.imageUrl },
           });
         } else {
           alert("이미지 업로드 실패");
@@ -459,14 +457,13 @@ function DiagnosisPage() {
         console.error("전송 오류:", error);
         alert("백엔드 전송 중 오류 발생");
       }
-      
+
       const link = document.createElement("a");
       link.href = imgData;
-      link.download = "avatar.png";
+      //link.download = "avatar.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
     } else {
       // avatarElement를 찾지 못했거나 캡처할 필요가 없는 경우
       navigate("/diagnosisEnd");
@@ -479,10 +476,14 @@ function DiagnosisPage() {
       <div className={styles.mainContent}>
         {/* 아바타 표시 영역 */}
         <div className={styles.avatar}>
+          <button className={styles.doneChip} onClick={handleCapture}>
+            <span className={styles.checkIcon}>✓</span>
+            완료
+          </button>
           <div className={styles.avatarLayerWrap}>
             {/* 기본 아바타 이미지 */}
             <img src={avatarBase} className={styles.avatarImg} alt="avatar" />
-            
+
             {/* 선택된 머리 스타일 이미지 */}
             {selectedHair && (
               <img
@@ -512,25 +513,17 @@ function DiagnosisPage() {
                 style={selectedClothes.style}
               />
             )}
-  
+
             {/* 선택된 액세서리 이미지 */}
             {selectedAccessory && (
               <img
                 src={selectedAccessory.itemImg}
                 className={styles.avatarLayer}
                 alt={selectedAccessory.name}
-                style={selectedAccessory.style} 
+                style={selectedAccessory.style}
               />
             )}
           </div>
-          {/* 완료 버튼 */}
-          <button className={styles.submitButton} onClick={handleCapture}
-          disabled={
-            selectedAccessory && selectedAccessory.unlocked === false // 잠금 아이템 선택 시 비활성화
-          }
-          >
-            완료
-          </button>
         </div>
 
         {/* 아이템 선택 UI 영역 */}
