@@ -86,68 +86,93 @@ const AdminUploadPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sectionWrapper}>
-        <div className={styles.section}>
-          <h3 className={styles.header}>동화 등록</h3>
-          <h4>동화 제목</h4>
-          <input
-            className={styles.input}
-            placeholder="동화 제목"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <h4>동화 속성</h4>
-          <div className={styles.optionGrid}>
-            {optionGroups.map((group) => (
-              <div key={group.key} className={styles.optionColumn}>
-                <p className={styles.optionLabel}>{group.label}</p>
-                <div className={styles.optionButtons}>
-                  {group.options.map((option) => {
-                    const active = attributes[group.key] === option;
-                    return (
-                      <button
-                        key={option}
-                        type="button"
-                        className={`${styles.optionButton} ${
-                          active ? styles.active : ""
-                        }`}
-                        onClick={() => handleAttributeSelect(group.key, option)}
-                      >
-                        {option}
-                      </button>
-                    );
-                  })}
+      <h2 className={styles.title}>동화 등록</h2>
+
+      <div className={styles.pageWrapper}>
+        <div className={styles.sectionWrapper}>
+          <div className={styles.section}>
+            <h3 className={styles.header}>동화 정보 입력</h3>
+
+            <h4>동화 제목</h4>
+            <input
+              className={styles.input}
+              placeholder="동화 제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+
+            <h4>동화 속성</h4>
+            <div className={styles.optionGrid}>
+              {optionGroups.map((group) => (
+                <div
+                  key={group.key}
+                  className={
+                    group.key === "ageGroup"
+                      ? styles.optionColumnRow // 가로 일자 배치
+                      : styles.optionColumn // 기존 세로 배치
+                  }
+                >
+                  <p className={styles.optionLabel}>{group.label}</p>
+
+                  <div
+                    className={
+                      group.key === "ageGroup"
+                        ? styles.optionButtonsRow // 버튼 가로로 나열
+                        : styles.optionButtons
+                    }
+                  >
+                    {group.options.map((option) => {
+                      const active = attributes[group.key] === option;
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          className={`${styles.optionButton} ${
+                            active ? styles.active : ""
+                          }`}
+                          onClick={() =>
+                            handleAttributeSelect(group.key, option)
+                          }
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            <h4>페이지별 내용</h4>
+            {contents.map((text, idx) => (
+              <div key={idx} className={styles.pageBlock}>
+                <textarea
+                  className={styles.pageTextarea}
+                  placeholder={`${idx + 1} 페이지 내용`}
+                  value={text}
+                  onChange={(e) => handleContentChange(idx, e.target.value)}
+                />
               </div>
             ))}
+
+            <button
+              type="button"
+              className={styles.addPageButton}
+              onClick={addPage}
+            >
+              + 페이지 추가
+            </button>
           </div>
-          <h4>페이지별 내용</h4>
-          {contents.map((text, idx) => (
-            <div key={idx} className={styles.pageBlock}>
-              <textarea
-                className={styles.pageTextarea}
-                placeholder={`${idx + 1} 페이지에 들어갈 내용`}
-                value={text}
-                onChange={(e) => handleContentChange(idx, e.target.value)}
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            className={styles.addPageButton}
-            onClick={addPage}
-          >
-            + 페이지 추가
-          </button>
         </div>
+
+        <button
+          type="button"
+          className={styles.uploadButton}
+          onClick={handleUpload}
+        >
+          동화 전체 업로드
+        </button>
       </div>
-      <button
-        type="button"
-        className={styles.uploadButton}
-        onClick={handleUpload}
-      >
-        동화 전체 업로드
-      </button>
     </div>
   );
 };

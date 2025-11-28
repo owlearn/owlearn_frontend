@@ -64,13 +64,6 @@ function AdminTaleView() {
     return (
       <div className={styles.page}>
         <div className={`${styles.stateMessage} ${styles.error}`}>{error}</div>
-        <button
-          type="button"
-          className={styles.backButton}
-          onClick={handleBack}
-        >
-          목록으로 돌아가기
-        </button>
       </div>
     );
   }
@@ -84,18 +77,6 @@ function AdminTaleView() {
         variant="admin"
         imageSrcBuilder={(src) => (src ? `${imageBaseUrl}${src}` : src)}
       />
-
-      {/* 오버레이 형태의 정보 영역 */}
-      <div className={styles.overlayInfo}>
-        <span className={styles.taleId}>ID: {taleId}</span>
-        <button
-          type="button"
-          className={styles.backButton}
-          onClick={handleBack}
-        >
-          ← 목록으로
-        </button>
-      </div>
     </div>
   );
 }
