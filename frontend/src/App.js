@@ -34,6 +34,7 @@ import PrivateRoute from "./component/PrivateRoute";
 import AdminRoute from "./component/AdminRoute";
 import ReviewDetail from "./pages/reviewDetail";
 import FeedbackPage from "./pages/feedbackPage";
+import TaleExplain from "./pages/taleExplain";
 
 function App() {
   return (
@@ -298,6 +299,15 @@ function AppContent() {
             <PrivateRoute>
               {" "}
               <FeedbackPage />{" "}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/tale/explain"
+          element={
+            <PrivateRoute>
+              {" "}
+              <TaleExplain />{" "}
             </PrivateRoute>
           }
         />

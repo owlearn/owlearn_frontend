@@ -201,7 +201,16 @@ const CustomStoryPage = () => {
 
       if (newTaleId) {
         alert("새로운 동화가 생성되었습니다!");
-        navigate("/tale/study", { state: { taleId: newTaleId } });
+        navigate("/tale/explain", {
+          state: {
+            taleId: newTaleId,
+            story: res.data.responseDto.story,
+            selections,       // shorthand
+            reasons: res.data.responseDto.reasons,
+          }
+        });
+
+
       } else {
         throw new Error("newTaleId 없음");
       }
@@ -231,7 +240,7 @@ const CustomStoryPage = () => {
 
   return (
     <div className={styles.page}>
-      {/* 상단 영역 */}
+      {/* 상단 영역 
 
       <div className={styles.header}>
         <div className={styles.heroContent}>
@@ -254,7 +263,7 @@ const CustomStoryPage = () => {
         <button className={styles.backButton} onClick={() => navigate(-1)}>
           ← 돌아가기
         </button>
-      </div>
+      </div>*/}
 
       {/* 옵션 선택 */}
       <section className={styles.optionsCard}>
