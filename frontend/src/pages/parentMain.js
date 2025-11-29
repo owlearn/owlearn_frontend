@@ -4,6 +4,7 @@ import styles from "./parentMain.module.css";
 import { getChildAPI } from "../api/user";
 import { deleteChildAPI } from "../api/user"; 
 import book from "../assets/fairy.png";
+import creditIcon from "../assets/credit.png";
 
 export default function ParentDashboard() {
   const navigate = useNavigate();
@@ -159,21 +160,22 @@ export default function ParentDashboard() {
 
             <div className={styles.cardHeader}>
               <h3>{child.name}</h3>
-              <span className={styles.ageBadge}>
-                {child.age !== null && child.age !== undefined
-                  ? `${child.age}세`
-                  : "나이 미입력"}
-              </span>
-            </div>
-
-            <div className={styles.metrics}>
-              <div className={styles.metric}>
-                <div className={styles.metricLabel}>누적 크레딧</div>
-                <div className={styles.metricValue}>
-                  {typeof child.credit === "number"
-                    ? `${child.credit.toLocaleString()}점`
-                    : "-"}
-                </div>
+              <div className={styles.headerBadges}>
+                <span className={styles.ageBadge}>
+                  {child.age !== null && child.age !== undefined
+                    ? `${child.age}세`
+                    : "나이 미입력"}
+                </span>
+                {typeof child.credits === "number" && (
+                  <span className={styles.creditPill}>
+                    <img
+                      src={creditIcon}
+                      alt="크레딧"
+                      className={styles.creditIcon}
+                    />
+                    <span>{child.credits.toLocaleString()}C</span>
+                  </span>
+                )}
               </div>
             </div>
 
