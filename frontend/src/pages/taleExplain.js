@@ -13,7 +13,7 @@ export default function TaleExplain() {
   // 🔥 state가 undefined일 수도 있으므로 optional chaining
   const taleId = state?.taleId;
   const selections = state?.selections;
-const reasons = state?.reasons;
+const reason = state?.reason;
 const story = state?.story;
 
   // 🔥 taleId 기반으로 상세 조회 API 호출
@@ -95,13 +95,9 @@ const story = state?.story;
           <div className="explain-box">
             <h3>✨ 이렇게 생성되었어요</h3>
 
-            <ul className="reason-list">
-                {reasons?.map((r, idx) => (
-                    <li key={idx} className="reason-item">
-                    {r}
-                    </li>
-                ))}
-            </ul>
+            <p className="reason-item">
+              {reason}
+            </p>
           </div>
         </div>
 

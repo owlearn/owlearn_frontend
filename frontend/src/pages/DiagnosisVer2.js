@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams, useLocation } from "react-router-dom";
 import html2canvas from "html2canvas";
 import styles from "./DiagnosisVer2.module.css";
 import avatarBase from "../assets/avatar.png";
 import coinIcon from "../assets/credit.png";
-import { saveCharacterAPI, getCharacterAPI } from "../api/user";
+import { saveCharacterAPI, getCharacterAPI, getChildDetailAPI, buyItemAPI } from "../api/user";
 
 import hairMale1 from "../assets/hair_boy_1.png";
 import hairMale2 from "../assets/hair_boy_2.png";
@@ -268,42 +268,42 @@ const accessory = [
     itemImg: itemGlasses,
     name: "안경",
     style: { top: "30px", left: "35%", width: "30%" },
-    unlocked: true,
+    unlocked: false,
     price: 100,
   },
   {
     itemImg: itemCrown,
     name: "왕관",
     style: { top: "-25px", left: "37%", width: "25%" },
-    unlocked: true,
+    unlocked: false,
     price: 100,
   },
   {
     itemImg: itemTie,
     name: "넥타이",
     style: { top: "63%", left: "37.5%", width: "25%" },
-    unlocked: true,
+    unlocked: false,
     price: 100,
   },
   {
     itemImg: itemBadge,
     name: "뱃지",
     style: { top: "140px", left: "50%", width: "10%" },
-    unlocked: true,
+    unlocked: false,
     price: 300,
   },
   {
     itemImg: itemBag,
     name: "가방",
     style: { top: "190px", left: "55px", width: "25%" },
-    unlocked: true,
+    unlocked: false,
     price: 300,
   },
   {
     itemImg: itemHeadband2,
     name: "머리띠2",
     style: { top: "-20px", left: "110px", width: "25%" },
-    unlocked: true,
+    unlocked: false,
     price: 300,
   },
 ];
@@ -311,19 +311,98 @@ const accessory = [
 const tabList = ["머리", "의상", "신발", "액세서리"];
 
 function DiagnosisPage() {
+  // ⭐ 추가됨: 크레딧 상태
+  const [childCredit, setChildCredit] = useState(0);
+
   const [selectedHair, setSelectedHair] = useState(null);
   const [selectedClothes, setSelectedClothes] = useState(null);
   const [selectedShoes, setSelectedShoes] = useState(null);
   const [selectedAccessory, setSelectedAccessory] = useState(null);
-  // 현재 탭 인덱스도 0으로 고정하거나, 필요하다면 여러 탭으로 확장 가능
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const navigate = useNavigate();
-
   const { childId } = useParams();
   const location = useLocation();
   const childData = location.state?.child;
+  console.log("childId=", childId)
 
+  // ⭐ 추가됨: 첫 진입 시 크레딧 로드
+  useEffect(() => {
+    async function fetchCredit() {
+      try {
+        const detail = await getChildDetailAPI(childId); 
+        // /mypage/{childId} 구조가 child.credit 형태임
+        setChildCredit(detail.child.credit); // ⭐ 수정됨  
+        console.log("childCredit:", detail.child.credit);
+      } catch (error) {
+        console.error("크레딧 로딩 오류", error);
+      }
+    }
+    fetchCredit();
+  }, [childId]);
+
+  // ⭐ 변경됨: 구매 가능 여부 체크 함수
+  const canBuy = (item) => {
+    if (item.unlocked) return false;
+    if (typeof item.price !== "number") return false;
+    return childCredit >= item.price;
+  };
+
+  // 탭에 따라 아이템 목록 선택
+  let items;
+  if (currentIndex === 0) items = hair;
+  else if (currentIndex === 1) items = clothes;
+  else if (currentIndex === 2) items = shoes;
+  else if (currentIndex === 3) items = accessory;
+  else items = [];
+
+  // ⭐ 변경됨: 아이템 선택 / 구매
+  const handleItemClick = async (item) => {
+    // 이미 해금된 아이템 → 그냥 선택 처리
+    if (item.unlocked) {
+      selectItem(item);
+      return;
+    }
+
+    // 구매 가능
+    if (canBuy(item)) {
+      const ok = window.confirm(`${item.price} 크레딧으로 구매하시겠습니까?`);
+      if (!ok) return;
+
+      try {
+        await buyItemAPI(childId, { itemId: item.id, price: item.price }); // ⭐ 추가됨 (buy API 호출)
+        alert("구매 완료!");
+
+        item.unlocked = true; // 프론트 즉시 반영
+        setChildCredit((c) => c - item.price); // ⭐ 추가됨
+
+        selectItem(item);
+      } catch (err) {
+        console.error(err);
+        alert("구매 중 오류 발생");
+      }
+
+      return;
+    }
+
+    // 구매 불가
+    alert("크레딧이 부족합니다! 🔒");
+  };
+
+  // ⭐ 선택 로직(깔끔하게 함수화)
+  const selectItem = (item) => {
+    if (currentIndex === 0)
+      setSelectedHair((prev) => (prev?.name === item.name ? null : item));
+    else if (currentIndex === 1)
+      setSelectedClothes((prev) => (prev?.name === item.name ? null : item));
+    else if (currentIndex === 2)
+      setSelectedShoes((prev) => (prev?.name === item.name ? null : item));
+    else if (currentIndex === 3)
+      setSelectedAccessory((prev) => (prev?.name === item.name ? null : item));
+  };
+
+  // 선택된 아이템인지 판별
   const isSelected = (item) => {
     if (currentIndex === 0) return selectedHair?.name === item.name;
     if (currentIndex === 1) return selectedClothes?.name === item.name;
@@ -332,63 +411,11 @@ function DiagnosisPage() {
     return false;
   };
 
-  let items;
-  if (currentIndex === 0) {
-    items = hair;
-  } else if (currentIndex === 1) {
-    items = clothes;
-  } else if (currentIndex === 2) {
-    items = shoes;
-  } else if (currentIndex === 3) {
-    items = accessory;
-  } else {
-    // 정의되지 않은 currentIndex 값에 대한 기본값 또는 오류 처리
-    items = [];
-    console.warn("정의되지 않은 currentIndex:", currentIndex);
-  }
-
-  const handleItemClick = (item) => {
-    if (!item.unlocked) {
-      // 잠금 상태면 클릭 불가
-      alert("크레딧이 부족합니다! 🔒");
-      return;
-    }
-
-    if (currentIndex === 0) {
-      // '머리' 탭일 때
-      if (selectedHair?.name === item.name) {
-        setSelectedHair(null);
-      } else {
-        setSelectedHair(item);
-      }
-    } else if (currentIndex === 1) {
-      // '의상' 탭일 때
-      if (selectedClothes?.name === item.name) {
-        setSelectedClothes(null);
-      } else {
-        setSelectedClothes(item);
-      }
-    } else if (currentIndex === 2) {
-      // '신발' 탭일 때
-      if (selectedShoes?.name === item.name) {
-        setSelectedShoes(null);
-      } else {
-        setSelectedShoes(item);
-      }
-    } else if (currentIndex === 3) {
-      // '액세서리' 탭일 때
-      if (selectedAccessory?.name === item.name) {
-        setSelectedAccessory(null);
-      } else {
-        setSelectedAccessory(item);
-      }
-    }
-  };
-
+  // 기존 handleCapture() 코드 그대로 사용
   const handleCapture = async () => {
     const avatarElement = document.querySelector(`.${styles.avatarLayerWrap}`);
     if (avatarElement) {
-      const scale = 2; // 이미지 품질을 높이기 위한 스케일
+      const scale = 2;
       const captureWidth = 270;
       const captureHeight = 330;
 
@@ -396,53 +423,41 @@ function DiagnosisPage() {
         width: captureWidth,
         height: captureHeight,
         scale: scale,
-        backgroundColor: null, // 배경 투명하게 캡처
+        backgroundColor: null,
         useCORS: true,
         y: -30,
       });
 
-      const sourceY = 0; // 초기 크롭 시작점을 0으로 설정하여 전체 캡처
-      const croppedCanvasWidth = captureWidth * scale;
-      const croppedCanvasHeight = captureHeight * scale;
-
       const croppedCanvas = document.createElement("canvas");
-      croppedCanvas.width = croppedCanvasWidth;
-      croppedCanvas.height = croppedCanvasHeight;
+      croppedCanvas.width = captureWidth * scale;
+      croppedCanvas.height = captureHeight * scale;
       const ctx = croppedCanvas.getContext("2d");
 
       ctx.drawImage(
         canvas,
         25 * scale,
-        sourceY,
+        0,
         canvas.width,
-        canvas.height - sourceY,
+        canvas.height,
         0,
         0,
-        croppedCanvasWidth,
-        croppedCanvasHeight
+        croppedCanvas.width,
+        croppedCanvas.height
       );
 
       const imgData = croppedCanvas.toDataURL("image/png");
+      const blob = await (await fetch(imgData)).blob();
 
-      // 백엔드 전송 로직
+      const formData = new FormData();
+      formData.append("image", blob, "avatar.png");
+      formData.append("childId", Number(childId));
+
+      formData.append("selectedHair", selectedHair?.name || "");
+      formData.append("selectedClothes", selectedClothes?.name || "");
+      formData.append("selectedShoes", selectedShoes?.name || "");
+      formData.append("selectedAccessory", selectedAccessory?.name || "");
+
       try {
-        // base64 → Blob 변환
-        const blob = await (await fetch(imgData)).blob();
-
-        const formData = new FormData();
-        formData.append("image", blob, "avatar.png");
-        formData.append("childId", Number(childId));
-
-        // 기존 착장 정보
-        formData.append("selectedHair", selectedHair?.name || "");
-        formData.append("selectedClothes", selectedClothes?.name || "");
-        formData.append("selectedShoes", selectedShoes?.name || "");
-        formData.append("selectedAccessory", selectedAccessory?.name || "");
-
-        for (let [key, value] of formData.entries()) {
-          console.log("FormData Key:", key, "Value:", value);
-        }
-
         const response = await saveCharacterAPI(formData);
 
         if (response.status === 200) {
@@ -457,15 +472,7 @@ function DiagnosisPage() {
         console.error("전송 오류:", error);
         alert("백엔드 전송 중 오류 발생");
       }
-
-      const link = document.createElement("a");
-      link.href = imgData;
-      //link.download = "avatar.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     } else {
-      // avatarElement를 찾지 못했거나 캡처할 필요가 없는 경우
       navigate("/diagnosisEnd");
     }
   };
@@ -474,17 +481,16 @@ function DiagnosisPage() {
     <div className={styles.diagnosisPage}>
       <h1 className={styles.title}>나만의 캐릭터 만들기</h1>
       <div className={styles.mainContent}>
-        {/* 아바타 표시 영역 */}
+        {/* 아바타 */}
         <div className={styles.avatar}>
           <button className={styles.doneChip} onClick={handleCapture}>
             <span className={styles.checkIcon}>✓</span>
             완료
           </button>
+
           <div className={styles.avatarLayerWrap}>
-            {/* 기본 아바타 이미지 */}
             <img src={avatarBase} className={styles.avatarImg} alt="avatar" />
 
-            {/* 선택된 머리 스타일 이미지 */}
             {selectedHair && (
               <img
                 src={selectedHair.itemImg}
@@ -494,7 +500,6 @@ function DiagnosisPage() {
               />
             )}
 
-            {/* 선택된 신발 스타일 이미지 */}
             {selectedShoes && (
               <img
                 src={selectedShoes.itemImg}
@@ -504,7 +509,6 @@ function DiagnosisPage() {
               />
             )}
 
-            {/* 선택된 의상 스타일 이미지 */}
             {selectedClothes && (
               <img
                 src={selectedClothes.itemImg}
@@ -514,7 +518,6 @@ function DiagnosisPage() {
               />
             )}
 
-            {/* 선택된 액세서리 이미지 */}
             {selectedAccessory && (
               <img
                 src={selectedAccessory.itemImg}
@@ -526,7 +529,7 @@ function DiagnosisPage() {
           </div>
         </div>
 
-        {/* 아이템 선택 UI 영역 */}
+        {/* 아이템 UI */}
         <div className={styles.itemContainer}>
           <div className={styles.tabs}>
             {tabList.map((tab, idx) => (
@@ -559,7 +562,11 @@ function DiagnosisPage() {
 
                 {!item.unlocked && (
                   <div className={styles.coinOverlay}>
-                    <img src={coinIcon} className={styles.coinIcon} alt="" />
+                    <img
+                      src={coinIcon}
+                      className={styles.coinIcon}
+                      alt=""
+                    />
                     <span>{item.price}</span>
                   </div>
                 )}
