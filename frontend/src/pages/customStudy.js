@@ -302,7 +302,11 @@ const CustomStoryPage = () => {
               </button>
               <button
                 className={styles.bestOverlayConfirm}
-                onClick={() => navigate(`/tale/explain/${selectedBest.id}`)}
+                onClick={() =>
+                  navigate("/tale/study", {
+                    state: { taleId: selectedBest.id },
+                  })
+                }
               >
                 이 동화로 학습하기
               </button>
