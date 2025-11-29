@@ -1,4 +1,5 @@
 import { userInstance } from "./instance";
+import { defaultInstance } from "./instance";
 import { request } from "../utils/request";
 
 // 회원가입
@@ -45,8 +46,36 @@ export const getChildAPI = async () => {
   return res.data.responseDto;   // 배열로 내려옴
 };
 
-// 자녀 상세 정보 조회
+/* 자녀 상세 정보 조회
 export const getChildDetailAPI = async (childId) => {
   const res = await userInstance.get(`/mypage/${childId}`);
   return res.data.responseDto;
+};*/
+
+export const getChildDetailAPI = async (childId) => {
+  const res = await defaultInstance.get(`/mypage/${childId}`);
+  return res.data.responseDto;
+};
+
+// 자녀 삭제
+export async function deleteChildAPI(childIds) {
+  try {
+    const res = await userInstance.delete("/child", {
+      data: { childIds },
+    });
+
+    console.log("자녀 삭제 응답:", res.data);
+    return res.data;
+  } catch (err) {
+    console.error("자녀 삭제 오류:", err.response?.data || err);
+    throw err;
+  }
+};
+
+// 아이템 구매
+export const buyItemAPI = (childId, item) => {
+  return userInstance.put(`/buyitem?childId=${childId}`, {
+    itemId: item.itemId,
+    price: item.price,
+  });
 };

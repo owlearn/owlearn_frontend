@@ -1,29 +1,23 @@
 .page {
-  width: 100%;
-  max-width: 1040px;
-  margin: 32px auto 24px;
-  padding: 0 24px 24px;
-  box-sizing: border-box;
+  font-family: "HakgyoansimGeurimilgi", "Noto Sans KR", sans-serif;
+  padding: 56px 48px;
   color: #2f2f2f;
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Noto Sans KR",
-    sans-serif;
-  min-height: 100%;
-  height: auto;
-  overflow-y: auto; /* 마이페이지 내용만 프레임 안에서 스크롤 */
+  width: 100%;
+  max-width: 1300px; 
+  margin: 0 auto;
 }
 
 .profileSection {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  gap: 24px;
-  background: linear-gradient(135deg, #eef4e6 0%, #f9fbf6 100%);
-  border-radius: 24px;
-  padding: 22px 26px;
-  color: #2f3a24;
-  box-shadow: 0 10px 24px rgba(101, 136, 100, 0.12);
-  border: 2px solid #d4dfc6;
-  margin-bottom: 26px;
+  gap: 36px;
+  background: linear-gradient(90deg, #b7b78a 0%, #869b73 100%);
+  border-radius: 28px;
+  padding: 36px 44px;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
   position: relative;
   overflow: hidden;
 }
@@ -45,13 +39,13 @@
 }
 
 .greeting {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .subText {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 400;
   opacity: 0.9;
 }
@@ -64,9 +58,9 @@
 }
 
 .tag {
-  background: rgba(255, 255, 255, 0.7);
-  color: #506043;
-  font-size: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 15px;
   padding: 8px 14px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -77,10 +71,7 @@
 }
 
 .noTags {
-  .noTags {
-    color: #a5a5a5; /* ⬅ 기존보다 더 부드럽고 잘 어울리는 회색 */
-    font-size: 13px;
-  }
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .profileAside {
@@ -102,52 +93,38 @@
 .creditBadge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: #ffffff;
-  border: 1px solid #d4dfc6;
-  border-radius: 999px;
-  padding: 6px 14px 6px 10px;
-  color: #2f3a24;
-  font-size: 14px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-}
-
-.creditIcon {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-
-.creditText {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.creditLabel {
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: #7a8c6a;
-}
-
-.creditValue {
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 18px;
+  padding: 10px 18px;
+  color: #ffffff;
   font-size: 15px;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.creditBadge span {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.creditBadge strong {
+  font-size: 20px;
   font-weight: 700;
 }
 
 .summarySection {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 22px;
-  margin-bottom: 26px;
+  gap: 28px;
+  margin-bottom: 48px;
 }
 
 .card {
-  background: #fffdf8;
-  border-radius: 20px;
-  padding: 22px 22px 20px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-  border: 1.5px solid #d4dfc6;
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,26 +179,29 @@
   font-size: 20px;
   color: #244020;
 }
+
 .primaryBtn {
-  margin-top: 12px;
-  padding: 10px 16px;
-  background: #ffffff;
-  color: #6f8f6f;
-  border-radius: 12px;
-  border: 1.5px solid #8fb68f;
+  border-radius: 16px;
+  border: none;
+  background: #94a184;
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.15s;
+  box-shadow: 0 10px 24px rgba(118, 132, 105, 0.28);
+  transition: background 0.2s ease;
+  margin-top: 12px;
+}
+.primaryBtn:hover {
+  background: #7f8d6f;
 }
 
-.primaryBtn:hover {
-  background: #eef3ee;
-}
 .infoSection {
   background: #ffffff;
-  border-radius: 22px;
-  padding: 24px 22px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-  border: 1.5px solid #d4dfc6;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .infoSection h2 {
@@ -461,44 +441,38 @@
 }
 
 .editBtnRight {
-  background: #ffffff;
-  border: 1px solid #ccd8c5;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 18px;
-  color: #3f5a33;
+  color: #fff;
   font-size: 16px;
   padding: 12px 22px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.18s ease,
-    border-color 0.2s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
   width: 100%;
   text-align: center;
   font-weight: 600;
 }
 .editBtnRight:hover {
-  background: #f2f6ee;
-  border-color: #bccbaf;
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 .switchChildBtn {
-  background: #ffffff;
-  border: 1px solid #ccd8c5;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 18px;
-  color: #3f5a33;
+  color: #ffffff;
   font-size: 16px;
   padding: 12px 22px;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
   width: 100%;
-  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.18s ease,
-    border-color 0.2s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .switchChildBtn:hover {
-  background: #f2f6ee;
-  border-color: #bccbaf;
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
