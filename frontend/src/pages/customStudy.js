@@ -197,6 +197,7 @@ const CustomStoryPage = () => {
         selectedChild.id
       );
 
+      console.log("생성 API 응답:", res.data.responseDto);
       const newTaleId = res.data?.responseDto?.taleId;
 
       if (newTaleId) {
@@ -205,8 +206,8 @@ const CustomStoryPage = () => {
           state: {
             taleId: newTaleId,
             story: res.data.responseDto.story,
-            selections,       // shorthand
-            reasons: res.data.responseDto.reasons,
+            selections,
+            reason: res.data.responseDto.reason,
           }
         });
 

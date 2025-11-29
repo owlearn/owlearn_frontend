@@ -53,6 +53,7 @@ const ChildMyPage = () => {
         );
 
         const json = await res.json();
+        console.log("📌 API 응답 json:", json); 
         if (!json.success || !json.responseDto) throw new Error("잘못된 응답");
 
         setChildData(json.responseDto);
@@ -67,6 +68,8 @@ const ChildMyPage = () => {
 
   useEffect(() => {
     if (!childData?.child) return;
+    console.log("childData:", childData);
+
 
     setEditableFields({
       name: childData.child.name || "",
@@ -93,7 +96,7 @@ const ChildMyPage = () => {
     : `${process.env.REACT_APP_URL}${child.characterImageUrl}`
   : owlGirl;
 
-  const creditBalance = child?.credits ?? 0;
+  const creditBalance = child?.credit ?? 0;
   const interests = child?.interests ?? [];
   const recentBookTitle = recentTale?.title ?? "기록 없음";
 
