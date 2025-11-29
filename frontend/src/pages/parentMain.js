@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./parentMain.module.css";
 import { getChildAPI } from "../api/user";
+import { deleteChildAPI } from "../api/user"; 
 import book from "../assets/fairy.png";
 
 export default function ParentDashboard() {
@@ -29,7 +30,7 @@ export default function ParentDashboard() {
           id: c.id,
           name: c.name,
           age: c.age,
-          credits: c.taleCount * 10 ?? 0, // credits 없어서 임의 계산
+          credit: c.credit ?? 0,
           favoriteTopics: [c.prefer], 
           recentBook: "최근 기록 없음",
           recentBookCover: book,
@@ -70,20 +71,28 @@ export default function ParentDashboard() {
   };
 
   // 선택한 자녀 삭제
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (selectedToDelete.length === 0) return;
 
     const yes = window.confirm("선택한 자녀를 삭제하시겠습니까?");
     if (!yes) return;
 
-    setChildren((prev) =>
-      prev.filter((child) => !selectedToDelete.includes(child.id))
-    );
+    try {
+      const res = await deleteChildAPI(selectedToDelete);
+      alert(res.responseDto?.message || "삭제되었습니다.");
+
+      // UI 반영
+      setChildren((prev) =>
+        prev.filter((child) => !selectedToDelete.includes(child.id))
+      );
+
+    } catch (err) {
+      alert("삭제 실패: " + (err.response?.data?.error || err.message));
+    }
 
     setDeleteMode(false);
     setSelectedToDelete([]);
   };
-
   if (loading) return <div className={styles.page}>불러오는 중…</div>;
 
   return (
@@ -161,8 +170,8 @@ export default function ParentDashboard() {
               <div className={styles.metric}>
                 <div className={styles.metricLabel}>누적 크레딧</div>
                 <div className={styles.metricValue}>
-                  {typeof child.credits === "number"
-                    ? `${child.credits.toLocaleString()}점`
+                  {typeof child.credit === "number"
+                    ? `${child.credit.toLocaleString()}점`
                     : "-"}
                 </div>
               </div>
