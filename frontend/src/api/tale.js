@@ -66,3 +66,11 @@ export const editTaleAPI = (taleId, data) => {
 export const deleteTaleAPI = (taleId) => {
   return request(taleInstance, "delete", `/${taleId}`);
 };
+
+export const retellAPI = (taleId, childId, sceneIndex, userDescription) => {
+  return request(taleInstance, "post", `/${taleId}/retell`, {
+    childId: childId,
+    sceneIndex: sceneIndex,
+    userDescription: userDescription,
+  });
+};
