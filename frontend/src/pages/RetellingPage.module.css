@@ -195,3 +195,121 @@
     text-align: center;
   }
 }
+
+/* ===== 팝업 ===== */
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popupCard {
+  width: 360px;
+  background: #ffffff;
+  padding: 26px 24px 22px;
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  position: relative;
+  text-align: center;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.popupTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.popupCredit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #305f32;
+  margin-bottom: 10px;
+}
+
+.popupCreditIcon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.popupCreditValue {
+  font-size: 18px;
+}
+
+.popupFeedback {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.45;
+  white-space: pre-line;
+  margin-bottom: 18px;
+}
+
+.popupOK {
+  padding: 10px 22px;
+  background: #8fb68f;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* 중앙 크레딧 표시 */
+.creditCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+
+.creditIcon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.creditValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #5a6b4f;
+}
+
+/* 문단 가독성 향상 */
+.feedbackText {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.55;
+  margin: 0 4px 18px;
+  text-align: left;
+  white-space: normal;
+}
+
+/* 크레딧 설명 박스 */
+.creditExplainBox {
+  background: #f3f7ed;
+  border-left: 4px solid #8fb68f;
+  padding: 10px 14px;
+  margin: 10px 0 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #4b6045;
+  text-align: left;
+}
