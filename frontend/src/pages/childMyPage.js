@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./childMyPage.module.css";
 import owlGirl from "../assets/owl_girl.png";
 import defaultCover from "../assets/fairy.png";
+import creditIcon from "../assets/credit.png";
 
 const ChildMyPage = () => {
   const navigate = useNavigate();
@@ -88,10 +89,10 @@ const ChildMyPage = () => {
 
   const name = child?.name ?? "";
   const avatar = child?.characterImageUrl
-  ? child.characterImageUrl.startsWith("http")
-    ? child.characterImageUrl
-    : `${process.env.REACT_APP_URL}${child.characterImageUrl}`
-  : owlGirl;
+    ? child.characterImageUrl.startsWith("http")
+      ? child.characterImageUrl
+      : `${process.env.REACT_APP_URL}${child.characterImageUrl}`
+    : owlGirl;
 
   const creditBalance = child?.credits ?? 0;
   const interests = child?.interests ?? [];
@@ -157,17 +158,18 @@ const ChildMyPage = () => {
 
   const handleAvatarClick = () => {
     const ok = window.confirm("아바타를 수정하시겠습니까?");
-    if (ok) navigate(`/diagnosis/${child.id}`, {
-      state: {
-        editMode: true,
-        selectedItems: {
-          hair: child.hair,  
-          clothes: child.clothes,
-          shoes: child.shoes,
-          accessory: child.accessory,
-        }
-      }
-    });
+    if (ok)
+      navigate(`/diagnosis/${child.id}`, {
+        state: {
+          editMode: true,
+          selectedItems: {
+            hair: child.hair,
+            clothes: child.clothes,
+            shoes: child.shoes,
+            accessory: child.accessory,
+          },
+        },
+      });
   };
 
   return (
@@ -186,8 +188,16 @@ const ChildMyPage = () => {
           <div className={styles.profileTopRow}>
             <h2 className={styles.greeting}>{name}님, 반가워요!</h2>
             <div className={styles.creditBadge}>
-              <span>보유 크레딧</span>
-              <strong>{creditBalance.toLocaleString()}C</strong>
+              <img
+                src={creditIcon}
+                alt="크레딧 아이콘"
+                className={styles.creditIcon}
+              />
+              <div className={styles.creditText}>
+                <strong className={styles.creditValue}>
+                  {creditBalance.toLocaleString()}C
+                </strong>
+              </div>
             </div>
           </div>
 
@@ -264,9 +274,7 @@ const ChildMyPage = () => {
                 <input
                   type="text"
                   value={editableFields.name}
-                  onChange={(e) =>
-                    handleFieldChange("name", e.target.value)
-                  }
+                  onChange={(e) => handleFieldChange("name", e.target.value)}
                 />
               </label>
 
@@ -315,10 +323,11 @@ const ChildMyPage = () => {
                     <li
                       key={r.reviewId}
                       className={styles.reportItem}
-                      onClick={() => navigate(`/review/${r.reviewId}?from=mypage`)} // 상세페이지 이동 추가
+                      onClick={() =>
+                        navigate(`/review/${r.reviewId}?from=mypage`)
+                      } // 상세페이지 이동 추가
                       style={{ cursor: "pointer" }}
                     >
-                      
                       <strong className={styles.reportItemTitle}>
                         {r.title || "제목 없음"}
                       </strong>
