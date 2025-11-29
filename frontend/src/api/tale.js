@@ -4,6 +4,16 @@ import { request } from "../utils/request";
 // 동화 조회 요청
 export const getTale = (taleId) => request(taleInstance, "get", `/${taleId}`);
 
+//맞춤동화 베스트
+export const getBestTale = (subject, tone, artStyle, ageGroup) => {
+  return request(taleInstance, "post", "/options", {
+    subject,
+    tone,
+    artStyle,
+    ageGroup,
+  });
+};
+
 // 기성동화 이미지 생성요청
 export const oldTaleImageGen = (taleId, childId) => {
   return request(taleInstance, "post", ``, {

@@ -461,7 +461,6 @@ function DiagnosisPage() {
         const response = await saveCharacterAPI(formData);
 
         if (response.status === 200) {
-          alert("캐릭터 저장 완료!");
           navigate("/diagnosisEnd", {
             state: { imageUrl: response.data.responseDto.imageUrl },
           });

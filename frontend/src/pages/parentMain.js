@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./parentMain.module.css";
 import { getChildAPI } from "../api/user";
-import { deleteChildAPI } from "../api/user"; 
 import book from "../assets/fairy.png";
 import creditIcon from "../assets/credit.png";
 
@@ -21,7 +20,7 @@ export default function ParentDashboard() {
     // 로그인 시 저장한 "name" 불러오기
     const savedName = localStorage.getItem("name");
     setParentName(savedName || "학부모");
-    
+
     async function loadChildren() {
       try {
         const data = await getChildAPI();
@@ -31,11 +30,11 @@ export default function ParentDashboard() {
           id: c.id,
           name: c.name,
           age: c.age,
-          credit: c.credit ?? 0,
-          favoriteTopics: [c.prefer], 
+          credits: c.taleCount * 10 ?? 0, // credits 없어서 임의 계산
+          favoriteTopics: [c.prefer],
           recentBook: "최근 기록 없음",
           recentBookCover: book,
-          progress: 0, 
+          progress: 0,
         }));
 
         setChildren(mapped);
@@ -72,28 +71,20 @@ export default function ParentDashboard() {
   };
 
   // 선택한 자녀 삭제
-  const handleDeleteConfirm = async () => {
+  const handleDeleteConfirm = () => {
     if (selectedToDelete.length === 0) return;
 
     const yes = window.confirm("선택한 자녀를 삭제하시겠습니까?");
     if (!yes) return;
 
-    try {
-      const res = await deleteChildAPI(selectedToDelete);
-      alert(res.responseDto?.message || "삭제되었습니다.");
-
-      // UI 반영
-      setChildren((prev) =>
-        prev.filter((child) => !selectedToDelete.includes(child.id))
-      );
-
-    } catch (err) {
-      alert("삭제 실패: " + (err.response?.data?.error || err.message));
-    }
+    setChildren((prev) =>
+      prev.filter((child) => !selectedToDelete.includes(child.id))
+    );
 
     setDeleteMode(false);
     setSelectedToDelete([]);
   };
+
   if (loading) return <div className={styles.page}>불러오는 중…</div>;
 
   return (
@@ -101,7 +92,8 @@ export default function ParentDashboard() {
       {/* 상단 Greeting + 버튼 */}
       <section className={styles.greeting}>
         <div className={styles.greetText}>
-          <strong>{parentName || "학부모"}님</strong>, 자녀 학습 현황을 확인해 보세요.
+          <strong>{parentName || "학부모"}님</strong>, 자녀 학습 현황을 확인해
+          보세요.
         </div>
 
         <div className={styles.actions}>
@@ -111,7 +103,10 @@ export default function ParentDashboard() {
               <button onClick={goAddProfile} className={styles.primary}>
                 + 자녀 추가
               </button>
-              <button onClick={handleDeleteMode} className={styles.deleteModeBtn}>
+              <button
+                onClick={handleDeleteMode}
+                className={styles.deleteModeBtn}
+              >
                 자녀 삭제
               </button>
             </>
