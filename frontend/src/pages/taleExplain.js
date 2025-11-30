@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./taleExplain.css";
+import styles from "./taleExplain.module.css";
 import { getTale } from "../api/tale";
 
 export default function TaleExplain() {
@@ -41,68 +41,71 @@ const story = state?.story;
   };
 
   return (
-    <div className="explain-wrapper">
+    <div className={styles.explainWrapper}>
 
       {/* 페이지 제목 */}
-      <div className="explain-title">
+      <div className={styles.explainTitle}>
         <h1>동화 생성이 완료되었어요!</h1>
         <p>이번 동화가 어떻게 만들어졌는지 확인해볼까요?</p>
       </div>
 
-      <div className="explain-card">
+      <div className={styles.explainCard}>
 
         {/* 동화 제목 */}
-        <div className="story-title-box">
-          <h2 className="story-title">{title || "제목 불러오는 중..."}</h2>
-          <span className="story-badge">AI 맞춤 생성</span>
+        <div className={styles.storyTitleBox}>
+          <h2 className={styles.storyTitle}>{title || "제목 불러오는 중..."}</h2>
+          <span className={styles.storyBadge}>AI 맞춤 생성</span>
         </div>
 
         {/* 가로 2박스 */}
-        <div className="explain-flex">
+        <div className={styles.explainFlex}>
 
           {/* 선택한 옵션 */}
-          <div className="explain-box">
+          <div className={styles.explainBox}>
             <h3>🍀 선택한 옵션</h3>
 
-            <div className="option-grid">
-                <div className="option-item">
-                    <span className="option-label">주제</span>
-                    <span className="option-sep"> | </span>
-                    <span className="option-value">{selections?.theme}</span>
-                </div>
+            <div className={styles.optionGrid}>
 
-                <div className="option-item">
-                    <span className="option-label">분위기</span>
-                    <span className="option-sep"> | </span>
-                    <span className="option-value">{selections?.mood}</span>
-                </div>
+              <div className={styles.optionItem}>
+                <span className={styles.optionLabel}>주제</span>
+                <span className={styles.optionSep}> | </span>
+                <span className={styles.optionValue}>{selections?.theme}</span>
+              </div>
 
-                <div className="option-item">
-                    <span className="option-label">그림체</span>
-                    <span className="option-sep"> | </span>
-                    <span className="option-value">{selections?.artStyle}</span>
-                </div>
+              <div className={styles.optionItem}>
+                <span className={styles.optionLabel}>분위기</span>
+                <span className={styles.optionSep}> | </span>
+                <span className={styles.optionValue}>{selections?.mood}</span>
+              </div>
 
-                <div className="option-item">
-                    <span className="option-label">연령대</span>
-                    <span className="option-sep"> | </span>
-                    <span className="option-value">{selections?.ageGroup}</span>
-                </div>
-                </div>
+              <div className={styles.optionItem}>
+                <span className={styles.optionLabel}>그림체</span>
+                <span className={styles.optionSep}> | </span>
+                <span className={styles.optionValue}>{selections?.artStyle}</span>
+              </div>
+
+              <div className={styles.optionItem}>
+                <span className={styles.optionLabel}>연령대</span>
+                <span className={styles.optionSep}> | </span>
+                <span className={styles.optionValue}>{selections?.ageGroup}</span>
+              </div>
+
+            </div>
           </div>
 
           {/* 생성 이유 */}
-          <div className="explain-box">
+          <div className={styles.explainBox}>
             <h3>✨ 이렇게 생성되었어요</h3>
 
-            <p className="reason-item">
+            <p className={styles.reasonItem}>
               {reason}
             </p>
           </div>
         </div>
 
+
         {/* 버튼 */}
-        <button className="explain-button" onClick={handleGoStudy}>
+        <button className={styles.explainButton} onClick={handleGoStudy}>
           학습 시작하기
         </button>
       </div>
