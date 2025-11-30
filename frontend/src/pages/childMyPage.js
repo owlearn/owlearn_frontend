@@ -4,6 +4,8 @@ import styles from "./childMyPage.module.css";
 import owlGirl from "../assets/owl_girl.png";
 import defaultCover from "../assets/fairy.png";
 import creditIcon from "../assets/credit.png";
+import { getChildMyPage } from "../api/mypage";
+import { getChildReviews } from "../api/review";
 
 const ChildMyPage = () => {
   const navigate = useNavigate();
@@ -42,30 +44,25 @@ const ChildMyPage = () => {
 
     const childId = selectedChild.id;
 
-    const fetchChildMyPage = async () => {
+    const loadChildMyPage = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await fetch(
-          `${process.env.REACT_APP_URL}/api/mypage/${childId}`,
-          {
-            method: "GET",
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const child = await getChildMyPage(childId);
 
-        const json = await res.json();
-        console.log("📌 API 응답 json:", json); 
-        if (!json.success || !json.responseDto) throw new Error("잘못된 응답");
-
-        setChildData(json.responseDto);
-      } catch (e) {
-        console.error("마이페이지 불러오기 실패:", e);
+        // 백에서 child만 내려오므로 childData 구조에 맞춰 셋팅
+        setChildData({
+          child: child,
+          recentTale: child.recentTale || null,
+          reportSummary: child.reportSummary || null,  
+        });
+      } catch (err) {
+        console.error("마이페이지 불러오기 실패:", err);
         alert("자녀 정보를 불러오지 못했습니다.");
       }
     };
 
-    fetchChildMyPage();
+    loadChildMyPage();
   }, [navigate]);
+
 
   useEffect(() => {
     if (!childData?.child) return;
@@ -98,14 +95,21 @@ const ChildMyPage = () => {
     : owlGirl;
 
   const creditBalance = child?.credit ?? 0;
-  const interests = child?.interests ?? [];
+  const interests = [
+    child.preferSubject,
+    child.preferTone,
+    child.preferStyle,
+    child.preferAge,
+  ].filter(Boolean);  
   const recentBookTitle = recentTale?.title ?? "기록 없음";
 
   const recentBookCover = recentTale?.thumbnail
     ? `${process.env.REACT_APP_URL}${recentTale.thumbnail}`
     : defaultCover;
 
-  const reportCount = reportSummary?.totalCount ?? 0;
+  //const reportCount = reportSummary?.totalCount ?? 0;
+  const reportCount = reportList.length;
+
 
   const openEditModal = () => setIsEditing(true);
   const closeEditModal = () => setIsEditing(false);
@@ -140,15 +144,8 @@ const ChildMyPage = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_URL}/api/review/child/${childId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const json = await res.json();
-      setReportList(json.responseDto || []);
+      const list = await getChildReviews(childId);
+      setReportList(list);
     } catch (err) {
       console.error("리포트 조회 실패:", err);
       setReportList([]);
