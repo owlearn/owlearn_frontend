@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from "./parentDetail.module.css";
 import { defaultInstance, reportInstance, imageBaseUrl } from "../api/instance";
 import book from "../assets/fairy.png";
+import PreferenceChart from "../component/preferenceChart";
 
-export default function ChildDetail() {
+export default function ParentDetail() {
   const { childId } = useParams();
   const navigate = useNavigate();
 
@@ -14,6 +15,12 @@ export default function ChildDetail() {
   // 리포트 목록
   const [reportList, setReportList] = useState([]);
   const [isReportListOpen, setIsReportListOpen] = useState(false);
+  const [wordList, setWordList] = useState([
+  { id: 1, text: "splendid" },
+  { id: 2, text: "fragile" },
+]);
+
+
 
   const totalReports = childDetail?.reportSummary?.totalCount ?? 0;
 
@@ -118,13 +125,43 @@ export default function ChildDetail() {
         </section>
 
         {/* 학습 주제 밸런스 */}
-        <section className={styles.topicBalance}>
-          <h3>학습 주제 밸런스</h3>
-          <p className={styles.topicNote}>자녀의 학습 주제 편향을 한눈에 볼 수 있습니다.</p>
+        <section className={styles.learningSection}>
+            <div className={styles.leftBox}>
 
-          <div className={styles.topicBars}>
+              <div className={styles.balanceHeader}>
+                <h3>학습 주제 밸런스</h3>
+                <p className={styles.topicNote}>
+                  💡자녀의 학습 주제 편향을 한눈에 볼 수 있습니다.
+                </p>
+              </div>
+
+          <div className={styles.chartWrapper}> 
+              <PreferenceChart stats={childDetail.balance} />
+          </div>
+        </div>
+
+          {/* 오른쪽 : 모르는 단어 모음 */}
+          <div className={styles.rightBox}>
+            <h3>모르는 단어 모음</h3>
+
+            {/* flexGrow로 남는 공간 채우기 */}
+            <div style={{ flexGrow: 1 }}>
+              <div className={styles.wordList}>
+                {wordList.map((word) => (
+                  <span key={word.id} className={styles.wordChip}>
+                    {word.text}
+                  </span>
+                ))}
+              </div>
+
+              {/* 비었을 때 안내문 */}
+              {wordList.length === 0 && (
+                <p className={styles.wordEmpty}>아직 저장된 단어가 없어요.</p>
+              )}
+            </div>
           </div>
         </section>
+
       </div>
 
       {/* 리포트 팝업 */}
