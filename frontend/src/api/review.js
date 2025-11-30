@@ -8,3 +8,8 @@ export const getReviewDetailAPI = (reviewId) => {
 export const updateReviewAPI = (reviewId, data) => {
   return request(reportInstance, "put", `/${reviewId}`, data);
 };
+
+export const getChildReviews = async (childId) => {
+  const res = await reportInstance.get(`/child/${childId}`);
+  return res.data.responseDto ?? [];
+};
