@@ -12,4 +12,4 @@ export const updateReviewAPI = (reviewId, data) => {
 export const getChildReviews = async (childId) => {
   const res = await reportInstance.get(`/child/${childId}`);
   return res.data.responseDto ?? [];
-};
+}; 
