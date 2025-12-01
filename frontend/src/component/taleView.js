@@ -9,6 +9,7 @@ export default function TaleView({
   imageSrcBuilder,
   onPageChange,
   onFinish,
+  onWordSelect, // StudyProgress로 단어 전달
   isLastPage,
 }) {
   const totalPages = contents.length;
@@ -35,13 +36,18 @@ export default function TaleView({
       <span key={i} className={styles.wordWrapper}>
         <span
           className={`${styles.word} ${selected ? styles.wordSelected : ""}`}
-          onClick={() =>
+          onClick={() => {
             setSelectedWords((prev) =>
               prev.includes(clean)
                 ? prev.filter((v) => v !== clean)
                 : [...prev, clean]
-            )
-          }
+            );
+
+            // StudyProgress로 단어 클릭 전달
+            if (!selected) {
+              onWordSelect && onWordSelect(clean);
+            }
+          }}
         >
           {clean}
         </span>{" "}
@@ -132,7 +138,7 @@ export default function TaleView({
                 isLastPage ? styles.finishActive : styles.finishDisabled
               }`}
               disabled={!isLastPage}
-              onClick={onFinish}
+              onClick={() => onFinish(selectedWords)}
             >
               FINISH
             </button>

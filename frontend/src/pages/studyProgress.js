@@ -4,6 +4,7 @@ import TaleView from "../component/taleView";
 import { getTale } from "../api/tale";
 import { imageBaseUrl } from "../api/instance";
 import styles from "./studyProgress.module.css";
+import { saveUnknownWordsAPI } from "../api/child";
 
 const StudyProgress = () => {
   const navigate = useNavigate();
@@ -21,6 +22,50 @@ const StudyProgress = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // 단어 저장 배열 = 문자열 배열
+  const [unknownWords, setUnknownWords] = useState([]);
+
+  const handleWordSelect = (word) => {
+    setUnknownWords((prev) => {
+      if (prev.includes(word)) return prev;
+      return [...prev, word];
+    });
+  };
+
+  // FINISH 버튼 눌렀을 때 API 저장
+  const handleFinish = async () => {
+      const child = JSON.parse(localStorage.getItem("selectedChild"));
+      const childId = child?.id;
+
+      console.log("보낼 단어 목록:", unknownWords);
+
+      try {
+          const response = await saveUnknownWordsAPI(childId, unknownWords);
+
+          const reviewWords = response.data?.responseDto || []; 
+          
+          console.log("저장 성공 및 상세 단어 정보:", reviewWords);
+          
+          navigate("/tale/feedback", { 
+              state: { 
+                  taleId,
+                  reviewWords: reviewWords 
+              } 
+          });
+
+      } catch (err) {
+          console.error("단어 저장 실패:", err);
+          
+          navigate("/tale/feedback", { 
+              state: { 
+                  taleId,
+                  reviewWords: [] // 실패 시 빈 배열 전달
+              } 
+          });
+      }
+  };
+
+  // 동화 조회
   useEffect(() => {
     const fetchTale = async () => {
       try {
@@ -43,10 +88,6 @@ const StudyProgress = () => {
     fetchTale();
   }, [taleId]);
 
-  const handleFinish = () => {
-    navigate("/tale/feedback", { state: { taleId } });
-  };
-
   if (loading) return <div className={styles.page}>불러오는 중…</div>;
   if (error) return <div className={styles.page}>{error}</div>;
 
@@ -61,8 +102,9 @@ const StudyProgress = () => {
           setCurrentPage(p);
           setTotalPages(total);
         }}
-        onFinish={handleFinish} // 🔥 TaleView에서 FINISH 호출
-        isLastPage={currentPage === totalPages} // 🔥 마지막 페이지 여부 전달
+        onWordSelect={handleWordSelect}   // 단어 전달 추가
+        onFinish={handleFinish} 
+        isLastPage={currentPage === totalPages}
       />
     </div>
   );
