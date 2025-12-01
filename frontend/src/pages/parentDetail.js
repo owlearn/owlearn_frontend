@@ -4,6 +4,7 @@ import styles from "./parentDetail.module.css";
 import { defaultInstance, reportInstance, imageBaseUrl } from "../api/instance";
 import book from "../assets/fairy.png";
 import PreferenceChart from "../component/preferenceChart";
+import { getUnknownWordsAPI } from "../api/child";
 
 export default function ParentDetail() {
   const { childId } = useParams();
@@ -15,12 +16,9 @@ export default function ParentDetail() {
   // 리포트 목록
   const [reportList, setReportList] = useState([]);
   const [isReportListOpen, setIsReportListOpen] = useState(false);
-  const [wordList, setWordList] = useState([
-  { id: 1, text: "splendid" },
-  { id: 2, text: "fragile" },
-]);
 
-
+  // API 데이터를 저장할 상태
+  const [wordList, setWordList] = useState([]);
 
   const totalReports = childDetail?.reportSummary?.totalCount ?? 0;
 
@@ -39,7 +37,33 @@ export default function ParentDetail() {
     loadChildDetail();
   }, [childId]);
 
-  // 독후감 작성 책 목록을 가져옴
+  // 모르는 단어 목록 로드
+  useEffect(() => {
+    if (!childId) return;
+
+    async function loadUnknownWords() {
+    try {
+        const res = await getUnknownWordsAPI(childId);
+        
+        const detailedWords = res.data?.responseDto?.words || []; 
+        
+        const words = detailedWords.map(item => ({
+            id: item.word,
+            text: item.word 
+        }));
+
+        setWordList(words);
+        
+    } catch (e) {
+        console.error("모르는 단어 목록 조회 실패", e);
+        setWordList([]); 
+    }
+  }
+
+    loadUnknownWords();
+  }, [childId]);
+
+  // 독후감 작성 목록
   useEffect(() => {
     const fetchReviewTitles = async () => {
       try {
@@ -147,17 +171,16 @@ export default function ParentDetail() {
             {/* flexGrow로 남는 공간 채우기 */}
             <div style={{ flexGrow: 1 }}>
               <div className={styles.wordList}>
-                {wordList.map((word) => (
-                  <span key={word.id} className={styles.wordChip}>
-                    {word.text}
-                  </span>
-                ))}
+                {wordList.length > 0 ? ( // 단어 목록이 있을 때만 렌더링
+                  wordList.map((word) => (
+                    <span key={word.id} className={styles.wordChip}>
+                     {word.text}
+                    </span>
+                  ))
+                ) : (
+                  <p className={styles.wordEmpty}>아직 저장된 단어가 없어요.</p>
+                )}
               </div>
-
-              {/* 비었을 때 안내문 */}
-              {wordList.length === 0 && (
-                <p className={styles.wordEmpty}>아직 저장된 단어가 없어요.</p>
-              )}
             </div>
           </div>
         </section>
