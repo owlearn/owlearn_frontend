@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./parentMain.module.css";
-import { getChildAPI } from "../api/user";
+import { getChildAPI, deleteChildAPI } from "../api/user";
 import { getChildDetail } from "../api/mypage"; 
 import book from "../assets/fairy.png";
 import creditIcon from "../assets/credit.png";
@@ -139,15 +139,24 @@ export default function ParentDashboard() {
   };
 
   // 선택한 자녀 삭제
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm =  async () => {
     if (selectedToDelete.length === 0) return;
 
     const yes = window.confirm("선택한 자녀를 삭제하시겠습니까?");
     if (!yes) return;
 
-    setChildren((prev) =>
-      prev.filter((child) => !selectedToDelete.includes(child.id))
-    );
+    try {
+      const res = await deleteChildAPI(selectedToDelete);
+      alert(res.responseDto?.message || "삭제되었습니다.");
+
+      // UI 반영
+      setChildren((prev) =>
+        prev.filter((child) => !selectedToDelete.includes(child.id))
+      );
+
+    } catch (err) {
+      alert("삭제 실패: " + (err.response?.data?.error || err.message));
+    }
 
     setDeleteMode(false);
     setSelectedToDelete([]);
