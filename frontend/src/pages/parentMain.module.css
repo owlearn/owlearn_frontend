@@ -274,9 +274,9 @@
 .chip {
   background: #eaf3e2;
   color: #4b5942;
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 16px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   box-shadow: 0 3px 6px rgba(90, 100, 80, 0.08);
   transition: all 0.2s ease;
@@ -338,8 +338,8 @@
 .deleteModeBtn {
   background: #fdf3f3 !important;
   color: #c85b5b;
-  padding: 10px 18px;
-  border-radius: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
   border: 1px solid #e6c4c4;
   font-size: 15px;
   font-weight: 700;
