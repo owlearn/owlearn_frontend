@@ -1,4 +1,5 @@
 import { defaultInstance } from "./instance";
+import { request } from "../utils/request";
 
 export const getChildMyPage = async (childId) => {
   const token = localStorage.getItem("token");
@@ -8,4 +9,13 @@ export const getChildMyPage = async (childId) => {
   });
 
   return res.data.responseDto.child; 
+};
+
+export const getChildDetail = async (childId) => {
+  return request(
+    defaultInstance,
+    "get", 
+    `/mypage/${childId}`,
+    {}
+  );
 };
