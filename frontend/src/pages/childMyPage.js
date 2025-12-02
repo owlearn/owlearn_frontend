@@ -6,6 +6,7 @@ import defaultCover from "../assets/fairy.png";
 import creditIcon from "../assets/credit.png";
 import { getChildMyPage } from "../api/mypage";
 import { getChildReviews } from "../api/review";
+import { imageBaseUrl } from "../api/instance"; 
 
 const ChildMyPage = () => {
   const navigate = useNavigate();
@@ -46,14 +47,17 @@ const ChildMyPage = () => {
 
     const loadChildMyPage = async () => {
       try {
-        const child = await getChildMyPage(childId);
+            const dto = await getChildMyPage(childId); 
 
-        // 백에서 child만 내려오므로 childData 구조에 맞춰 셋팅
-        setChildData({
-          child: child,
-          recentTale: child.recentTale || null,
-          reportSummary: child.reportSummary || null,  
-        });
+            setChildData({
+              child: dto.child, 
+              recentTale: dto.recentTale || null, // recentTale을 dto에서 직접 추출
+              reportSummary: dto.reportSummary,
+            });
+
+            const list = await getChildReviews(childId);
+            setReportList(list);
+
       } catch (err) {
         console.error("마이페이지 불러오기 실패:", err);
         alert("자녀 정보를 불러오지 못했습니다.");
@@ -75,12 +79,15 @@ const ChildMyPage = () => {
     });
   }, [childData]);
 
-  if (!childData) {
+  if (!childData || !childData.child) {
     return (
       <div className={styles.page}>
         <div className={styles.empty}>
           <p>자녀 정보를 불러오는 중입니다...</p>
         </div>
+        <button className={styles.switchChildBtn} onClick={goSwitchChild}>
+          자녀 전환
+        </button>
       </div>
     );
   }
@@ -91,7 +98,7 @@ const ChildMyPage = () => {
   const avatar = child?.characterImageUrl
     ? child.characterImageUrl.startsWith("http")
       ? child.characterImageUrl
-      : `${process.env.REACT_APP_URL}${child.characterImageUrl}`
+      : `${imageBaseUrl}${child.characterImageUrl}` 
     : owlGirl;
 
   const creditBalance = child?.credit ?? 0;
@@ -104,7 +111,7 @@ const ChildMyPage = () => {
   const recentBookTitle = recentTale?.title ?? "기록 없음";
 
   const recentBookCover = recentTale?.thumbnail
-    ? `${process.env.REACT_APP_URL}${recentTale.thumbnail}`
+    ? `${imageBaseUrl}${recentTale.thumbnail}`
     : defaultCover;
 
   //const reportCount = reportSummary?.totalCount ?? 0;
@@ -141,7 +148,6 @@ const ChildMyPage = () => {
 
     const selectedChild = JSON.parse(localStorage.getItem("selectedChild"));
     const childId = selectedChild.id;
-    const token = localStorage.getItem("token");
 
     try {
       const list = await getChildReviews(childId);

@@ -1,12 +1,11 @@
 import { reportInstance } from "./instance";
 import { request } from "../utils/request";
 
-export const getReviewDetailAPI = (reviewId) => {
-  return request(reportInstance, "get", `/${reviewId}`);
-};
-
-export const updateReviewAPI = (reviewId, data) => {
-  return request(reportInstance, "put", `/${reviewId}`, data);
+export const getReviewDetailAPI = async (reviewId) => {
+  const res = await request(reportInstance, "get", `/${reviewId}`);
+  console.log("상세조회 응답:", res);    
+  
+  return res?.data?.responseDto ?? res?.responseDto ?? res;
 };
 
 export const getChildReviews = async (childId) => {
