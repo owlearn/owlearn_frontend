@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styles from "./reportPage.module.css";
-import { getReviewDetailAPI, updateReviewAPI } from "../api/review";
+import { getReviewDetailAPI } from "../api/review";
 import { getTale } from "../api/tale";
 
 const emotionTags = [
@@ -26,25 +26,13 @@ const ReviewDetail = () => {
   const [review, setReview] = useState(null);
   const [taleTitle, setTaleTitle] = useState("");
 
-  /* 수정 모드 상태
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  // 수정 데이터 상태
-  const [editData, setEditData] = useState({
-    feeling: [],
-    rating: 0,
-    memorableScene: "",
-    lesson: "",
-    question: ""
-  });*/
-
   useEffect(() => {
     const fetchReview = async () => {
       try {
         const json = await getReviewDetailAPI(reviewId);
-        const dto = json.data.responseDto;
+        console.log("최종 파싱된 상세 데이터:", json);
 
-        setReview(dto);
+        setReview(json);
 
         if (from === "parent") {
           setTaleTitle("알 수 없는 동화");
@@ -52,7 +40,7 @@ const ReviewDetail = () => {
         }
 
         try {
-          const taleJson = await getTale(dto.taleId);
+          const taleJson = await getTale(json.taleId);
           setTaleTitle(taleJson.data.responseDto?.title || "알 수 없는 동화");
         } catch {
           setTaleTitle("알 수 없는 동화");
@@ -67,33 +55,6 @@ const ReviewDetail = () => {
 
     fetchReview();
   }, [reviewId, from]);
-
-  /*const handleEdit = () => {
-    setIsEditMode(true);
-
-    setEditData({
-      feeling: review.feeling || [],
-      rating: review.rating || 0,
-      memorableScene: review.memorableScene || "",
-      lesson: review.lesson || "",
-      question: review.question || ""
-    });
-  };
-
-  const handleSave = async () => {
-    try {
-      await updateReviewAPI(reviewId, editData);
-
-      alert("수정되었습니다.");
-      setIsEditMode(false);
-
-      // 화면에 반영
-      setReview((prev) => ({ ...prev, ...editData }));
-
-    } catch (err) {
-      console.error("리뷰 수정 실패:", err);
-    }
-  };*/
 
   if (loading) return <div className={styles.page}>불러오는 중...</div>;
   if (!review)

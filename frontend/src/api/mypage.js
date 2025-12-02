@@ -8,7 +8,8 @@ export const getChildMyPage = async (childId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return res.data.responseDto.child; 
+  //return res.data.responseDto.child;
+  return res.data.responseDto; 
 };
 
 export const getChildDetail = async (childId) => {
