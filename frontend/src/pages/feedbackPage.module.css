@@ -110,6 +110,16 @@
   margin-top: 8px;
 }
 
+.emptyWords {
+  margin-top: 20px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #f1f4ec;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
 .wordName {
   font-size: 26px;
   font-weight: 700;

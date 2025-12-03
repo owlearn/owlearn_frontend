@@ -10,10 +10,12 @@ export default function TaleView({
   onPageChange,
   onFinish,
   isLastPage,
+  submitting = false,
+  selectedWords = [],
+  onWordsChange,
 }) {
   const totalPages = contents.length;
   const [page, setPage] = useState(1);
-  const [selectedWords, setSelectedWords] = useState([]);
 
   useEffect(() => {
     onPageChange && onPageChange(page, totalPages);
@@ -27,6 +29,16 @@ export default function TaleView({
     ? imageSrcBuilder(imageUrls[page - 1])
     : null;
 
+  const toggleWord = (clean) => {
+    if (!onWordsChange) return;
+    const exists = selectedWords.includes(clean);
+    const next = exists
+      ? selectedWords.filter((v) => v !== clean)
+      : [...selectedWords, clean];
+    console.log("[TaleView] 토글된 단어:", clean, "=> 선택된 단어들:", next);
+    onWordsChange(next);
+  };
+
   const words = current.split(/\s+/).map((token, i) => {
     const clean = token.replace(/[.,!?;]/g, "");
     const selected = selectedWords.includes(clean);
@@ -35,13 +47,7 @@ export default function TaleView({
       <span key={i} className={styles.wordWrapper}>
         <span
           className={`${styles.word} ${selected ? styles.wordSelected : ""}`}
-          onClick={() =>
-            setSelectedWords((prev) =>
-              prev.includes(clean)
-                ? prev.filter((v) => v !== clean)
-                : [...prev, clean]
-            )
-          }
+          onClick={() => toggleWord(clean)}
         >
           {clean}
         </span>{" "}
@@ -111,9 +117,7 @@ export default function TaleView({
                     {w}
                     <span
                       className={styles.wordRemove}
-                      onClick={() =>
-                        setSelectedWords((prev) => prev.filter((v) => v !== w))
-                      }
+                      onClick={() => toggleWord(w)}
                     >
                       ✕
                     </span>
@@ -129,12 +133,14 @@ export default function TaleView({
             {/* 🔥 패널 하단 고정 FINISH 버튼 */}
             <button
               className={`${styles.finishBtn} ${
-                isLastPage ? styles.finishActive : styles.finishDisabled
+                isLastPage && !submitting
+                  ? styles.finishActive
+                  : styles.finishDisabled
               }`}
-              disabled={!isLastPage}
+              disabled={!isLastPage || submitting}
               onClick={onFinish}
             >
-              FINISH
+              {submitting ? "제출 중..." : "FINISH"}
             </button>
           </div>
         </div>

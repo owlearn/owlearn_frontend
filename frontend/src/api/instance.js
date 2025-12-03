@@ -25,6 +25,10 @@ promptInstance.defaults.baseURL += "/gemini";
 const retellingInstance = axios.create(defaultInstance.defaults);
 retellingInstance.defaults.baseURL += "/retelling";
 
+// child 인스턴스 (단어장)
+const childWordInstance = axios.create(defaultInstance.defaults);
+childWordInstance.defaults.baseURL += "/child";
+
 // 서버 저장된 이미지 접근용 인스턴스
 const imageBaseUrl = `${BASE_URL}`;
 
@@ -52,6 +56,7 @@ attachToken(userInstance);
 attachToken(taleInstance);
 attachToken(reportInstance);
 attachToken(retellingInstance);
+attachToken(childWordInstance);
 
 export {
   defaultInstance,
@@ -62,4 +67,5 @@ export {
   retellingInstance,
   imageBaseUrl,
   reportInstance,
+  childWordInstance,
 };
