@@ -1,5 +1,5 @@
 // StudyMain.jsx
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./studyMain.module.css";
 
@@ -9,6 +9,7 @@ import { getOldTale, oldTaleImageGen } from "../api/tale";
 import { imageBaseUrl } from "../api/instance";
 
 import LoadingOverlay from "../component/LoadingOverlay";
+import { getUnknownWordsAPI } from "../api/child";
 
 const StudyMain = () => {
   const [child, setChild] = useState(null);
@@ -17,26 +18,29 @@ const StudyMain = () => {
   const [loading, setLoading] = useState(false);
   const [loadingWord, setLoadingWord] = useState(null);
   const loadingIntervalRef = useRef(null);
+  const [loadingWords, setLoadingWords] = useState([
+    { word: "noUnknown", meaning: "모르는 단어 없음" },
+    // { word: "imagine", meaning: "상상하다" },
+    // { word: "curious", meaning: "호기심 많은" },
+    // { word: "sparkle", meaning: "반짝이다" },
+    // { word: "journey", meaning: "여정" },
+    // { word: "wonder", meaning: "경이로움" },
+    // { word: "dream", meaning: "꿈" },
+    // { word: "explore", meaning: "탐험하다" },
+  ]);
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ------------------- 로딩 단어 리스트 -------------------
-  const loadingWords = [
-    { word: "adventure", meaning: "모험, 신나는 경험" },
-    { word: "imagine", meaning: "상상하다" },
-    { word: "curious", meaning: "호기심 많은" },
-    { word: "sparkle", meaning: "반짝이다" },
-    { word: "journey", meaning: "여정" },
-    { word: "wonder", meaning: "경이로움" },
-    { word: "dream", meaning: "꿈" },
-    { word: "explore", meaning: "탐험하다" },
-  ];
-
-  const pickRandomWord = () => {
+  // ------------------- 로딩 단어 선택 -------------------
+  const pickRandomWord = useCallback(() => {
+    if (!loadingWords.length) {
+      setLoadingWord(null);
+      return;
+    }
     const idx = Math.floor(Math.random() * loadingWords.length);
     setLoadingWord(loadingWords[idx]);
-  };
+  }, [loadingWords]);
 
   // ------------------- 4초마다 영어단어 변경 -------------------
   useEffect(() => {
@@ -52,7 +56,7 @@ const StudyMain = () => {
     }
 
     return () => clearInterval(loadingIntervalRef.current);
-  }, [loading]);
+  }, [loading, pickRandomWord]);
 
   // ------------------- 초기 child + 추천동화 -------------------
   useEffect(() => {
@@ -79,6 +83,47 @@ const StudyMain = () => {
 
     fetchTale();
   }, [location.state]);
+
+  // ------------------- 자녀 모르는 단어 로딩 단어에 반영 -------------------
+  useEffect(() => {
+    const fetchUnknownWords = async () => {
+      if (!child?.id) return;
+
+      try {
+        const res = await getUnknownWordsAPI(child.id);
+        const dto = res.data?.responseDto;
+
+        let wordsSource = [];
+        if (Array.isArray(dto)) {
+          wordsSource = dto;
+        } else if (Array.isArray(dto?.words)) {
+          wordsSource = dto.words;
+        }
+
+        const normalized = wordsSource
+          .map((item) => {
+            const word = item.word || item.text;
+            const meaning =
+              item.meaningKo || item.meaning || item.kor || item.meaningEn;
+            return word
+              ? {
+                  word,
+                  meaning: meaning || "",
+                }
+              : null;
+          })
+          .filter(Boolean);
+
+        if (normalized.length > 0) {
+          setLoadingWords(normalized);
+        }
+      } catch (e) {
+        console.error("모르는 단어 로딩 단어 조회 실패:", e);
+      }
+    };
+
+    fetchUnknownWords();
+  }, [child]);
 
   const avatarSrc = child?.avatar
     ? `${imageBaseUrl}${child.avatar}`
@@ -178,7 +223,7 @@ const StudyMain = () => {
           <div className={styles.innerOverlayWrapper}>
             <LoadingOverlay
               message="동화를 재구성중이에요…"
-              subMessage="약 1분 정도 걸려요. 잠시만 기다려주세요!"
+              subMessage="약 1분 정도 걸려요. 로딩되는 동안 모른다고 눌렀던 단어를 다시 학습해봅시다."
               word={loadingWord}
             />
           </div>

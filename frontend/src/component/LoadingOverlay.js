@@ -8,10 +8,13 @@ const LoadingOverlay = ({ message, subMessage, word }) => {
       {message && <div className={styles.text}>{message}</div>}
       {subMessage && <div className={styles.sub}>{subMessage}</div>}
       {word && (
-        <div className={styles.wordCard}>
-          <div className={styles.wordTitle}>{word.word}</div>
-          <div className={styles.wordMeaning}>{word.meaning}</div>
-        </div>
+        <>
+          <div className={styles.wordNotice}></div>
+          <div className={styles.wordCard}>
+            <div className={styles.wordTitle}>{word.word}</div>
+            <div className={styles.wordMeaning}>{word.meaning}</div>
+          </div>
+        </>
       )}
     </div>
   );
