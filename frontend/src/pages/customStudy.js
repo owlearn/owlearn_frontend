@@ -1,10 +1,17 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./customStudy.module.css";
 import myAvatar from "../assets/myAvatar.png";
 import { AiTaleGen, getBestTale } from "../api/tale";
 import { imageBaseUrl } from "../api/instance";
 import LoadingOverlay from "../component/LoadingOverlay";
+import { getUnknownWordsAPI } from "../api/child";
 
 const optionGroups = [
   { key: "theme", label: "주제", options: ["우정", "가족", "모험", "성장"] },
@@ -49,19 +56,23 @@ const CustomStoryPage = () => {
   );
 
   /* 로딩 문구 */
-  const loadingWords = [
-    { word: "create", meaning: "창조하다" },
-    { word: "story", meaning: "이야기" },
-    { word: "wonder", meaning: "경이" },
-    { word: "dream", meaning: "꿈" },
-    { word: "explore", meaning: "탐험하다" },
-    { word: "magic", meaning: "마법" },
-  ];
+  const [loadingWords, setLoadingWords] = useState([
+    { word: "noUnknown", meaning: "모르는 단어 없음" },
+    // { word: "story", meaning: "이야기" },
+    // { word: "wonder", meaning: "경이" },
+    // { word: "dream", meaning: "꿈" },
+    // { word: "explore", meaning: "탐험하다" },
+    // { word: "magic", meaning: "마법" },
+  ]);
 
-  const pickLoadingWord = () => {
+  const pickLoadingWord = useCallback(() => {
+    if (!loadingWords.length) {
+      setLoadingWord(null);
+      return;
+    }
     const idx = Math.floor(Math.random() * loadingWords.length);
     setLoadingWord(loadingWords[idx]);
-  };
+  }, [loadingWords]);
 
   useEffect(() => {
     if (isGenerating) {
@@ -71,7 +82,7 @@ const CustomStoryPage = () => {
       clearInterval(loadingIntervalRef.current);
       setLoadingWord(null);
     }
-  }, [isGenerating]);
+  }, [isGenerating, pickLoadingWord]);
 
   /* 자녀 정보 불러오기 */
   useEffect(() => {
@@ -87,6 +98,47 @@ const CustomStoryPage = () => {
       console.error("아이 정보 파싱 실패:", e);
     }
   }, []);
+
+  /* 자녀 모르는 단어를 로딩 단어로 활용 */
+  useEffect(() => {
+    const fetchUnknownWords = async () => {
+      if (!selectedChild?.id) return;
+
+      try {
+        const res = await getUnknownWordsAPI(selectedChild.id);
+        const dto = res.data?.responseDto;
+
+        let wordsSource = [];
+        if (Array.isArray(dto)) {
+          wordsSource = dto;
+        } else if (Array.isArray(dto?.words)) {
+          wordsSource = dto.words;
+        }
+
+        const normalized = wordsSource
+          .map((item) => {
+            const word = item.word || item.text;
+            const meaning =
+              item.meaningKo || item.meaning || item.kor || item.meaningEn;
+            return word
+              ? {
+                  word,
+                  meaning: meaning || "",
+                }
+              : null;
+          })
+          .filter(Boolean);
+
+        if (normalized.length > 0) {
+          setLoadingWords(normalized);
+        }
+      } catch (e) {
+        console.error("모르는 단어 로딩 단어 조회 실패:", e);
+      }
+    };
+
+    fetchUnknownWords();
+  }, [selectedChild]);
 
   /* 옵션 선택 */
   const handleSelect = (groupKey, option) => {
@@ -263,8 +315,9 @@ const CustomStoryPage = () => {
       {/* 로딩 오버레이 */}
       {isGenerating && (
         <LoadingOverlay
+          light
           message="동화를 생성하는 중이에요…"
-          subMessage="약 1분 정도 걸려요!"
+          subMessage="약 1분 정도 걸려요. 로딩되는 동안 모른다고 눌렀던 단어를 다시 학습해봅시다."
           word={loadingWord}
         />
       )}
