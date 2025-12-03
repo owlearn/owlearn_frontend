@@ -20,3 +20,11 @@ export const getChildDetail = async (childId) => {
     {}
   );
 };
+
+export const updateChildInfo = async (childId, updateData) => {
+  const res = await defaultInstance.put(
+    `/user/child/${childId}`, 
+    updateData
+  );
+  return res.data.responseDto;
+};

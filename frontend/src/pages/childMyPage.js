@@ -4,7 +4,7 @@ import styles from "./childMyPage.module.css";
 import owlGirl from "../assets/owl_girl.png";
 import defaultCover from "../assets/fairy.png";
 import creditIcon from "../assets/credit.png";
-import { getChildMyPage } from "../api/mypage";
+import { getChildMyPage, updateChildInfo } from "../api/mypage";
 import { getChildReviews } from "../api/review";
 import { imageBaseUrl } from "../api/instance"; 
 
@@ -31,6 +31,22 @@ const ChildMyPage = () => {
     const day = String(d.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
+
+  // 💡 생년월일(YYYY-MM-DD)을 만 나이로 계산하는 함수 추가
+  const calculateAge = (birthdate) => {
+    const birth = new Date(birthdate);
+    if (isNaN(birth.getTime())) return null;
+
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+
+    // 생일이 지나지 않았으면 나이에서 1을 뺌 (만 나이 기준)
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };   
 
   const goSwitchChild = () => navigate("/loginProfile");
 
@@ -125,22 +141,61 @@ const ChildMyPage = () => {
     setEditableFields((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    const trimmedName = editableFields.name.trim();
-    if (!trimmedName) {
-      alert("이름을 입력해 주세요.");
-      return;
-    }
+  const handleSave = async () => { // async 키워드 유지
+    const trimmedName = editableFields.name.trim();
+    const birthdate = editableFields.birthdate;
+    
+    if (!trimmedName) {
+      alert("이름을 입력해 주세요.");
+      return;
+    }
+    
+    if (!birthdate) {
+      alert("생년월일을 입력해 주세요.");
+      return;
+    }
 
-    const updated = {
-      ...child,
-      name: trimmedName,
-      birthdate: editableFields.birthdate,
-    };
+    const childId = child.id; 
+    const ageToSend = calculateAge(birthdate); // 생년월일 -> 만 나이 계산
 
-    setChildData((prev) => ({ ...prev, child: updated }));
-    setIsEditing(false);
-  };
+    if (ageToSend === null || ageToSend < 0) {
+      alert("유효하지 않은 생년월일입니다.");
+      return;
+    }
+
+    try {
+      // 1. 서버에 이름과 계산된 나이 전송
+      const updatePayload = {
+        childName: trimmedName, // 💡 **수정 완료: name 대신 childName 사용**
+        age: ageToSend,         // 계산된 Age를 서버로 전송
+      };
+      
+      // PUT api/user/child/{childId} API 호출
+      await updateChildInfo(childId, updatePayload); 
+
+      // 2. 서버 업데이트 성공 시 로컬 상태 및 LocalStorage 업데이트
+      //    (마이페이지 UI에 즉시 반영)
+      const updatedChild = {
+        ...child,
+        name: trimmedName,
+        birthdate: birthdate, 
+      };
+      setChildData((prev) => ({ ...prev, child: updatedChild }));
+      
+      // 3. 프로필 선택 화면 등에 변경된 이름이 반영되도록 LocalStorage 업데이트
+      const selectedChild = JSON.parse(localStorage.getItem("selectedChild"));
+      if (selectedChild && selectedChild.id === childId) {
+        const updatedSelectedChild = { ...selectedChild, name: trimmedName };
+        localStorage.setItem("selectedChild", JSON.stringify(updatedSelectedChild));
+      }
+
+      setIsEditing(false);
+
+    } catch (err) {
+      console.error("정보 수정 실패:", err);
+      alert("정보 수정에 실패했습니다. 다시 시도해 주세요.");
+    }
+  };
 
   const openReportList = async () => {
     setIsReportListOpen(true);
