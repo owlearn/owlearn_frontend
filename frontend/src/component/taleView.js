@@ -30,6 +30,7 @@ export default function TaleView({
 
   const words = current.split(/\s+/).map((token, i) => {
     const clean = token.replace(/[.,!?;]/g, "");
+    const display = token;
     const selected = selectedWords.includes(clean);
 
     return (
@@ -49,8 +50,9 @@ export default function TaleView({
             }
           }}
         >
-          {clean}
+          {display}
         </span>{" "}
+        {/[.!?]$/.test(token) && <br />}
       </span>
     );
   });
