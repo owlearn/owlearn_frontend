@@ -71,6 +71,27 @@
   color: #3f572d;
 }
 
+.noWordBox {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: #f1f6ea;
+  text-align: center;
+}
+
+.noWordTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2d3b2a;
+  margin-bottom: 6px;
+}
+
+.noWordDesc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
 /* 단어 태그 영역 */
 .wordTags {
   display: flex;
