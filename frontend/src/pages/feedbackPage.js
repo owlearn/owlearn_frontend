@@ -4,37 +4,6 @@ import styles from "./feedbackPage.module.css";
 import { getUnknownWordsAPI } from "../api/child";
 
 export default function FeedbackPage() {
-  // TODO: 실제 API로 교체 예정
-  const dummy = {
-    taleTitle: "The Magic of Friendship",
-    wordList: [
-      {
-        id: 1,
-        word: "shiny",
-        pos: "adjective",
-        meaning: "bright because it reflects light",
-        kor: "빛을 반사해서 반짝이는",
-        example: "Liam picked up a shiny stone from the riverbank.",
-      },
-      {
-        id: 2,
-        word: "decided",
-        pos: "verb",
-        meaning: "made a choice",
-        kor: "결정한",
-        example: "She finally decided to join the music club.",
-      },
-      {
-        id: 3,
-        word: "magical",
-        pos: "adjective",
-        meaning: "having special powers",
-        kor: "마법 같은",
-        example: "The forest was filled with magical creatures.",
-      },
-    ],
-  };
-
   // API 데이터 상태 추가
   const [reviewWords, setReviewWords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,7 +65,7 @@ export default function FeedbackPage() {
   if (loading) return <div className={styles.page}>단어 정보를 불러오는 중입니다...</div>;
   if (error) return <div className={styles.page}>{error}</div>;
 
-  const wordListToDisplay = reviewWords.length > 0 ? reviewWords : dummy.wordList;
+  const hasWords = reviewWords.length > 0;
 
   return (
     <div className={styles.page}>
@@ -107,46 +76,58 @@ export default function FeedbackPage() {
             <h1 className={styles.pageTitle}>단어 복습하기</h1>
 
             <div className={styles.wordCount}>
-              모르는 단어 {wordListToDisplay.length}개 
+              모르는 단어 {reviewWords.length}개 
             </div>
           </div>
 
-          <div className={styles.wordTags}>
-            {wordListToDisplay.map((item, index) => ( 
-              <button
-                key={item.id || item.word || index}
-                type="button"
-                className={`${styles.tag} ${
-                  selectedWord?.word === item.word ? styles.activeTag : ""
-                }`}
-                onClick={() => setSelectedWord(item)}
-              >
-                {item.word}
-              </button>
-            ))}
-          </div>
-
-          {selectedWord && (
-            <div className={styles.wordDetails}>
-              <div className={styles.wordName}>
-                {selectedWord.word}
-                <span className={styles.wordPos}>{selectedWord.pos}</span>
+          {hasWords ? (
+            <>
+              <div className={styles.wordTags}>
+                {reviewWords.map((item, index) => (
+                  <button
+                    key={item.id || item.word || index}
+                    type="button"
+                    className={`${styles.tag} ${
+                      selectedWord?.word === item.word ? styles.activeTag : ""
+                    }`}
+                    onClick={() => setSelectedWord(item)}
+                  >
+                    {item.word}
+                  </button>
+                ))}
               </div>
 
-              <div className={styles.wordMeaning}>
-                <span className={styles.wordLabel}>Meaning · </span>
-                {selectedWord.meaningEn}
-              </div>
+              {selectedWord && (
+                <div className={styles.wordDetails}>
+                  <div className={styles.wordName}>
+                    {selectedWord.word}
+                    <span className={styles.wordPos}>{selectedWord.pos}</span>
+                  </div>
 
-              <div className={styles.wordKor}>
-                <span className={styles.wordLabel}>한국어 뜻 · </span>
-                {selectedWord.meaningKo}
-              </div>
+                  <div className={styles.wordMeaning}>
+                    <span className={styles.wordLabel}>Meaning · </span>
+                    {selectedWord.meaningEn}
+                  </div>
 
-              <div className={styles.wordExample}>
-                <span className={styles.wordLabel}>Example · </span>
-                {selectedWord.example}
-              </div>
+                  <div className={styles.wordKor}>
+                    <span className={styles.wordLabel}>한국어 뜻 · </span>
+                    {selectedWord.meaningKo}
+                  </div>
+
+                  <div className={styles.wordExample}>
+                    <span className={styles.wordLabel}>Example · </span>
+                    {selectedWord.example}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className={styles.noWordBox}>
+              <p className={styles.noWordTitle}>모르는 단어가 없어요!</p>
+              <p className={styles.noWordDesc}>
+                이번 동화에서는 모르는 단어를 선택하지 않았어요.{" "}
+                다음에 모르는 단어가 나오면 단어를 눌러서 함께 복습해볼까요?
+              </p>
             </div>
           )}
         </section>
