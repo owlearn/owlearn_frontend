@@ -14,6 +14,10 @@ function ProfileSelectionPage() {
 
   const BASE_URL = process.env.REACT_APP_URL; // 배포 도메인
 
+   useEffect(() => {
+    localStorage.removeItem("selectedChild");
+  }, []);
+
   // userId는 참고용 저장, 실제 조회는 JWT 토큰으로 백엔드에서 부모 ID 호출
   // 자녀 목록 불러오기
   useEffect(() => {
@@ -29,6 +33,7 @@ function ProfileSelectionPage() {
       }
 
       const data = await getChildAPI(); // 자녀 목록
+      console.log("getChildAPI() 자녀 목록:", data);
 
       if (!Array.isArray(data)) {
         setChildren([]);
@@ -38,9 +43,12 @@ function ProfileSelectionPage() {
       // 자녀별 캐릭터 이미지 조회
       const updatedChildren = await Promise.all(
         data.map(async (child) => {
+          console.log("🔍 캐릭터 조회 요청 childId:", child.id); 
           try {
             console.log("보내는 childId:", child.id);
             const res = await getCharacterAPI(child.id);
+            console.log("캐릭터 API 응답:", res.data);
+
 
             if (res.data?.responseDto?.imageUrl) {
               // 백엔드에서 준 이미지 URL 저장
