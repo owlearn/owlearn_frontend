@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DiagnosisEnd.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import firework from "../assets/firework.png";
+import { getCharacterAPI } from "../api/user";
 
 const DiagnosisEnd = () => {
   const navigate = useNavigate();
@@ -23,8 +23,21 @@ const DiagnosisEnd = () => {
 
   console.log("이미지 URL:", imageUrl);
 
-  const onClick = () => {
-    navigate("/loginProfile");
+  const onClick = async () => {
+    try {
+      const childId = sessionStorage.getItem("childId"); // childId 사용 경로에 맞게 조정 가능
+
+      // ⭐ 최신 캐릭터 정보 조회
+      const res = await getCharacterAPI(childId);
+      console.log("🔄 최신 캐릭터 조회 성공:", res.data.responseDto);
+
+      // ⭐ 조회 성공한 후에만 프로필 선택 화면으로 이동
+      navigate("/loginProfile");
+    } catch (err) {
+      console.error("캐릭터 조회 실패:", err);
+      // 실패해도 일단 이동은 가능하게 유지
+      navigate("/loginProfile");
+    }
   };
 
   return (

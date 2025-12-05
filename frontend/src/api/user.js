@@ -46,12 +46,7 @@ export const getChildAPI = async () => {
   return res.data.responseDto;   // 배열로 내려옴
 };
 
-/* 자녀 상세 정보 조회
-export const getChildDetailAPI = async (childId) => {
-  const res = await userInstance.get(`/mypage/${childId}`);
-  return res.data.responseDto;
-};*/
-
+// 자녀 상세 정보 조회
 export const getChildDetailAPI = async (childId) => {
   const res = await defaultInstance.get(`/mypage/${childId}`);
   return res.data.responseDto;
@@ -76,6 +71,6 @@ export async function deleteChildAPI(childIds) {
 export const buyItemAPI = (childId, item) => {
   return userInstance.put(`/buyitem?childId=${childId}`, {
     itemId: item.itemId,
-    price: item.price,
+    price: item.price
   });
 };

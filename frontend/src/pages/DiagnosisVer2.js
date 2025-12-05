@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 import styles from "./DiagnosisVer2.module.css";
 import avatarBase from "../assets/avatar.png";
 import coinIcon from "../assets/credit.png";
-import { saveCharacterAPI, getCharacterAPI, getChildDetailAPI, buyItemAPI } from "../api/user";
+import { saveCharacterAPI, getChildDetailAPI, buyItemAPI } from "../api/user";
 
 import hairMale1 from "../assets/hair_boy_1.png";
 import hairMale2 from "../assets/hair_boy_2.png";
@@ -70,6 +70,7 @@ const hair = [
     unlocked: true,
   },
   {
+    itemId: 1,
     itemImg: hairMale4,
     name: "남자머리4",
     type: "male",
@@ -78,6 +79,7 @@ const hair = [
     price: 200,
   },
   {
+    itemId: 2,
     itemImg: hairFemale1,
     name: "여자머리1",
     type: "male",
@@ -86,6 +88,7 @@ const hair = [
     price: 200,
   },
   {
+    itemId: 3,
     itemImg: hairFemale2,
     name: "여자머리2",
     type: "female",
@@ -94,6 +97,7 @@ const hair = [
     price: 400,
   },
   {
+    itemId: 4,
     itemImg: hairFemale3,
     name: "여자머리3",
     type: "female",
@@ -102,6 +106,7 @@ const hair = [
     price: 600,
   },
   {
+    itemId: 5,
     itemImg: hairFemale5,
     name: "여자머리5",
     type: "female",
@@ -110,6 +115,7 @@ const hair = [
     price: 600,
   },
   {
+    itemId: 6,
     itemImg: hairMale2,
     name: "남자머리2",
     type: "male",
@@ -139,6 +145,7 @@ const clothes = [
     unlocked: true,
   },
   {
+    itemId: 7,
     itemImg: clothes3,
     name: "의상3",
     style: { top: "123px", left: "96px", width: "35%" },
@@ -146,6 +153,7 @@ const clothes = [
     price: 300,
   },
   {
+    itemId: 8,
     itemImg: clothes7,
     name: "의상7",
     style: { top: "125px", left: "97.5px", width: "35%" },
@@ -153,6 +161,7 @@ const clothes = [
     price: 300,
   },
   {
+    itemId: 9,
     itemImg: clothes4,
     name: "의상4",
     style: { top: "123px", left: "92.5px", width: "38%" },
@@ -160,6 +169,7 @@ const clothes = [
     price: 500,
   },
   {
+    itemId: 10,
     itemImg: clothes6,
     name: "의상6",
     style: { top: "122.5px", left: "92px", width: "38%" },
@@ -167,6 +177,7 @@ const clothes = [
     price: 500,
   },
   {
+    itemId: 11,
     itemImg: clothes5,
     name: "의상5",
     style: { top: "125px", left: "92.5px", width: "38%" },
@@ -174,6 +185,7 @@ const clothes = [
     price: 700,
   },
   {
+    itemId: 12,
     itemImg: clothes9,
     name: "의상9",
     style: { top: "125px", left: "94px", width: "37%" },
@@ -202,6 +214,7 @@ const shoes = [
     unlocked: true,
   },
   {
+    itemId: 13,
     itemImg: shoes7,
     name: "신발7",
     style: { top: "263px", left: "93px", width: "38%" },
@@ -209,6 +222,7 @@ const shoes = [
     price: 200,
   },
   {
+    itemId: 14,
     itemImg: shoes5,
     name: "신발5",
     style: { top: "260px", left: "93px", width: "38%" },
@@ -216,6 +230,7 @@ const shoes = [
     price: 200,
   },
   {
+    itemId: 15,
     itemImg: shoes6,
     name: "신발6",
     style: { top: "264px", left: "93px", width: "38%" },
@@ -223,6 +238,7 @@ const shoes = [
     price: 200,
   },
   {
+    itemId: 16,
     itemImg: shoes4,
     name: "신발4",
     style: { top: "241px", left: "94px", width: "37%" },
@@ -230,6 +246,7 @@ const shoes = [
     price: 400,
   },
   {
+    itemId: 17,
     itemImg: shoes8,
     name: "신발8",
     style: { top: "257px", left: "92px", width: "38%" },
@@ -237,6 +254,7 @@ const shoes = [
     price: 400,
   },
   {
+    itemId: 18,
     itemImg: shoes9,
     name: "신발9",
     style: { top: "263px", left: "91px", width: "39%" },
@@ -265,6 +283,7 @@ const accessory = [
     unlocked: true,
   },
   {
+    itemId: 19,
     itemImg: itemGlasses,
     name: "안경",
     style: { top: "30px", left: "35%", width: "30%" },
@@ -272,6 +291,7 @@ const accessory = [
     price: 100,
   },
   {
+    itemId: 20,
     itemImg: itemCrown,
     name: "왕관",
     style: { top: "-25px", left: "37%", width: "25%" },
@@ -279,6 +299,7 @@ const accessory = [
     price: 100,
   },
   {
+    itemId: 21,
     itemImg: itemTie,
     name: "넥타이",
     style: { top: "63%", left: "37.5%", width: "25%" },
@@ -286,6 +307,7 @@ const accessory = [
     price: 100,
   },
   {
+    itemId: 22,
     itemImg: itemBadge,
     name: "뱃지",
     style: { top: "140px", left: "50%", width: "10%" },
@@ -293,6 +315,7 @@ const accessory = [
     price: 300,
   },
   {
+    itemId: 23,
     itemImg: itemBag,
     name: "가방",
     style: { top: "190px", left: "55px", width: "25%" },
@@ -300,6 +323,7 @@ const accessory = [
     price: 300,
   },
   {
+    itemId: 24,
     itemImg: itemHeadband2,
     name: "머리띠2",
     style: { top: "-20px", left: "110px", width: "25%" },
@@ -311,7 +335,6 @@ const accessory = [
 const tabList = ["머리", "의상", "신발", "액세서리"];
 
 function DiagnosisPage() {
-  // ⭐ 추가됨: 크레딧 상태
   const [childCredit, setChildCredit] = useState(0);
 
   const [selectedHair, setSelectedHair] = useState(null);
@@ -327,13 +350,17 @@ function DiagnosisPage() {
   const childData = location.state?.child;
   console.log("childId=", childId)
 
-  // ⭐ 추가됨: 첫 진입 시 크레딧 로드
+  useEffect(() => {
+    if (childId) {
+      sessionStorage.setItem("childId", childId);
+    }
+  }, [childId]);
+
   useEffect(() => {
     async function fetchCredit() {
       try {
         const detail = await getChildDetailAPI(childId); 
-        // /mypage/{childId} 구조가 child.credit 형태임
-        setChildCredit(detail.child.credit); // ⭐ 수정됨  
+        setChildCredit(detail.child.credit); 
         console.log("childCredit:", detail.child.credit);
       } catch (error) {
         console.error("크레딧 로딩 오류", error);
@@ -342,7 +369,7 @@ function DiagnosisPage() {
     fetchCredit();
   }, [childId]);
 
-  // ⭐ 변경됨: 구매 가능 여부 체크 함수
+  // 구매 가능 여부 함수
   const canBuy = (item) => {
     if (item.unlocked) return false;
     if (typeof item.price !== "number") return false;
@@ -357,9 +384,8 @@ function DiagnosisPage() {
   else if (currentIndex === 3) items = accessory;
   else items = [];
 
-  // ⭐ 변경됨: 아이템 선택 / 구매
+  // 아이템 선택 / 구매
   const handleItemClick = async (item) => {
-    // 이미 해금된 아이템 → 그냥 선택 처리
     if (item.unlocked) {
       selectItem(item);
       return;
@@ -371,13 +397,12 @@ function DiagnosisPage() {
       if (!ok) return;
 
       try {
-        await buyItemAPI(childId, { itemId: item.id, price: item.price }); // ⭐ 추가됨 (buy API 호출)
-        alert("구매 완료!");
+        await buyItemAPI(childId, { itemId: item.itemId, price: item.price });
 
-        item.unlocked = true; // 프론트 즉시 반영
-        setChildCredit((c) => c - item.price); // ⭐ 추가됨
-
+        item.unlocked = true;
+        setChildCredit((c) => c - item.price);
         selectItem(item);
+
       } catch (err) {
         console.error(err);
         alert("구매 중 오류 발생");
@@ -390,7 +415,6 @@ function DiagnosisPage() {
     alert("크레딧이 부족합니다! 🔒");
   };
 
-  // ⭐ 선택 로직(깔끔하게 함수화)
   const selectItem = (item) => {
     if (currentIndex === 0)
       setSelectedHair((prev) => (prev?.name === item.name ? null : item));
