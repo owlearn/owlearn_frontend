@@ -37,8 +37,9 @@ const SignupPage = () => {
       console.log("회원가입 성공:", response);
 
       alert("회원가입이 완료되었습니다!");
+      navigate("/login");
 
-      // 2) 자동 로그인 시도
+      /* 2) 자동 로그인 시도
       const loginResponse = await signinAPI(userId, password);
 
       console.log("자동 로그인 응답:", loginResponse);
@@ -56,7 +57,7 @@ const SignupPage = () => {
       localStorage.setItem("userId", userId);
 
       // 4) 학생추가 페이지로 이동
-      navigate("/loginProfile");
+      navigate("/loginProfile");*/
 
     } catch (error) {
       console.error("회원가입 실패:", error);
