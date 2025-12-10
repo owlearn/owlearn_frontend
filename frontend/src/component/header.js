@@ -1,9 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./header.module.css";
 
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("user"); 
@@ -14,12 +15,31 @@ function Header() {
     navigate("/login");
   };
 
+  const handleLogoClick = () => {
+    // 부모 관리 영역에서는 항상 자녀 프로필 선택으로 유도
+    if (location.pathname.startsWith("/parent")) {
+      alert("학습할 자녀 프로필을 먼저 선택해주세요.");
+      navigate("/loginProfile");
+      return;
+    }
+
+    // 그 외에는 선택된 자녀가 있을 때만 학습 메인으로 이동
+    const selectedChild = localStorage.getItem("selectedChild");
+    if (!selectedChild) {
+      alert("학습할 자녀 프로필을 먼저 선택해주세요.");
+      navigate("/loginProfile");
+      return;
+    }
+
+    navigate("/studyMain");
+  };
+
   return (
     <div>
       <div className={styles.header}>
         <div>
           <button
-            onClick={() => navigate(`/studyMain`)}
+            onClick={handleLogoClick}
             className={styles.logo}
           >
             OWLEARN
