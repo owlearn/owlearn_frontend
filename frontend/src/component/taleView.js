@@ -11,6 +11,7 @@ export default function TaleView({
   onFinish,
   onWordSelect, // StudyProgress로 단어 전달
   isLastPage,
+  isSaving,
 }) {
   const totalPages = contents.length;
   const [page, setPage] = useState(1);
@@ -137,12 +138,14 @@ export default function TaleView({
             {/* 🔥 패널 하단 고정 FINISH 버튼 */}
             <button
               className={`${styles.finishBtn} ${
-                isLastPage ? styles.finishActive : styles.finishDisabled
+                isLastPage && !isSaving
+                  ? styles.finishActive
+                  : styles.finishDisabled
               }`}
-              disabled={!isLastPage}
+              disabled={!isLastPage || isSaving}
               onClick={() => onFinish(selectedWords)}
             >
-              FINISH
+              {isSaving ? "저장 중..." : "FINISH"}
             </button>
           </div>
         </div>

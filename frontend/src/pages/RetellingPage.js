@@ -135,10 +135,14 @@ const RetellingPage = () => {
   };
 
   /* -------------------------------
-      팝업 닫기 → feedback 페이지 이동
+      리텔링 이후 다음 단계 선택
   -------------------------------- */
-  const handleClosePopup = () => {
-    navigate("/tale/feedback", { state: { taleId } });
+  const goReport = () => {
+    navigate("/tale/report", { state: { taleId } });
+  };
+
+  const goFinish = () => {
+    navigate("/studyMain");
   };
 
   return (
@@ -208,10 +212,6 @@ const RetellingPage = () => {
       {feedbackResult && (
         <div className={styles.popupOverlay}>
           <div className={styles.popupCard}>
-            <button className={styles.closeBtn} onClick={handleClosePopup}>
-              ✕
-            </button>
-
             <h2 className={styles.popupTitle}>리텔링 채점 결과</h2>
 
             {/* CREDIT */}
@@ -236,9 +236,22 @@ const RetellingPage = () => {
               <strong>{feedbackResult.credit}C</strong>가 부여되었어요.
             </div>
 
-            <button className={styles.popupOK} onClick={handleClosePopup}>
-              확인
-            </button>
+            <div className={styles.popupActions}>
+              <button
+                type="button"
+                className={styles.popupSecondary}
+                onClick={goFinish}
+              >
+                학습 종료하기
+              </button>
+              <button
+                type="button"
+                className={styles.popupPrimary}
+                onClick={goReport}
+              >
+                독후감 쓰기
+              </button>
+            </div>
           </div>
         </div>
       )}

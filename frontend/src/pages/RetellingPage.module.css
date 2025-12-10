@@ -217,16 +217,6 @@
   text-align: center;
 }
 
-.closeBtn {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
 .popupTitle {
   font-size: 20px;
   font-weight: 700;
@@ -261,14 +251,30 @@
   margin-bottom: 18px;
 }
 
-.popupOK {
-  padding: 10px 22px;
-  background: #8fb68f;
-  color: white;
-  border-radius: 12px;
+.popupActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.popupPrimary,
+.popupSecondary {
+  padding: 8px 18px;
+  border-radius: 999px;
   border: none;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 15px;
+}
+
+.popupPrimary {
+  background: #8fb68f;
+  color: #ffffff;
+}
+
+.popupSecondary {
+  background: #f5f7f2;
+  color: #445137;
 }
 
 /* 중앙 크레딧 표시 */

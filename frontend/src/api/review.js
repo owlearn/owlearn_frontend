@@ -9,6 +9,6 @@ export const getReviewDetailAPI = async (reviewId) => {
 };
 
 export const getChildReviews = async (childId) => {
-  const res = await reportInstance.get(`/child/${childId}`);
-  return res.data.responseDto ?? [];
+  const res = await request(reportInstance, "get", `/child/${childId}`);
+  return res.data?.responseDto ?? res.responseDto ?? [];
 }; 
