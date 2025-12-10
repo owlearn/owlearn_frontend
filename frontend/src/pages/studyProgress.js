@@ -24,6 +24,7 @@ const StudyProgress = () => {
 
   // 단어 저장 배열 = 문자열 배열
   const [unknownWords, setUnknownWords] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleWordSelect = (word) => {
     setUnknownWords((prev) => {
@@ -34,12 +35,14 @@ const StudyProgress = () => {
 
   // FINISH 버튼 눌렀을 때 API 저장
   const handleFinish = async () => {
+      if (isSaving) return;
       const child = JSON.parse(localStorage.getItem("selectedChild"));
       const childId = child?.id;
 
       console.log("보낼 단어 목록:", unknownWords);
 
       try {
+          setIsSaving(true);
           const response = await saveUnknownWordsAPI(childId, unknownWords);
 
           const reviewWords = response.data?.responseDto || []; 
@@ -62,6 +65,9 @@ const StudyProgress = () => {
                   reviewWords: [] // 실패 시 빈 배열 전달
               } 
           });
+      }
+      finally {
+          setIsSaving(false);
       }
   };
 
@@ -105,6 +111,7 @@ const StudyProgress = () => {
         onWordSelect={handleWordSelect}   // 단어 전달 추가
         onFinish={handleFinish} 
         isLastPage={currentPage === totalPages}
+        isSaving={isSaving}
       />
     </div>
   );
