@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./parentDetail.module.css";
-import { defaultInstance, reportInstance, imageBaseUrl } from "../api/instance";
+import { imageBaseUrl } from "../api/instance";
 import book from "../assets/fairy.png";
 import PreferenceChart from "../component/preferenceChart";
 import { getUnknownWordsAPI } from "../api/child";
+import { getChildDetail } from "../api/mypage";
+import { getChildReviews } from "../api/review";
 
 export default function ParentDetail() {
   const { childId } = useParams();
@@ -27,8 +29,8 @@ export default function ParentDetail() {
 
     async function loadChildDetail() {
       try {
-        const res = await defaultInstance.get(`/mypage/${childId}`);
-        setChildDetail(res.data.responseDto); 
+        const res = await getChildDetail(childId);
+        setChildDetail(res.data.responseDto);
       } catch (e) {
         console.error("조회 실패", e);
       }
@@ -42,23 +44,22 @@ export default function ParentDetail() {
     if (!childId) return;
 
     async function loadUnknownWords() {
-    try {
+      try {
         const res = await getUnknownWordsAPI(childId);
-        
-        const detailedWords = res.data?.responseDto?.words || []; 
-        
-        const words = detailedWords.map(item => ({
-            id: item.word,
-            text: item.word 
+
+        const detailedWords = res.data?.responseDto?.words || [];
+
+        const words = detailedWords.map((item) => ({
+          id: item.word,
+          text: item.word,
         }));
 
         setWordList(words);
-        
-    } catch (e) {
+      } catch (e) {
         console.error("모르는 단어 목록 조회 실패", e);
-        setWordList([]); 
+        setWordList([]);
+      }
     }
-  }
 
     loadUnknownWords();
   }, [childId]);
@@ -67,8 +68,8 @@ export default function ParentDetail() {
   useEffect(() => {
     const fetchReviewTitles = async () => {
       try {
-        const res = await reportInstance.get(`/child/${childId}`);
-        setReportList(res.data.responseDto || []);
+        const list = await getChildReviews(childId);
+        setReportList(list || []);
       } catch (e) {
         console.error("리뷰 제목 목록 조회 실패", e);
       }
@@ -80,8 +81,8 @@ export default function ParentDetail() {
   // 리포트 목록 가져오기
   const loadReportList = async () => {
     try {
-      const res = await reportInstance.get(`/child/${childId}`);
-      setReportList(res.data.responseDto);
+      const list = await getChildReviews(childId);
+      setReportList(list || []);
       setIsReportListOpen(true);
     } catch (e) {
       console.error("리포트 목록 조회 실패", e);
@@ -93,13 +94,15 @@ export default function ParentDetail() {
   return (
     <>
       <div className={styles.page}>
-        <button className={styles.backButton} onClick={() => navigate("/parentMain")}>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/parentMain")}
+        >
           ← 목록으로
         </button>
 
         <section className={styles.childSummary}>
           <div className={styles.headerBox}>
-
             {/* 최근 읽은 책 이미지 */}
             <img
               src={
@@ -132,7 +135,7 @@ export default function ParentDetail() {
                 </div>
               </div>
 
-              <div className={styles.reportBooks}> 
+              <div className={styles.reportBooks}>
                 {reportList.length > 0 ? (
                   reportList.map((r) => (
                     <span key={r.reviewId} className={styles.bookChip}>
@@ -140,29 +143,29 @@ export default function ParentDetail() {
                     </span>
                   ))
                 ) : (
-                  <span className={styles.reportEmpty}>작성한 책이 없습니다.</span>
+                  <span className={styles.reportEmpty}>
+                    작성한 책이 없습니다.
+                  </span>
                 )}
               </div>
-
             </div>
           </div>
         </section>
 
         {/* 학습 주제 밸런스 */}
         <section className={styles.learningSection}>
-            <div className={styles.leftBox}>
+          <div className={styles.leftBox}>
+            <div className={styles.balanceHeader}>
+              <h3>학습 주제 밸런스</h3>
+              <p className={styles.topicNote}>
+                💡자녀의 학습 주제 편향을 한눈에 볼 수 있습니다.
+              </p>
+            </div>
 
-              <div className={styles.balanceHeader}>
-                <h3>학습 주제 밸런스</h3>
-                <p className={styles.topicNote}>
-                  💡자녀의 학습 주제 편향을 한눈에 볼 수 있습니다.
-                </p>
-              </div>
-
-          <div className={styles.chartWrapper}> 
+            <div className={styles.chartWrapper}>
               <PreferenceChart stats={childDetail.balance} />
+            </div>
           </div>
-        </div>
 
           {/* 오른쪽 : 모르는 단어 모음 */}
           <div className={styles.rightBox}>
@@ -174,7 +177,7 @@ export default function ParentDetail() {
                 {wordList.length > 0 ? ( // 단어 목록이 있을 때만 렌더링
                   wordList.map((word) => (
                     <span key={word.id} className={styles.wordChip}>
-                     {word.text}
+                      {word.text}
                     </span>
                   ))
                 ) : (
@@ -184,7 +187,6 @@ export default function ParentDetail() {
             </div>
           </div>
         </section>
-
       </div>
 
       {/* 리포트 팝업 */}
@@ -211,7 +213,9 @@ export default function ParentDetail() {
                     <li
                       key={r.reviewId || index}
                       className={styles.reportItem}
-                      onClick={() => navigate(`/review/${r.reviewId}?from=parent`)}
+                      onClick={() =>
+                        navigate(`/review/${r.reviewId}?from=parent`)
+                      }
                       style={{ cursor: "pointer" }}
                     >
                       {/* 제목 */}
@@ -219,10 +223,10 @@ export default function ParentDetail() {
                         {r.title}
                       </strong>
 
-                      {/* 내용(memorableScene) */}
+                      {/* 내용(memorableScene)
                       <p className={styles.reportSummary}>
                         {r.memorableScene || "내용 없음"}
-                      </p>
+                      </p> */}
 
                       {/* 날짜 */}
                       <span className={styles.reportDate}>

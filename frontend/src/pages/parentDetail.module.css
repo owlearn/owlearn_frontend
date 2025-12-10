@@ -104,7 +104,7 @@
 
 .recommendation,
 .leftBox {
-  display: flex;     
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -115,7 +115,6 @@
   margin-top: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
-
 
 .recCard {
   display: flex;
@@ -197,13 +196,12 @@
   color: #3f572d;
 }
 
-
 .learningSection {
   display: flex;
   width: 100%;
-  align-items: stretch;   /* 핵심 */
+  align-items: stretch; /* 핵심 */
   gap: 16px;
-  margin-top: 18px;
+  margin-top: 1px;
 }
 
 .leftBox,
@@ -211,7 +209,7 @@
   flex: 1;
   background: white;
   padding: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   border: 1.5px solid #d4dfc6;
@@ -233,9 +231,8 @@
   padding: 0;
 }
 
-
 .rightBox {
-  display: flex;     
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -260,7 +257,6 @@
   cursor: default;
 }
 
-
 .wordEmpty {
   font-size: 13px;
   color: #7a7a7a;
@@ -274,7 +270,6 @@
     flex-direction: column;
   }
 }
-
 
 .topicBars {
   display: flex;
@@ -443,7 +438,6 @@
   width: 100% !important;
   height: 100% !important;
 }
-
 
 .preferenceChartEmpty {
   text-align: center;
