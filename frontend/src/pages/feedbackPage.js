@@ -17,9 +17,8 @@ export default function FeedbackPage() {
 
   const transmittedWords = location.state?.reviewWords;
 
-  const goReport = () => navigate("/tale/report", { state: { taleId } });
-  const goRetelling = () => navigate("/tale/retelling", { state: { taleId } });
-  const goFinish = () => navigate("/studyMain");
+  const goRetelling = () =>
+    navigate("/tale/retelling", { state: { taleId } });
 
   // 데이터 로딩 및 초기화 로직
   useEffect(() => {
@@ -132,16 +131,10 @@ export default function FeedbackPage() {
           )}
         </section>
 
-        {/* 하단 선택 버튼들 */}
+        {/* 다음 단계: 리텔링으로 이동 (필수) */}
         <div className={styles.actionButtons}>
-          <button className={styles.brownBtn} onClick={goReport}>
-            독후감 쓰기
-          </button>
           <button className={styles.brownBtn} onClick={goRetelling}>
-            리텔링 쓰기
-          </button>
-          <button className={styles.blackBtn} onClick={goFinish}>
-            학습 종료하기
+            리텔링 하러 가기
           </button>
         </div>
       </div>

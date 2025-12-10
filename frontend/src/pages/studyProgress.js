@@ -49,16 +49,18 @@ const StudyProgress = () => {
           
           console.log("저장 성공 및 상세 단어 정보:", reviewWords);
           
+          // 1단계: 단어 복습 페이지로 이동 (필수)
           navigate("/tale/feedback", { 
               state: { 
                   taleId,
-                  reviewWords: reviewWords 
+                  reviewWords 
               } 
           });
 
       } catch (err) {
           console.error("단어 저장 실패:", err);
           
+          // 실패 시에도 흐름은 동일하게 단어 복습 페이지로 이동
           navigate("/tale/feedback", { 
               state: { 
                   taleId,
